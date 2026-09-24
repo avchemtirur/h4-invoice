@@ -490,9 +490,7 @@
       font-size: 0.85rem;
     }
 
-    /* ==========================================================================
-       LINE ITEMS: DESKTOP TABLE & MOBILE CARD TRANSFORMATION
-       ========================================================================== */
+    /* Line Items Table & Mobile Layout */
     .line-items-wrapper {
       width: 100%;
       margin-bottom: 14px;
@@ -745,7 +743,7 @@
       }
     }
 
-    /* Calculation Summary */
+    /* Summary Grid */
     .summary-grid {
       display: grid;
       grid-template-columns: 1.2fr 0.8fr;
@@ -869,9 +867,7 @@
       }
     }
 
-    /* ==========================================================================
-       MATERIAL 3 ACCORDION CARDS & INVOICE DESIGNER WORKSPACE
-       ========================================================================== */
+    /* Material Design Accordion */
     .designer-layout-grid {
       display: grid;
       grid-template-columns: 1.15fr 0.85fr;
@@ -939,7 +935,7 @@
       display: block;
     }
 
-    /* Column Sorter Element */
+    /* Column Sorter */
     .col-order-list {
       display: flex;
       flex-direction: column;
@@ -967,7 +963,7 @@
       gap: 4px;
     }
 
-    /* Live Preview Sticky Canvas Container */
+    /* Designer Preview Sticky Canvas */
     .designer-preview-sticky {
       position: sticky;
       top: 84px;
@@ -995,9 +991,7 @@
       margin-bottom: 12px;
     }
 
-    /* ==========================================================================
-       A4 INVOICE SHEET (FOR PREVIEW & PRINT)
-       ========================================================================== */
+    /* A4 Physical Sheet */
     .a4-sheet {
       width: 210mm;
       min-height: 297mm;
@@ -1208,7 +1202,6 @@
       font-size: 8pt;
     }
 
-    /* Keep the designer Grand Total highlight in browser Print / Save as PDF */
     .inv-grand-total-row,
     .inv-grand-total-row td {
       -webkit-print-color-adjust: exact !important;
@@ -1279,7 +1272,6 @@
       margin-bottom: 4px;
     }
 
-    /* Print Rules: Strict A4 210mm x 297mm */
     @media print {
       @page {
         size: A4 portrait;
@@ -1351,7 +1343,6 @@
       }
     }
 
-    /* Toast */
     .toast-box {
       position: fixed;
       bottom: 24px;
@@ -1559,7 +1550,6 @@
           </div>
 
           <div class="grid-2">
-            <!-- Discount Box -->
             <div style="background:#F8FAFC; padding:14px; border-radius:var(--h4-radius); border:1px solid var(--h4-border);">
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
                 <span style="font-weight:700; font-size:0.92rem;">Invoice Discount</span>
@@ -1583,7 +1573,6 @@
               </div>
             </div>
 
-            <!-- GST Box -->
             <div style="background:#F8FAFC; padding:14px; border-radius:var(--h4-radius); border:1px solid var(--h4-border);">
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
                 <span style="font-weight:700; font-size:0.92rem;">GST (CGST + SGST)</span>
@@ -2933,8 +2922,6 @@
       const computed = computeTotals(inv);
       const s = state.settings;
       const ds = s.designer || defaultDesignerSettings();
-      // Use the invoice snapshot when available, but fall back to current Company Settings.
-      // This keeps WhatsApp and Website visible even on an older/open draft.
       const sellerWhatsapp = String(inv.sellerWhatsapp || s.whatsapp || '').trim();
       const sellerWebsite = String(inv.sellerWebsite || s.website || '').trim();
 
@@ -3435,390 +3422,661 @@
     }
 
     /* ==========================================================================
-       SETTINGS & DESIGNER CONTROLS BINDING
+       INITIALIZATION AND EVENT BINDINGS
        ========================================================================== */
-    function renderSettings() {
-      const s = state.settings;
-      const ds = s.designer || defaultDesignerSettings();
+    function initUI() {
+      loadState();
 
-      document.getElementById('setLegalName').value = s.legalName || '';
-      document.getElementById('setBrandName').value = s.brandName || '';
-      document.getElementById('setGstin').value = s.gstin || '';
-      document.getElementById('setAddress').value = s.address || '';
-      document.getElementById('setCity').value = s.city || '';
-      document.getElementById('setDistrict').value = s.district || '';
-      document.getElementById('setSellerState').value = s.state || 'Kerala';
-      document.getElementById('setSellerStateCode').value = s.stateCode || '32';
-      document.getElementById('setPin').value = s.pinCode || '';
+      state.currentInvoice = newDraft();
+      loadInvoiceIntoEditor(state.currentInvoice);
 
-      document.getElementById('setMobile').value = s.mobile || '';
-      document.getElementById('setWhatsapp').value = s.whatsapp || '';
-      document.getElementById('setEmail').value = s.email || '';
-      document.getElementById('setWebsite').value = s.website || '';
-
-      document.getElementById('setShowBankDetails').checked = Boolean(s.showBankDetails);
-      document.getElementById('setBankName').value = s.bankName || '';
-      document.getElementById('setAccountName').value = s.accountName || '';
-      document.getElementById('setAccountNumber').value = s.accountNumber || '';
-      document.getElementById('setIfscCode').value = s.ifscCode || '';
-      document.getElementById('setBranch').value = s.branch || '';
-      document.getElementById('setUpiId').value = s.upiId || '';
-
-      document.getElementById('setInvoicePrefix').value = s.invoicePrefix || 'INV-';
-
-      // Designer UI Inputs
-      document.getElementById('dsGlobalPrimaryColor').value = ds.global.primaryColor;
-      document.getElementById('dsGlobalPrimaryColorTxt').value = ds.global.primaryColor;
-      document.getElementById('dsGlobalSecondaryColor').value = ds.global.secondaryColor;
-      document.getElementById('dsGlobalSecondaryColorTxt').value = ds.global.secondaryColor;
-      document.getElementById('dsGlobalNavyColor').value = ds.global.navyColor;
-      document.getElementById('dsGlobalNavyColorTxt').value = ds.global.navyColor;
-      document.getElementById('dsGlobalTextColor').value = ds.global.textColor;
-      document.getElementById('dsGlobalTextColorTxt').value = ds.global.textColor;
-      document.getElementById('dsGlobalMutedColor').value = ds.global.mutedColor;
-      document.getElementById('dsGlobalMutedColorTxt').value = ds.global.mutedColor;
-      document.getElementById('dsGlobalBorderColor').value = ds.global.borderColor;
-      document.getElementById('dsGlobalBorderColorTxt').value = ds.global.borderColor;
-
-      document.getElementById('dsHeaderShowLogo').value = String(ds.header.showLogo);
-      document.getElementById('dsHeaderLogoSize').value = ds.header.logoSize;
-      document.getElementById('dsHeaderShowBrand').value = String(ds.header.showBrand);
-      document.getElementById('dsHeaderBrandSize').value = ds.header.brandSize;
-      document.getElementById('dsHeaderBrandWeight').value = ds.header.brandWeight;
-      document.getElementById('dsHeaderBrandColor').value = ds.header.brandColor;
-      document.getElementById('dsHeaderShowLegal').value = String(ds.header.showLegal);
-      document.getElementById('dsHeaderLegalSize').value = ds.header.legalSize;
-      document.getElementById('dsHeaderLegalColor').value = ds.header.legalColor;
-      document.getElementById('dsHeaderShowWhatsapp').value = String(ds.header.showWhatsapp !== false);
-      document.getElementById('dsHeaderShowWebsite').value = String(ds.header.showWebsite !== false);
-
-      document.getElementById('dsCustBgColor').value = ds.customer.bgColor;
-      document.getElementById('dsCustBorderColor').value = ds.customer.borderColor;
-      document.getElementById('dsCustPadding').value = ds.customer.padding;
-      document.getElementById('dsCustNameSize').value = ds.customer.nameSize;
-      document.getElementById('dsCustNameColor').value = ds.customer.nameColor;
-      document.getElementById('dsCustShowCo').value = String(ds.customer.showCo);
-
-      document.getElementById('dsMetaTitleSize').value = ds.invoiceMeta.titleSize;
-      document.getElementById('dsMetaTitleColor').value = ds.invoiceMeta.titleColor;
-      document.getElementById('dsMetaBadgeBg').value = ds.invoiceMeta.badgeBg;
-
-      document.getElementById('dsTableHeaderBg').value = ds.table.headerBg;
-      document.getElementById('dsTableHeaderColor').value = ds.table.headerColor;
-      document.getElementById('dsTableCellPadding').value = ds.table.cellPadding;
-
-      document.getElementById('dsWordsSize').value = ds.amountWords.size;
-      document.getElementById('dsWordsWeight').value = ds.amountWords.weight;
-      document.getElementById('dsWordsColor').value = ds.amountWords.color;
-
-      document.getElementById('dsTotalSize').value = ds.totals.size;
-      document.getElementById('dsTotalColor').value = ds.totals.color;
-      document.getElementById('dsTotalBgColor').value = ds.totals.bgColor;
-
-      document.getElementById('dsGreetingText').value = ds.greeting.text;
-      document.getElementById('dsGreetingSize').value = ds.greeting.size;
-      document.getElementById('dsGreetingAlign').value = ds.greeting.align;
-      document.getElementById('dsGreetingColor').value = ds.greeting.color;
-
-      document.getElementById('dsBaseFontFamily').value = ds.fonts.base || 'Inter, sans-serif';
-      document.getElementById('dsBaseBodySize').value = ds.fonts.bodySize || '9pt';
-      document.getElementById('dsBaseLineHeight').value = ds.fonts.lineHeight || '1.35';
-      document.getElementById('dsLetterSpacing').value = ds.fonts.letterSpacing || '0px';
-      const fontStatus = document.getElementById('dsCustomFontStatus');
-      if (fontStatus) fontStatus.textContent = ds.fonts.customName ? `Loaded: ${ds.fonts.customName}` : 'No custom font loaded';
-      document.getElementById('dsPresetSelect').value = ds.preset || 'H4_PREMIUM';
-      renderDesignerTemplateSelect();
-
-      document.getElementById('dsLayoutPaddingTop').value = ds.layout.paddingTop;
-      document.getElementById('dsLayoutPaddingHoriz').value = ds.layout.paddingHoriz;
-      document.getElementById('dsLayoutPaddingBottom').value = ds.layout.paddingBottom;
-
-      renderColumnOrderList();
-      renderSettingsLogoPreview();
-      debouncedLivePreview();
-    }
-
-    function renderColumnOrderList() {
-      const listEl = document.getElementById('designerColOrderList');
-      if (!listEl) return;
-      listEl.innerHTML = '';
-      const cols = state.settings.designer.columns || [];
-
-      cols.forEach((col, idx) => {
-        const item = document.createElement('div');
-        item.className = 'col-order-item';
-        item.style.cssText = 'display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;';
-        item.innerHTML = `
-          <div style="min-width:0;">
-            <div class="col-name" style="font-weight:700;">${escapeHTML(col.name)}</div>
-            <div style="display:flex;gap:6px;align-items:center;margin-top:5px;flex-wrap:wrap;">
-              <input type="text" class="input-control" data-action="width" value="${escapeHTML(col.width || 'auto')}" aria-label="${escapeHTML(col.name)} width" style="width:90px;height:34px;">
-              <select class="input-control" data-action="align" aria-label="${escapeHTML(col.name)} alignment" style="width:100px;height:34px;">
-                <option value="left" ${col.align === 'left' ? 'selected' : ''}>Left</option>
-                <option value="center" ${col.align === 'center' ? 'selected' : ''}>Center</option>
-                <option value="right" ${col.align === 'right' ? 'selected' : ''}>Right</option>
-              </select>
-              <label style="display:flex;align-items:center;gap:4px;font-size:.75rem;">
-                <input type="checkbox" ${col.show !== false ? 'checked' : ''} data-action="toggle"> Show
-              </label>
-            </div>
-          </div>
-          <div class="col-order-btns" style="display:flex;gap:4px;">
-            <button type="button" class="btn btn-sm btn-outline" data-action="up" ${idx === 0 ? 'disabled' : ''}>▲</button>
-            <button type="button" class="btn btn-sm btn-outline" data-action="down" ${idx === cols.length - 1 ? 'disabled' : ''}>▼</button>
-          </div>
-        `;
-
-        item.querySelector('[data-action="up"]')?.addEventListener('click', () => {
-          if (idx > 0) { [cols[idx - 1], cols[idx]] = [cols[idx], cols[idx - 1]]; renderColumnOrderList(); refreshOpenPreview(); saveState(); }
-        });
-        item.querySelector('[data-action="down"]')?.addEventListener('click', () => {
-          if (idx < cols.length - 1) { [cols[idx + 1], cols[idx]] = [cols[idx], cols[idx + 1]]; renderColumnOrderList(); refreshOpenPreview(); saveState(); }
-        });
-        item.querySelector('[data-action="toggle"]')?.addEventListener('change', e => {
-          col.show = e.target.checked; refreshOpenPreview(); saveState();
-        });
-        item.querySelector('[data-action="width"]')?.addEventListener('input', e => {
-          const v = String(e.target.value || '').trim();
-          if (/^(auto|\d+(?:\.\d+)?(?:px|mm|pt|%)?)$/i.test(v)) { col.width = v; refreshOpenPreview(); saveState(); }
-        });
-        item.querySelector('[data-action="align"]')?.addEventListener('change', e => {
-          col.align = e.target.value; refreshOpenPreview(); saveState();
-        });
-        listEl.appendChild(item);
-      });
-    }
-
-    function renderSettingsLogoPreview() {
-      const previewBox = document.getElementById('settingsLogoPreviewBox');
-      const appBarBadge = document.getElementById('appBarLogoBadge');
-
-      if (state.settings.logoUrl && state.settings.logoUrl.trim()) {
-        const img = `<img src="${state.settings.logoUrl}" alt="Logo" style="width:100%; height:100%; object-fit:contain;">`;
-        previewBox.innerHTML = img;
-        appBarBadge.innerHTML = img;
-      } else {
-        previewBox.innerHTML = DEFAULT_H4_LOGO_SVG;
-        appBarBadge.innerHTML = DEFAULT_H4_LOGO_SVG;
-      }
-    }
-
-    function syncDesignerInputsToState() {
-      const ds = ensureDesignerSettings();
-
-      ds.global.primaryColor = document.getElementById('dsGlobalPrimaryColor').value;
-      ds.global.secondaryColor = document.getElementById('dsGlobalSecondaryColor').value;
-      ds.global.navyColor = document.getElementById('dsGlobalNavyColor').value;
-      ds.global.textColor = document.getElementById('dsGlobalTextColor').value;
-      ds.global.mutedColor = document.getElementById('dsGlobalMutedColor').value;
-      ds.global.borderColor = document.getElementById('dsGlobalBorderColor').value;
-
-      ds.header.showLogo = document.getElementById('dsHeaderShowLogo').value === 'true';
-      ds.header.logoSize = Number(document.getElementById('dsHeaderLogoSize').value) || 60;
-      ds.header.showBrand = document.getElementById('dsHeaderShowBrand').value === 'true';
-      ds.header.brandSize = document.getElementById('dsHeaderBrandSize').value;
-      ds.header.brandWeight = document.getElementById('dsHeaderBrandWeight').value;
-      ds.header.brandColor = document.getElementById('dsHeaderBrandColor').value;
-      ds.header.showLegal = document.getElementById('dsHeaderShowLegal').value === 'true';
-      ds.header.legalSize = document.getElementById('dsHeaderLegalSize').value;
-      ds.header.legalColor = document.getElementById('dsHeaderLegalColor').value;
-      ds.header.showWhatsapp = document.getElementById('dsHeaderShowWhatsapp').value === 'true';
-      ds.header.showWebsite = document.getElementById('dsHeaderShowWebsite').value === 'true';
-
-      ds.customer.bgColor = document.getElementById('dsCustBgColor').value;
-      ds.customer.borderColor = document.getElementById('dsCustBorderColor').value;
-      ds.customer.padding = Number(document.getElementById('dsCustPadding').value) || 10;
-      ds.customer.nameSize = document.getElementById('dsCustNameSize').value;
-      ds.customer.nameColor = document.getElementById('dsCustNameColor').value;
-      ds.customer.showCo = document.getElementById('dsCustShowCo').value === 'true';
-
-      ds.invoiceMeta.titleSize = document.getElementById('dsMetaTitleSize').value;
-      ds.invoiceMeta.titleColor = document.getElementById('dsMetaTitleColor').value;
-      ds.invoiceMeta.badgeBg = document.getElementById('dsMetaBadgeBg').value;
-
-      ds.table.headerBg = document.getElementById('dsTableHeaderBg').value;
-      ds.table.headerColor = document.getElementById('dsTableHeaderColor').value;
-      ds.table.cellPadding = Number(document.getElementById('dsTableCellPadding').value) || 5;
-
-      ds.amountWords.size = document.getElementById('dsWordsSize').value;
-      ds.amountWords.weight = document.getElementById('dsWordsWeight').value;
-      ds.amountWords.color = document.getElementById('dsWordsColor').value;
-
-      ds.totals.size = document.getElementById('dsTotalSize').value;
-      ds.totals.color = document.getElementById('dsTotalColor').value;
-      ds.totals.bgColor = document.getElementById('dsTotalBgColor').value;
-
-      ds.greeting.text = document.getElementById('dsGreetingText').value;
-      ds.greeting.size = document.getElementById('dsGreetingSize').value;
-      ds.greeting.align = document.getElementById('dsGreetingAlign').value;
-      ds.greetingColor = document.getElementById('dsGreetingColor').value;
-
-      ds.fonts.base = document.getElementById('dsBaseFontFamily').value;
-      ds.fonts.bodySize = document.getElementById('dsBaseBodySize').value || '9pt';
-      ds.fonts.lineHeight = document.getElementById('dsBaseLineHeight').value || '1.35';
-      ds.fonts.letterSpacing = document.getElementById('dsLetterSpacing').value || '0px';
-
-      ds.layout.paddingTop = Number(document.getElementById('dsLayoutPaddingTop').value) || 14;
-      ds.layout.paddingHoriz = Number(document.getElementById('dsLayoutPaddingHoriz').value) || 16;
-      ds.layout.paddingBottom = Number(document.getElementById('dsLayoutPaddingBottom').value) || 14;
-
-      applyAppearance();
-      refreshOpenPreview();
-    }
-
-    function renderDesignerTemplateSelect() {
-      const sel = document.getElementById('dsTemplateSelect');
-      if (!sel) return;
-      const templates = (state.settings.designer && state.settings.designer.templates) || {};
-      const current = sel.value;
-      sel.innerHTML = '<option value="">Select saved template</option>';
-      Object.keys(templates).sort((a,b)=>a.localeCompare(b)).forEach(name => {
-        const opt = document.createElement('option'); opt.value = name; opt.textContent = name; sel.appendChild(opt);
-      });
-      if (templates[current]) sel.value = current;
-    }
-
-    function saveDesignerTemplate() {
-      const name = String(document.getElementById('dsTemplateName')?.value || '').trim();
-      if (!name) { alert('Enter a template name first.'); return; }
-      const ds = ensureDesignerSettings();
-      ds.templates = ds.templates || {};
-      const copy = JSON.parse(JSON.stringify(ds));
-      delete copy.templates;
-      ds.templates[name] = copy;
-      saveState();
-      renderDesignerTemplateSelect();
-      document.getElementById('dsTemplateSelect').value = name;
-      showToast(`Template saved: ${name}`);
-    }
-
-    function loadDesignerTemplate() {
-      const name = document.getElementById('dsTemplateSelect')?.value;
-      const ds = ensureDesignerSettings();
-      if (!name || !ds.templates?.[name]) { alert('Select a saved template.'); return; }
-      const templates = ds.templates;
-      const loaded = mergeDesignerSettings(defaultDesignerSettings(), templates[name]);
-      loaded.templates = templates;
-      state.settings.designer = loaded;
+      renderHistory();
       renderSettings();
-      saveState();
-      refreshOpenPreview();
-      showToast(`Template loaded: ${name}`);
+      bindEvents();
+      setupMobileNavigation();
     }
 
-    function deleteDesignerTemplate() {
-      const name = document.getElementById('dsTemplateSelect')?.value;
-      const ds = ensureDesignerSettings();
-      if (!name || !ds.templates?.[name]) { alert('Select a saved template.'); return; }
-      if (!confirm(`Delete template “${name}”?`)) return;
-      delete ds.templates[name];
-      saveState();
-      renderDesignerTemplateSelect();
-      showToast(`Template deleted: ${name}`);
+    function bindEvents() {
+      document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          switchTab(btn.getAttribute('data-tab'));
+        });
+      });
+
+      const custCoToggle = document.getElementById('custCoToggle');
+      custCoToggle?.addEventListener('change', (e) => {
+        const isChecked = e.target.checked;
+        document.getElementById('custCoSection').style.display = isChecked ? 'block' : 'none';
+        state.currentInvoice.coEnabled = isChecked;
+        if (!isChecked) {
+          state.currentInvoice.coName = '';
+          state.currentInvoice.coMobile = '';
+          document.getElementById('custCoName').value = '';
+          document.getElementById('custCoMobile').value = '';
+        }
+        triggerRecalculate();
+      });
+
+      const gstToggle = document.getElementById('gstToggle');
+      gstToggle?.addEventListener('change', (e) => {
+        const isChecked = e.target.checked;
+        document.getElementById('gstControls').style.display = isChecked ? 'grid' : 'none';
+        state.currentInvoice.gstEnabled = isChecked;
+        triggerRecalculate();
+      });
+
+      const gstRateSelect = document.getElementById('gstRateSelect');
+      gstRateSelect?.addEventListener('change', (e) => {
+        const val = e.target.value;
+        state.currentInvoice.gstRateType = val;
+        if (val === 'custom') {
+          document.getElementById('customGstGroup').style.display = 'flex';
+          state.currentInvoice.gstRate = Number(document.getElementById('customGstVal').value) || 0;
+        } else {
+          document.getElementById('customGstGroup').style.display = 'none';
+          state.currentInvoice.gstRate = Number(val);
+        }
+        triggerRecalculate();
+      });
+
+      const customGstVal = document.getElementById('customGstVal');
+      customGstVal?.addEventListener('input', (e) => {
+        let clean = e.target.value.replace(/[^0-9.]/g, '');
+        const parts = clean.split('.');
+        if (parts.length > 2) clean = parts[0] + '.' + parts.slice(1).join('');
+        e.target.value = clean;
+
+        const num = parseFloat(clean);
+        if (!isNaN(num) && num >= 0 && num <= 100) {
+          state.currentInvoice.customGstRate = num;
+          state.currentInvoice.gstRate = num;
+        } else {
+          state.currentInvoice.customGstRate = '';
+        }
+        triggerRecalculate();
+      });
+
+      const discountToggle = document.getElementById('discountToggle');
+      discountToggle?.addEventListener('change', (e) => {
+        const isChecked = e.target.checked;
+        document.getElementById('discountControls').style.display = isChecked ? 'grid' : 'none';
+        state.currentInvoice.discountEnabled = isChecked;
+        triggerRecalculate();
+      });
+
+      document.getElementById('discountMode')?.addEventListener('change', (e) => {
+        state.currentInvoice.discountType = e.target.value;
+        triggerRecalculate();
+      });
+
+      document.getElementById('discountVal')?.addEventListener('input', (e) => {
+        let clean = e.target.value.replace(/[^0-9.]/g, '');
+        const parts = clean.split('.');
+        if (parts.length > 2) clean = parts[0] + '.' + parts.slice(1).join('');
+        e.target.value = clean;
+        state.currentInvoice.discountValue = parseFloat(clean) || 0;
+        triggerRecalculate();
+      });
+
+      document.getElementById('btnAddLineItem')?.addEventListener('click', () => {
+        addLineItemRow({
+          id: 'item_' + Date.now(),
+          product: 'H4 Tile Adhesive',
+          customProduct: '',
+          qty: 1,
+          unit: 'Bag',
+          rate: 450
+        });
+        triggerRecalculate();
+      });
+
+      const syncInput = (id, key) => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('input', (e) => {
+            state.currentInvoice[key] = e.target.value;
+            refreshOpenPreview();
+          });
+        }
+      };
+
+      syncInput('invDate', 'invoiceDate');
+      syncInput('invDueDate', 'dueDate');
+      syncInput('invPaymentStatus', 'paymentStatus');
+      syncInput('custName', 'customerName');
+      syncInput('custMobile', 'customerMobile');
+      syncInput('custAltMobile', 'customerAltMobile');
+      syncInput('custCoName', 'coName');
+      syncInput('custCoMobile', 'coMobile');
+      syncInput('custGstin', 'customerGstin');
+      syncInput('custAddress', 'customerAddress');
+      syncInput('custCity', 'customerCity');
+      syncInput('custDistrict', 'customerDistrict');
+      syncInput('custState', 'customerState');
+      syncInput('custPin', 'customerPinCode');
+      syncInput('invNotes', 'notes');
+
+      document.getElementById('btnSaveInvoice')?.addEventListener('click', saveCurrentInvoice);
+      document.getElementById('btnPreviewInvoice')?.addEventListener('click', openPreviewModal);
+      document.getElementById('btnShareWhatsApp')?.addEventListener('click', () => shareInvoiceWhatsApp(state.currentInvoice));
+      document.getElementById('btnPrintDirect')?.addEventListener('click', printCurrentInvoice);
+      document.getElementById('btnNewDraft')?.addEventListener('click', () => {
+        if (confirm("Reset editor to a brand new invoice draft?")) {
+          state.currentInvoice = newDraft();
+          loadInvoiceIntoEditor(state.currentInvoice);
+          showToast("New invoice draft ready");
+        }
+      });
+
+      document.getElementById('btnZoomOut')?.addEventListener('click', () => {
+        if (currentZoomIndex > 0) {
+          currentZoomIndex--;
+          applyPreviewZoom();
+        }
+      });
+
+      document.getElementById('btnZoomIn')?.addEventListener('click', () => {
+        if (currentZoomIndex < ZOOM_LEVELS.length - 1) {
+          currentZoomIndex++;
+          applyPreviewZoom();
+        }
+      });
+
+      document.getElementById('btnZoomReset')?.addEventListener('click', () => {
+        currentZoomIndex = 2;
+        applyPreviewZoom();
+      });
+
+      document.getElementById('modalBtnClose')?.addEventListener('click', closePreviewModal);
+      document.getElementById('modalBtnCloseBottom')?.addEventListener('click', closePreviewModal);
+      document.getElementById('modalBtnPrint')?.addEventListener('click', () => {
+        closePreviewModal();
+        printCurrentInvoice();
+      });
+      document.getElementById('modalBtnWhatsApp')?.addEventListener('click', () => {
+        shareInvoiceWhatsApp(state.currentInvoice);
+      });
+
+      document.getElementById('btnSaveSettingsTop')?.addEventListener('click', saveSettingsFromForm);
+      document.getElementById('btnSaveSettingsBottom')?.addEventListener('click', saveSettingsFromForm);
+
+      const logoFileInput = document.getElementById('logoFileInput');
+      logoFileInput?.addEventListener('change', handleLogoUpload);
+
+      document.getElementById('btnRemoveLogo')?.addEventListener('click', () => {
+        state.settings.logoUrl = "";
+        renderSettingsLogoPreview();
+        saveState();
+        refreshOpenPreview();
+        showToast("Reverted to H4 default logo");
+      });
+
+      document.getElementById('historySearchInput')?.addEventListener('input', (e) => {
+        renderHistory(e.target.value);
+      });
+
+      document.getElementById('btnNewInvoiceFromHistory')?.addEventListener('click', () => {
+        state.currentInvoice = newDraft();
+        loadInvoiceIntoEditor(state.currentInvoice);
+        switchTab('editor');
+      });
     }
 
-    function saveSettingsFromForm() {
-      const legal = document.getElementById('setLegalName').value.trim();
-      const brand = document.getElementById('setBrandName').value.trim();
+    function setupMobileNavigation() {
+      document.getElementById('invoiceForm')?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA' && e.target.type !== 'button') {
+          e.preventDefault();
+          const focusables = Array.from(document.querySelectorAll('#invoiceForm input:not([type="hidden"]):not([disabled]):not([readonly]), #invoiceForm select:not([disabled])'))
+            .filter(el => el.offsetParent !== null);
+          const idx = focusables.indexOf(e.target);
+          if (idx >= 0 && idx < focusables.length - 1) {
+            focusables[idx + 1].focus();
+            if (focusables[idx + 1].select) focusables[idx + 1].select();
+          } else {
+            e.target.blur();
+          }
+        }
+      });
 
-      if (!legal || !brand) {
-        alert("Company Legal Name and Brand Name are required.");
+      window.addEventListener('focusin', (e) => {
+        if (['INPUT', 'SELECT', 'TEXTAREA'].includes(e.target.tagName)) {
+          setTimeout(() => {
+            e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }, 260);
+        }
+      });
+    }
+
+    function handleLogoUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      if (file.type === 'image/svg+xml') {
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+          state.settings.logoUrl = evt.target.result;
+          renderSettingsLogoPreview();
+          saveState();
+          refreshOpenPreview();
+          showToast("SVG Logo uploaded successfully");
+        };
+        reader.readAsDataURL(file);
         return;
       }
 
-      const s = state.settings;
-      s.legalName = legal;
-      s.brandName = brand;
-      s.gstin = document.getElementById('setGstin').value.trim().toUpperCase();
-      s.address = document.getElementById('setAddress').value.trim();
-      s.city = document.getElementById('setCity').value.trim();
-      s.district = document.getElementById('setDistrict').value.trim();
-      s.state = document.getElementById('setSellerState').value.trim() || 'Kerala';
-      s.stateCode = "32";
-      s.pinCode = document.getElementById('setPin').value.trim();
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        const img = new Image();
+        img.onload = () => {
+          const maxDim = 600;
+          let width = img.width;
+          let height = img.height;
 
-      s.mobile = document.getElementById('setMobile').value.trim();
-      s.whatsapp = document.getElementById('setWhatsapp').value.trim();
-      s.email = document.getElementById('setEmail').value.trim();
-      s.website = document.getElementById('setWebsite').value.trim();
+          if (width > maxDim || height > maxDim) {
+            if (width > height) {
+              height = Math.round((height * maxDim) / width);
+              width = maxDim;
+            } else {
+              width = Math.round((width * maxDim) / height);
+              height = maxDim;
+            }
+          }
 
-      s.showBankDetails = document.getElementById('setShowBankDetails').checked;
-      s.bankName = document.getElementById('setBankName').value.trim();
-      s.accountName = document.getElementById('setAccountName').value.trim();
-      s.accountNumber = document.getElementById('setAccountNumber').value.trim();
-      s.ifscCode = document.getElementById('setIfscCode').value.trim().toUpperCase();
-      s.branch = document.getElementById('setBranch').value.trim();
-      s.upiId = document.getElementById('setUpiId').value.trim();
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
 
-      s.invoicePrefix = document.getElementById('setInvoicePrefix').value.trim() || 'INV-';
-
-      syncDesignerInputsToState();
-      document.getElementById('appBarBrandSubtitle').textContent = legal;
-
-      saveState();
-      showToast("Company & Designer Settings saved successfully!");
+          state.settings.logoUrl = canvas.toDataURL('image/png', 0.88);
+          renderSettingsLogoPreview();
+          saveState();
+          refreshOpenPreview();
+          showToast("Logo optimized and saved!");
+        };
+        img.src = evt.target.result;
+      };
+      reader.readAsDataURL(file);
     }
 
-    function applyAppearance() {
-      const r = document.documentElement;
-      const ds = state.settings.designer || defaultDesignerSettings();
-      r.style.setProperty('--h4-primary', ds.global.primaryColor || '#A8238B');
-      r.style.setProperty('--h4-accent', ds.global.secondaryColor || '#F5BE00');
-      r.style.setProperty('--h4-navy', ds.global.navyColor || '#172554');
-    }
+    function switchTab(tabId) {
+      state.activeTab = tabId;
+      document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-tab') === tabId);
+      });
+      document.querySelectorAll('.view-panel').forEach(panel => {
+        panel.classList.remove('active');
+      });
 
-    function showToast(message) {
-      const toast = document.getElementById('appToast');
-      toast.textContent = '✓ ' + message;
-      toast.classList.add('show');
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 2800);
-    }
+      const target = document.getElementById(tabId === 'editor' ? 'viewEditor' : (tabId === 'history' ? 'viewHistory' : 'viewSettings'));
+      if (target) target.classList.add('active');
 
-    /* Preset Selection */
-    function applyPreset(presetKey) {
-      const ds = state.settings.designer;
-      ds.preset = presetKey;
-
-      if (presetKey === "H4_PREMIUM") {
-        ds.global.primaryColor = "#A8238B";
-        ds.global.secondaryColor = "#F5BE00";
-        ds.global.navyColor = "#172554";
-        ds.table.headerBg = "#172554";
-        ds.totals.bgColor = "#FEF3C7";
-        ds.fonts.base = "Inter, sans-serif";
-      } else if (presetKey === "H4_CORPORATE") {
-        ds.global.primaryColor = "#0F766E";
-        ds.global.secondaryColor = "#0284C7";
-        ds.global.navyColor = "#0F172A";
-        ds.table.headerBg = "#0F172A";
-        ds.totals.bgColor = "#E0F2FE";
-        ds.fonts.base = "Roboto, sans-serif";
-      } else if (presetKey === "H4_MINIMAL") {
-        ds.global.primaryColor = "#334155";
-        ds.global.secondaryColor = "#64748B";
-        ds.global.navyColor = "#1E293B";
-        ds.table.headerBg = "#334155";
-        ds.totals.bgColor = "#F1F5F9";
-        ds.fonts.base = "Arial, sans-serif";
-      } else if (presetKey === "H4_COMPACT") {
-        ds.global.primaryColor = "#831843";
-        ds.global.secondaryColor = "#D97706";
-        ds.global.navyColor = "#500724";
-        ds.table.headerBg = "#500724";
-        ds.totals.bgColor = "#FDF2F8";
-        ds.layout.paddingTop = 10;
-        ds.layout.paddingHoriz = 12;
-        ds.layout.paddingBottom = 10;
+      const actionsBar = document.getElementById('editorActionsBar');
+      if (actionsBar) {
+        actionsBar.style.display = tabId === 'editor' ? 'flex' : 'none';
       }
 
-      renderSettings();
-      refreshOpenPreview();
-      showToast(`Applied preset: ${presetKey}`);
+      if (tabId === 'history') {
+        renderHistory();
+      } else if (tabId === 'settings') {
+        renderSettings();
+      }
     }
 
-    /* Accordion Logic */
+    function loadInvoiceIntoEditor(inv) {
+      document.getElementById('invNumber').value = inv.invoiceNumber || generateNextInvoiceNumber();
+      document.getElementById('invDate').value = inv.invoiceDate || '';
+      document.getElementById('invDueDate').value = inv.dueDate || '';
+      document.getElementById('invPaymentStatus').value = inv.paymentStatus || 'UNPAID';
+
+      document.getElementById('custName').value = inv.customerName || '';
+      document.getElementById('custMobile').value = inv.customerMobile || '';
+      document.getElementById('custAltMobile').value = inv.customerAltMobile || '';
+
+      const coEnabled = Boolean(inv.coEnabled);
+      document.getElementById('custCoToggle').checked = coEnabled;
+      document.getElementById('custCoSection').style.display = coEnabled ? 'block' : 'none';
+      document.getElementById('custCoName').value = inv.coName || '';
+      document.getElementById('custCoMobile').value = inv.coMobile || '';
+
+      document.getElementById('custGstin').value = inv.customerGstin || '';
+      document.getElementById('custAddress').value = inv.customerAddress || '';
+      document.getElementById('custCity').value = inv.customerCity || '';
+      document.getElementById('custDistrict').value = inv.customerDistrict || '';
+      document.getElementById('custState').value = inv.customerState || 'Kerala';
+      document.getElementById('custPin').value = inv.customerPinCode || '';
+
+      document.getElementById('gstToggle').checked = Boolean(inv.gstEnabled);
+      document.getElementById('gstControls').style.display = inv.gstEnabled ? 'grid' : 'none';
+      document.getElementById('gstRateSelect').value = inv.gstRateType || '18';
+
+      if (inv.gstRateType === 'custom') {
+        document.getElementById('customGstGroup').style.display = 'flex';
+        document.getElementById('customGstVal').value = inv.customGstRate || inv.gstRate || '';
+      } else {
+        document.getElementById('customGstGroup').style.display = 'none';
+      }
+
+      document.getElementById('discountToggle').checked = Boolean(inv.discountEnabled);
+      document.getElementById('discountControls').style.display = inv.discountEnabled ? 'grid' : 'none';
+      document.getElementById('discountMode').value = inv.discountType || 'percent';
+      document.getElementById('discountVal').value = inv.discountValue || 0;
+
+      document.getElementById('invNotes').value = inv.notes || '';
+
+      const tbody = document.getElementById('itemsTableBody');
+      tbody.innerHTML = '';
+      if (Array.isArray(inv.items) && inv.items.length > 0) {
+        inv.items.forEach(it => addLineItemRow(it));
+      } else {
+        addLineItemRow({ id: 'item_1', product: 'H4 Tile Adhesive', qty: 1, unit: 'Bag', rate: 450 });
+      }
+
+      triggerRecalculate();
+    }
+
+    function addLineItemRow(itemData) {
+      const tbody = document.getElementById('itemsTableBody');
+      const tr = document.createElement('tr');
+      tr.id = itemData.id || 'row_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
+
+      const isCustomProduct = !STANDARD_PRODUCTS.includes(itemData.product);
+
+      tr.innerHTML = `
+        <td class="td-num"></td>
+        <td class="td-action">
+          <button type="button" class="btn btn-sm btn-danger btn-item-del" title="Delete Line Item">✕</button>
+        </td>
+        <td class="td-product">
+          <select class="input-control item-product-select" style="margin-bottom: 4px;" enterkeyhint="next">
+            ${STANDARD_PRODUCTS.map(p => `<option value="${p}" ${itemData.product === p ? 'selected' : ''}>${p}</option>`).join('')}
+            <option value="CUSTOM" ${isCustomProduct ? 'selected' : ''}>-- Custom Product Name --</option>
+          </select>
+          <input type="text" class="input-control item-product-custom" placeholder="Type product description" value="${isCustomProduct ? escapeHTML(itemData.product || '') : ''}" style="display: ${isCustomProduct ? 'block' : 'none'};" enterkeyhint="next">
+        </td>
+        <td class="td-qty">
+          <input type="text" class="input-control item-qty" value="${itemData.qty}" inputmode="decimal" style="text-align: right;" enterkeyhint="next">
+        </td>
+        <td class="td-unit">
+          <select class="input-control item-unit" enterkeyhint="next">
+            ${STANDARD_UNITS.map(u => `<option value="${u}" ${itemData.unit === u ? 'selected' : ''}>${u}</option>`).join('')}
+          </select>
+        </td>
+        <td class="td-rate">
+          <input type="text" class="input-control item-rate" value="${itemData.rate}" inputmode="decimal" style="text-align: right;" enterkeyhint="next">
+        </td>
+        <td class="td-taxable item-cell-taxable">₹0.00</td>
+        <td class="td-tax item-cell-tax">₹0.00</td>
+        <td class="td-amount item-cell-amount">₹0.00</td>
+      `;
+
+      tbody.appendChild(tr);
+
+      const prodSelect = tr.querySelector('.item-product-select');
+      const prodCustomInput = tr.querySelector('.item-product-custom');
+      const qtyInput = tr.querySelector('.item-qty');
+      const rateInput = tr.querySelector('.item-rate');
+      const delBtn = tr.querySelector('.btn-item-del');
+
+      prodSelect.addEventListener('change', (e) => {
+        if (e.target.value === 'CUSTOM') {
+          prodCustomInput.style.display = 'block';
+          prodCustomInput.focus();
+        } else {
+          prodCustomInput.style.display = 'none';
+          if (e.target.value === 'H4 Tile Adhesive') rateInput.value = 450;
+          if (e.target.value === 'H4 Waterproofing') rateInput.value = 650;
+          if (e.target.value === 'H4 ShieldX Epoxy Flooring') rateInput.value = 900;
+        }
+        triggerRecalculate();
+      });
+
+      prodCustomInput.addEventListener('input', triggerRecalculate);
+
+      qtyInput.addEventListener('input', (e) => {
+        let clean = e.target.value.replace(/[^0-9.]/g, '');
+        const parts = clean.split('.');
+        if (parts.length > 2) clean = parts[0] + '.' + parts.slice(1).join('');
+        e.target.value = clean;
+        triggerRecalculate();
+      });
+
+      rateInput.addEventListener('input', (e) => {
+        let clean = e.target.value.replace(/[^0-9.]/g, '');
+        const parts = clean.split('.');
+        if (parts.length > 2) clean = parts[0] + '.' + parts.slice(1).join('');
+        e.target.value = clean;
+        triggerRecalculate();
+      });
+
+      delBtn.addEventListener('click', () => {
+        if (tbody.querySelectorAll('tr').length <= 1) {
+          alert("An invoice must contain at least one line item.");
+          return;
+        }
+        tr.remove();
+        triggerRecalculate();
+      });
+
+      updateRowNumbers();
+    }
+
+    function updateRowNumbers() {
+      const rows = document.querySelectorAll('#itemsTableBody tr');
+      rows.forEach((r, idx) => {
+        const numTd = r.querySelector('.td-num');
+        if (numTd) numTd.textContent = idx + 1;
+      });
+    }
+
+    function readItemsFromEditor() {
+      const rows = document.querySelectorAll('#itemsTableBody tr');
+      const items = [];
+
+      rows.forEach(tr => {
+        const prodSelect = tr.querySelector('.item-product-select');
+        const prodCustomInput = tr.querySelector('.item-product-custom');
+        const qtyInput = tr.querySelector('.item-qty');
+        const unitSelect = tr.querySelector('.item-unit');
+        const rateInput = tr.querySelector('.item-rate');
+
+        let productName = prodSelect.value;
+        if (productName === 'CUSTOM') {
+          productName = prodCustomInput.value.trim() || 'Custom Product';
+        }
+
+        const qty = parseFloat(qtyInput.value) || 0;
+        const rate = parseFloat(rateInput.value) || 0;
+        const unit = unitSelect.value || 'Nos';
+
+        items.push({
+          id: tr.id,
+          product: productName,
+          qty,
+          unit,
+          rate
+        });
+      });
+
+      return items;
+    }
+
+    function triggerRecalculate() {
+      updateRowNumbers();
+
+      state.currentInvoice.items = readItemsFromEditor();
+      state.currentInvoice.sellerState = state.settings.state || "Kerala";
+      state.currentInvoice.sellerStateCode = "32";
+
+      const totals = computeTotals(state.currentInvoice);
+
+      const rows = document.querySelectorAll('#itemsTableBody tr');
+      rows.forEach((tr, i) => {
+        const itemComputed = totals.items[i];
+        if (itemComputed) {
+          tr.querySelector('.item-cell-taxable').textContent = formatCurrency(itemComputed.taxable);
+          tr.querySelector('.item-cell-tax').textContent = formatCurrency(itemComputed.tax);
+          tr.querySelector('.item-cell-amount').textContent = formatCurrency(itemComputed.amount);
+        }
+      });
+
+      document.getElementById('sumSubtotal').textContent = formatCurrency(totals.subtotal);
+
+      const rowDiscount = document.getElementById('rowDiscount');
+      if (state.currentInvoice.discountEnabled && totals.discountTotal > 0) {
+        rowDiscount.style.display = 'flex';
+        document.getElementById('sumDiscount').textContent = '-' + formatCurrency(totals.discountTotal);
+      } else {
+        rowDiscount.style.display = 'none';
+      }
+
+      document.getElementById('sumTaxable').textContent = formatCurrency(totals.taxable);
+
+      const gstContainer = document.getElementById('gstRowsContainer');
+      gstContainer.innerHTML = '';
+      const tag = document.getElementById('editorGstClassificationTag');
+
+      if (!totals.gstEnabled || totals.gstRate <= 0) {
+        tag.textContent = "GST NOT APPLICABLE";
+        tag.className = "gst-tag none";
+      } else {
+        tag.textContent = `GST ${totals.gstRate}% (CGST ${totals.cgstRate}% + SGST ${totals.sgstRate}%)`;
+        tag.className = "gst-tag active";
+
+        gstContainer.innerHTML = `
+          <div class="totals-row">
+            <span>CGST (${totals.cgstRate}%):</span>
+            <span>${formatCurrency(totals.cgst)}</span>
+          </div>
+          <div class="totals-row">
+            <span>SGST (${totals.sgstRate}%):</span>
+            <span>${formatCurrency(totals.sgst)}</span>
+          </div>
+        `;
+      }
+
+      document.getElementById('sumGrandTotal').textContent = formatCurrency(totals.grand);
+      document.getElementById('editorAmountInWords').textContent = amountInWords(totals.grand);
+
+      refreshOpenPreview();
+    }
+
+    function validateInvoice(inv) {
+      if (!inv.customerName || !inv.customerName.trim()) {
+        alert("Please enter Customer / Company Name.");
+        document.getElementById('custName').focus();
+        return false;
+      }
+
+      if (!inv.customerMobile || !inv.customerMobile.trim()) {
+        alert("Please enter Customer Mobile number.");
+        document.getElementById('custMobile').focus();
+        return false;
+      }
+
+      if (!inv.items || inv.items.length === 0) {
+        alert("Please add at least one line item.");
+        return false;
+      }
+
+      for (let i = 0; i < inv.items.length; i++) {
+        const item = inv.items[i];
+        if (item.qty <= 0) {
+          alert(`Item #${i + 1} (${item.product}): Quantity must be greater than 0.`);
+          return false;
+        }
+        if (item.rate < 0) {
+          alert(`Item #${i + 1} (${item.product}): Rate cannot be negative.`);
+          return false;
+        }
+      }
+
+      if (inv.gstEnabled && inv.gstRateType === 'custom') {
+        const cGst = Number(inv.customGstRate);
+        if (isNaN(cGst) || cGst < 0 || cGst > 100) {
+          alert("Custom GST % must be a valid number between 0% and 100%.");
+          document.getElementById('customGstVal').focus();
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    function buildInvoiceRecord() {
+      state.currentInvoice.invoiceNumber = document.getElementById('invNumber').value;
+      state.currentInvoice.invoiceDate = document.getElementById('invDate').value;
+      state.currentInvoice.dueDate = document.getElementById('invDueDate').value;
+      state.currentInvoice.paymentStatus = document.getElementById('invPaymentStatus').value;
+
+      state.currentInvoice.customerName = document.getElementById('custName').value.trim();
+      state.currentInvoice.customerMobile = document.getElementById('custMobile').value.trim();
+      state.currentInvoice.customerAltMobile = document.getElementById('custAltMobile').value.trim();
+
+      state.currentInvoice.coEnabled = document.getElementById('custCoToggle').checked;
+      state.currentInvoice.coName = document.getElementById('custCoName').value.trim();
+      state.currentInvoice.coMobile = document.getElementById('custCoMobile').value.trim();
+
+      state.currentInvoice.customerGstin = document.getElementById('custGstin').value.trim().toUpperCase();
+      state.currentInvoice.customerAddress = document.getElementById('custAddress').value.trim();
+      state.currentInvoice.customerCity = document.getElementById('custCity').value.trim();
+      state.currentInvoice.customerDistrict = document.getElementById('custDistrict').value.trim();
+      state.currentInvoice.customerState = document.getElementById('custState').value.trim() || 'Kerala';
+      state.currentInvoice.customerPinCode = document.getElementById('custPin').value.trim();
+
+      state.currentInvoice.items = readItemsFromEditor();
+      state.currentInvoice.notes = document.getElementById('invNotes').value.trim();
+
+      state.currentInvoice.sellerLegalName = state.settings.legalName;
+      state.currentInvoice.sellerBrandName = state.settings.brandName;
+      state.currentInvoice.sellerLogoUrl = state.settings.logoUrl;
+      state.currentInvoice.sellerAddress = state.settings.address;
+      state.currentInvoice.sellerCity = state.settings.city;
+      state.currentInvoice.sellerDistrict = state.settings.district;
+      state.currentInvoice.sellerState = state.settings.state || "Kerala";
+      state.currentInvoice.sellerStateCode = "32";
+      state.currentInvoice.sellerPinCode = state.settings.pinCode;
+      state.currentInvoice.sellerMobile = state.settings.mobile;
+      state.currentInvoice.sellerWhatsapp = state.settings.whatsapp;
+      state.currentInvoice.sellerEmail = state.settings.email;
+      state.currentInvoice.sellerWebsite = state.settings.website;
+      state.currentInvoice.sellerGstin = state.settings.gstin;
+
+      state.currentInvoice.showBankDetails = state.settings.showBankDetails;
+      state.currentInvoice.bankName = state.settings.bankName;
+      state.currentInvoice.accountName = state.settings.accountName;
+      state.currentInvoice.accountNumber = state.settings.accountNumber;
+      state.currentInvoice.ifscCode = state.settings.ifscCode;
+      state.currentInvoice.branch = state.settings.branch;
+      state.currentInvoice.upiId = state.settings.upiId;
+
+      return JSON.parse(JSON.stringify(state.currentInvoice));
+    }
+
+    function saveCurrentInvoice() {
+      const record = buildInvoiceRecord();
+      if (!validateInvoice(record)) return;
+
+      const existingIdx = state.invoices.findIndex(inv => inv.id === record.id);
+      if (existingIdx >= 0) {
+        state.invoices[existingIdx] = record;
+        showToast(`Invoice ${record.invoiceNumber} updated!`);
+      } else {
+        let finalNum = record.invoiceNumber;
+        while (state.invoices.some(inv => inv.invoiceNumber === finalNum)) {
+          finalNum = generateNextInvoiceNumber();
+        }
+        record.invoiceNumber = finalNum;
+        document.getElementById('invNumber').value = finalNum;
+
+        state.invoices.unshift(record);
+        showToast(`Invoice ${record.invoiceNumber} saved!`);
+      }
+
+      saveState();
+      renderHistory();
+    }
+
     function setupAccordions() {
       document.querySelectorAll('.accordion-header').forEach(hdr => {
         hdr.addEventListener('click', () => {
@@ -3828,7 +4086,6 @@
       });
     }
 
-    /* Designer Real-Time Input Sync */
     function setupDesignerLiveSync() {
       const inputs = document.querySelectorAll('#invoiceDesignerModule input, #invoiceDesignerModule select');
       inputs.forEach(input => {
@@ -3837,7 +4094,6 @@
         });
       });
 
-      // Synchronize color picker to text field pairs
       const bindColorSync = (pickerId, txtId) => {
         const picker = document.getElementById(pickerId);
         const txt = document.getElementById(txtId);
@@ -3861,12 +4117,10 @@
       bindColorSync('dsGlobalMutedColor', 'dsGlobalMutedColorTxt');
       bindColorSync('dsGlobalBorderColor', 'dsGlobalBorderColorTxt');
 
-      // Preset Change
       document.getElementById('dsPresetSelect')?.addEventListener('change', (e) => {
         applyPreset(e.target.value);
       });
 
-      // Reset All Designer
       document.getElementById('btnResetDesignerAll')?.addEventListener('click', () => {
         if (confirm("Reset all visual template settings to H4 default? (Your invoices & numbers remain safe)")) {
           state.settings.designer = defaultDesignerSettings();
@@ -3877,7 +4131,6 @@
         }
       });
 
-      // Custom Font Upload — stored locally and applied to invoice preview/print/PDF
       document.getElementById('dsCustomFontInput')?.addEventListener('change', (e) => {
         const file = e.target.files?.[0];
         if (!file) return;
@@ -3920,7 +4173,6 @@
         reader.readAsDataURL(file);
       });
 
-      // Designer Canvas Zoom Controls
       document.getElementById('btnZoomInDs')?.addEventListener('click', () => {
         if (designerZoom < 1.25) {
           designerZoom = Math.min(1.25, designerZoom + 0.05);
