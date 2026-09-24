@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>H4 Direct Invoice — AV CHEM Chemical &amp; Manufacturing</title>
   
-  <!-- Web & Offline Safe Fonts -->
+  <!-- Web & Offline-Safe Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -42,14 +42,22 @@
       --h4-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
-      /* Mobile Input Touch Metrics (Requested: 46–50px height, 15–16px text, 13–14px labels) */
+      /* Mobile First Ergonomics (48–52px height, 15–16px text, 13–14px labels) */
       --input-height: 48px;
       --input-font-size: 15.5px;
       --label-font-size: 13.5px;
     }
 
-    * {
+    /* Global Page Width & Safe Box Model */
+    html, body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
       box-sizing: border-box;
+    }
+
+    *, *:before, *:after {
+      box-sizing: inherit;
       margin: 0;
       padding: 0;
     }
@@ -63,9 +71,7 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
-    /* ==========================================================================
-       APP BAR & NAVIGATION
-       ========================================================================== */
+    /* Top App Bar */
     .app-header {
       background-color: var(--h4-navy);
       color: #FFFFFF;
@@ -73,6 +79,7 @@
       top: 0;
       z-index: 100;
       box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+      width: 100%;
     }
 
     .header-container {
@@ -84,6 +91,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 12px;
+      width: 100%;
     }
 
     .brand-section {
@@ -136,6 +144,7 @@
       border-radius: var(--h4-radius);
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
+      max-width: 100%;
     }
 
     .nav-tab-btn {
@@ -177,17 +186,17 @@
       text-align: center;
     }
 
-    /* ==========================================================================
-       CONTAINER & CARDS
-       ========================================================================== */
+    /* Main Container & Cards */
     .app-main {
       max-width: 1200px;
-      margin: 18px auto 95px;
+      margin: 18px auto 100px;
       padding: 0 14px;
+      width: 100%;
     }
 
     .view-panel {
       display: none;
+      width: 100%;
     }
 
     .view-panel.active {
@@ -207,6 +216,7 @@
       box-shadow: var(--h4-shadow-sm);
       padding: 20px;
       margin-bottom: 20px;
+      width: 100%;
     }
 
     .card-header {
@@ -246,24 +256,27 @@
     }
 
     @media (max-width: 768px) {
+      .app-main {
+        padding: 0 10px;
+        margin: 14px auto 120px;
+      }
       .grid-2, .grid-3, .grid-4 {
         grid-template-columns: 1fr;
         gap: 14px;
       }
       .card {
-        padding: 16px;
-        margin-bottom: 16px;
+        padding: 14px 12px;
+        margin-bottom: 14px;
       }
     }
 
-    /* ==========================================================================
-       LARGER MOBILE INPUT CONTROLS (HEIGHT: 48px, TEXT: 15.5px, LABELS: 13.5px)
-       ========================================================================== */
+    /* Form Controls */
     .form-group {
       display: flex;
       flex-direction: column;
       gap: 6px;
       margin-bottom: 10px;
+      width: 100%;
     }
 
     .form-group.span-2 {
@@ -310,6 +323,7 @@
       outline: none;
       transition: var(--h4-transition);
       width: 100%;
+      max-width: 100%;
     }
 
     .input-control:focus,
@@ -341,6 +355,7 @@
       border-radius: var(--h4-radius);
       border: 1px solid var(--h4-border);
       cursor: pointer;
+      width: 100%;
     }
 
     .switch-label {
@@ -396,9 +411,7 @@
       transform: translateX(22px);
     }
 
-    /* ==========================================================================
-       BUTTONS
-       ========================================================================== */
+    /* Buttons */
     .btn {
       min-height: var(--input-height);
       padding: 0 18px;
@@ -479,88 +492,310 @@
     }
 
     /* ==========================================================================
-       LINE ITEMS TABLE & EDITING (NO HSN/SAC)
+       LINE ITEMS: DESKTOP TABLE & MOBILE CARD TRANSFORMATION
        ========================================================================== */
     .line-items-wrapper {
       width: 100%;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
       margin-bottom: 14px;
-      border: 1px solid var(--h4-border);
-      border-radius: var(--h4-radius);
     }
 
-    .items-table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 720px;
-      background: #FFFFFF;
+    /* Desktop View: Clean Table Layout */
+    @media (min-width: 769px) {
+      .line-items-wrapper {
+        border: 1px solid var(--h4-border);
+        border-radius: var(--h4-radius);
+        overflow-x: auto;
+      }
+
+      .items-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 720px;
+        background: #FFFFFF;
+      }
+
+      .items-table th {
+        background: #F8FAFC;
+        color: var(--h4-muted);
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding: 10px 8px;
+        text-align: left;
+        border-bottom: 1px solid var(--h4-border);
+      }
+
+      .items-table td {
+        padding: 8px 6px;
+        border-bottom: 1px solid var(--h4-border);
+        vertical-align: middle;
+      }
+
+      .items-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .items-table .td-num {
+        width: 36px;
+        text-align: center;
+        font-weight: 700;
+        color: var(--h4-muted);
+        font-size: 0.88rem;
+      }
+
+      .items-table .td-product {
+        min-width: 220px;
+      }
+
+      .items-table .td-qty {
+        width: 88px;
+      }
+
+      .items-table .td-unit {
+        width: 95px;
+      }
+
+      .items-table .td-rate {
+        width: 105px;
+      }
+
+      .items-table .td-taxable,
+      .items-table .td-tax,
+      .items-table .td-amount {
+        width: 110px;
+        text-align: right;
+        font-weight: 600;
+        font-size: 0.9rem;
+        padding-right: 10px;
+      }
+
+      .items-table .td-action {
+        width: 48px;
+        text-align: center;
+      }
     }
 
-    .items-table th {
-      background: #F8FAFC;
-      color: var(--h4-muted);
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 10px 8px;
-      text-align: left;
-      border-bottom: 1px solid var(--h4-border);
+    /* Mobile View: High-Usability Responsive Stacked Cards */
+    @media (max-width: 768px) {
+      .line-items-wrapper {
+        border: none;
+        overflow-x: visible;
+        background: transparent;
+      }
+
+      .items-table {
+        min-width: 0 !important;
+        width: 100% !important;
+        display: block;
+        background: transparent;
+      }
+
+      .items-table thead {
+        display: none !important;
+      }
+
+      .items-table tbody {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        width: 100%;
+      }
+
+      .items-table tr {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 10px 8px;
+        background: #FFFFFF;
+        border: 1px solid var(--h4-border);
+        border-radius: var(--h4-radius-lg);
+        padding: 14px 12px 12px;
+        box-shadow: var(--h4-shadow-sm);
+        position: relative;
+        width: 100%;
+      }
+
+      .items-table td {
+        padding: 0;
+        border: none;
+        width: 100%;
+      }
+
+      /* Card Header: Item Number & Delete Action */
+      .items-table .td-num {
+        grid-column: 1 / -1;
+        display: flex;
+        align-items: center;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--h4-navy);
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--h4-border);
+        margin-bottom: 2px;
+        text-align: left;
+      }
+
+      .items-table .td-num::before {
+        content: "Item #";
+        color: var(--h4-primary);
+        font-weight: 800;
+        margin-right: 4px;
+      }
+
+      .items-table .td-action {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: auto;
+        z-index: 2;
+      }
+
+      .items-table .td-action .btn-item-del {
+        width: 44px;
+        height: 44px;
+        min-height: 44px;
+        padding: 0;
+        font-size: 1.15rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--h4-radius-sm);
+      }
+
+      /* Product Description Full-Width */
+      .items-table .td-product {
+        grid-column: 1 / -1;
+      }
+
+      .items-table .td-product::before {
+        content: "Product Description";
+        display: block;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--h4-muted);
+        margin-bottom: 4px;
+      }
+
+      /* Qty, Unit, Rate in 3 Columns */
+      .items-table .td-qty {
+        grid-column: 1 / 2;
+      }
+
+      .items-table .td-qty::before {
+        content: "Quantity";
+        display: block;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--h4-muted);
+        margin-bottom: 4px;
+      }
+
+      .items-table .td-unit {
+        grid-column: 2 / 3;
+      }
+
+      .items-table .td-unit::before {
+        content: "Unit";
+        display: block;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--h4-muted);
+        margin-bottom: 4px;
+      }
+
+      .items-table .td-rate {
+        grid-column: 3 / 4;
+      }
+
+      .items-table .td-rate::before {
+        content: "Rate (₹)";
+        display: block;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--h4-muted);
+        margin-bottom: 4px;
+      }
+
+      /* Calculation Cards Row */
+      .items-table .td-taxable {
+        grid-column: 1 / 2;
+        background: #F8FAFC;
+        border: 1px solid var(--h4-border);
+        border-radius: var(--h4-radius-sm);
+        padding: 6px 8px;
+        text-align: left;
+        font-size: 0.88rem;
+      }
+
+      .items-table .td-taxable::before {
+        content: "Taxable";
+        display: block;
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: var(--h4-muted);
+        margin-bottom: 2px;
+      }
+
+      .items-table .td-tax {
+        grid-column: 2 / 3;
+        background: #F8FAFC;
+        border: 1px solid var(--h4-border);
+        border-radius: var(--h4-radius-sm);
+        padding: 6px 8px;
+        text-align: left;
+        font-size: 0.88rem;
+      }
+
+      .items-table .td-tax::before {
+        content: "Tax (GST)";
+        display: block;
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: var(--h4-muted);
+        margin-bottom: 2px;
+      }
+
+      .items-table .td-amount {
+        grid-column: 3 / 4;
+        background: #F1F5F9;
+        border: 1px solid #CBD5E1;
+        border-radius: var(--h4-radius-sm);
+        padding: 6px 8px;
+        text-align: right;
+        font-size: 0.95rem;
+        font-weight: 800;
+        color: var(--h4-primary);
+      }
+
+      .items-table .td-amount::before {
+        content: "Line Total";
+        display: block;
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: var(--h4-muted);
+        text-align: right;
+        margin-bottom: 2px;
+      }
     }
 
-    .items-table td {
-      padding: 8px 6px;
-      border-bottom: 1px solid var(--h4-border);
-      vertical-align: middle;
+    /* Fine-Tuning for Narrow Screens (<= 400px: 360px, 375px, 390px) */
+    @media (max-width: 400px) {
+      .items-table tr {
+        padding: 12px 10px 10px;
+        gap: 8px 6px;
+      }
+      .items-table .td-taxable,
+      .items-table .td-tax,
+      .items-table .td-amount {
+        padding: 5px 6px;
+        font-size: 0.84rem;
+      }
+      .input-control, select.input-control {
+        padding: 8px 10px;
+      }
     }
 
-    .items-table tr:last-child td {
-      border-bottom: none;
-    }
-
-    .items-table .td-num {
-      width: 36px;
-      text-align: center;
-      font-weight: 700;
-      color: var(--h4-muted);
-      font-size: 0.88rem;
-    }
-
-    .items-table .td-product {
-      min-width: 220px;
-    }
-
-    .items-table .td-qty {
-      width: 88px;
-    }
-
-    .items-table .td-unit {
-      width: 95px;
-    }
-
-    .items-table .td-rate {
-      width: 105px;
-    }
-
-    .items-table .td-taxable,
-    .items-table .td-tax,
-    .items-table .td-amount {
-      width: 110px;
-      text-align: right;
-      font-weight: 600;
-      font-size: 0.9rem;
-      padding-right: 10px;
-    }
-
-    .items-table .td-action {
-      width: 48px;
-      text-align: center;
-    }
-
-    /* ==========================================================================
-       CALCULATION SUMMARY
-       ========================================================================== */
+    /* Calculation Summary */
     .summary-grid {
       display: grid;
       grid-template-columns: 1.2fr 0.8fr;
@@ -578,6 +813,7 @@
       border: 1px solid var(--h4-border);
       border-radius: var(--h4-radius);
       padding: 16px;
+      width: 100%;
     }
 
     .totals-row {
@@ -634,9 +870,7 @@
       margin-bottom: 3px;
     }
 
-    /* ==========================================================================
-       STICKY ACTIONS BAR
-       ========================================================================== */
+    /* Sticky Actions Bar */
     .sticky-actions-bar {
       position: sticky;
       bottom: 0;
@@ -650,6 +884,7 @@
       justify-content: flex-end;
       align-items: center;
       z-index: 90;
+      width: 100%;
     }
 
     .sticky-actions-bar .actions-wrapper {
@@ -662,14 +897,35 @@
       flex-wrap: wrap;
     }
 
-    /* ==========================================================================
-       INVOICE HISTORY TABLE
-       ========================================================================== */
+    @media (max-width: 768px) {
+      .sticky-actions-bar {
+        padding: 10px 12px;
+      }
+      .sticky-actions-bar .actions-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        width: 100%;
+      }
+      .sticky-actions-bar .actions-wrapper #btnSaveInvoice {
+        grid-column: span 2;
+        min-height: 50px;
+        font-size: 1rem;
+      }
+      .sticky-actions-bar .btn {
+        min-height: 46px;
+        padding: 0 10px;
+        font-size: 0.88rem;
+      }
+    }
+
+    /* History Table */
     .history-controls {
       display: flex;
       gap: 12px;
       margin-bottom: 14px;
       flex-wrap: wrap;
+      width: 100%;
     }
 
     .search-input {
@@ -682,6 +938,7 @@
       border-radius: var(--h4-radius);
       overflow-x: auto;
       background: #FFFFFF;
+      width: 100%;
     }
 
     .history-table {
@@ -734,9 +991,7 @@
       color: var(--h4-warning);
     }
 
-    /* ==========================================================================
-       MODAL & ZOOMABLE PREVIEW SYSTEM
-       ========================================================================== */
+    /* Modal & Zoomable Preview System */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -1001,7 +1256,7 @@
       color: #374151;
     }
 
-    /* Print Table (NO HSN/SAC) */
+    /* Print Table (Clean A4 portrait, No HSN/SAC) */
     .inv-table {
       width: 100%;
       border-collapse: collapse;
@@ -1090,7 +1345,6 @@
       margin-top: 3px;
     }
 
-    /* Greeting Banner (Replaces Terms & Conditions Completely) */
     .inv-greeting-box {
       margin-top: 10px;
       padding: 8px 12px;
@@ -1125,9 +1379,7 @@
       margin-bottom: 4px;
     }
 
-    /* ==========================================================================
-       PRINT MEDIA QUERY (STRICT A4 OUTPUT — ZERO ZOOM EFFECT)
-       ========================================================================== */
+    /* Print Rules: Strict A4 210mm x 297mm */
     @media print {
       @page {
         size: A4 portrait;
@@ -1227,9 +1479,7 @@
 </head>
 <body>
 
-  <!-- ==========================================================================
-       APP TOP BAR
-       ========================================================================== -->
+  <!-- Top Navigation Header -->
   <header class="app-header no-print">
     <div class="header-container">
       <div class="brand-section">
@@ -1261,16 +1511,14 @@
     </div>
   </header>
 
-  <!-- ==========================================================================
-       MAIN APP CONTAINER
-       ========================================================================== -->
+  <!-- Main Work Area -->
   <main class="app-main no-print">
 
-    <!-- VIEW 1: INVOICE EDITOR -->
+    <!-- View 1: Invoice Editor -->
     <section id="viewEditor" class="view-panel active">
       <form id="invoiceForm" onsubmit="event.preventDefault();" autocomplete="on">
         
-        <!-- CARD 1: INVOICE IDENTIFIERS -->
+        <!-- Invoice Identifiers -->
         <div class="card">
           <div class="card-header">
             <h2 class="card-title">📄 Invoice Information</h2>
@@ -1300,7 +1548,7 @@
           </div>
         </div>
 
-        <!-- CARD 2: CUSTOMER / BILL TO -->
+        <!-- Bill To -->
         <div class="card">
           <div class="card-header">
             <h2 class="card-title">👤 Bill To (Customer Details)</h2>
@@ -1328,7 +1576,7 @@
             </div>
           </div>
 
-          <!-- C/O Section (Conditional) -->
+          <!-- C/O Section -->
           <div id="custCoSection" style="display: none; background:#F8FAFC; border:1px dashed var(--h4-border); border-radius:var(--h4-radius); padding:12px 14px; margin-bottom:14px;">
             <div style="font-size:0.85rem; font-weight:700; color:var(--h4-primary); margin-bottom:8px;">C/O / Contact Person (Site Contact, Agent, Field Worker)</div>
             <div class="grid-2">
@@ -1374,7 +1622,7 @@
           </div>
         </div>
 
-        <!-- CARD 3: MULTIPLE LINE ITEMS (NO HSN / SAC) -->
+        <!-- Line Items Section (Responsive Stacked Cards on Mobile / Table on Desktop) -->
         <div class="card">
           <div class="card-header">
             <h2 class="card-title">📦 Invoice Line Items</h2>
@@ -1397,13 +1645,13 @@
                 </tr>
               </thead>
               <tbody id="itemsTableBody">
-                <!-- Populated dynamically -->
+                <!-- Populated via addLineItemRow() -->
               </tbody>
             </table>
           </div>
         </div>
 
-        <!-- CARD 4: DISCOUNT & TAX CONFIGURATION -->
+        <!-- Discount & GST Configuration -->
         <div class="card">
           <div class="card-header">
             <h2 class="card-title">⚖️ Discount &amp; GST Configuration</h2>
@@ -1434,7 +1682,7 @@
               </div>
             </div>
 
-            <!-- GST Box (Automatic CGST + SGST for Kerala) -->
+            <!-- GST Box -->
             <div style="background:#F8FAFC; padding:14px; border-radius:var(--h4-radius); border:1px solid var(--h4-border);">
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
                 <span style="font-weight:700; font-size:0.92rem;">GST (CGST + SGST)</span>
@@ -1465,7 +1713,7 @@
           </div>
         </div>
 
-        <!-- CARD 5: LIVE TOTALS SUMMARY -->
+        <!-- Totals Summary -->
         <div class="card">
           <div class="card-header">
             <h2 class="card-title">📊 Calculation Summary</h2>
@@ -1487,7 +1735,6 @@
                 <span>Subtotal (Gross):</span>
                 <span id="sumSubtotal">₹0.00</span>
               </div>
-              <!-- Discount row in GREEN (#16A34A) and hidden when OFF -->
               <div class="totals-row" id="rowDiscount" style="display: none; color: #16A34A; font-weight: 700;">
                 <span>Discount Total:</span>
                 <span id="sumDiscount">-₹0.00</span>
@@ -1512,7 +1759,7 @@
       </form>
     </section>
 
-    <!-- VIEW 2: INVOICE HISTORY -->
+    <!-- View 2: Invoice History -->
     <section id="viewHistory" class="view-panel">
       <div class="card">
         <div class="card-header">
@@ -1538,25 +1785,25 @@
               </tr>
             </thead>
             <tbody id="historyTableBody">
-              <!-- Populated by renderHistory() -->
+              <!-- Rendered via renderHistory() -->
             </tbody>
           </table>
         </div>
       </div>
     </section>
 
-    <!-- VIEW 3: SETTINGS -->
+    <!-- View 3: Settings -->
     <section id="viewSettings" class="view-panel">
       <form id="settingsForm" onsubmit="event.preventDefault();">
         
-        <!-- CARD 1: Company Profile & Company Logo -->
+        <!-- Company Profile & Logo -->
         <div class="card">
           <div class="card-header">
             <h2 class="card-title">🏢 Company Details (Seller Profile)</h2>
             <button type="button" class="btn btn-sm btn-accent" id="btnSaveSettingsTop">Save Settings</button>
           </div>
 
-          <!-- CLEAR COMPANY LOGO MANAGEMENT SECTION -->
+          <!-- Logo Management -->
           <div class="form-group" style="background:#F8FAFC; padding:16px; border-radius:var(--h4-radius); border:1px solid var(--h4-border); margin-bottom:18px;">
             <label style="font-size:0.95rem; font-weight:700; color:var(--h4-navy); margin-bottom:8px;">
               Company Logo Management
@@ -1564,7 +1811,7 @@
             </label>
             <div style="display:flex; align-items:center; gap:18px; margin-top:8px; flex-wrap:wrap;">
               <div id="settingsLogoPreviewBox" style="width:78px; height:78px; border:2px solid #CBD5E1; border-radius:8px; display:flex; align-items:center; justify-content:center; background:#FFF; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,0.08);">
-                <!-- Logo preview -->
+                <!-- Logo Preview Container -->
               </div>
               <div style="display:flex; flex-direction:column; gap:8px;">
                 <input type="file" id="logoFileInput" accept="image/png, image/jpeg, image/jpg, image/webp, image/svg+xml" style="display:none;">
@@ -1572,7 +1819,7 @@
                   <button type="button" class="btn btn-sm btn-outline" onclick="document.getElementById('logoFileInput').click();">📁 Upload / Change Logo</button>
                   <button type="button" class="btn btn-sm btn-danger" id="btnRemoveLogo">✕ Remove Custom Logo</button>
                 </div>
-                <div style="font-size:0.75rem; color:var(--h4-muted);">Logo is stored locally and automatically renders in Live Preview, Print, and PDF.</div>
+                <div style="font-size:0.75rem; color:var(--h4-muted);">Stored locally in browser; renders in Live Preview, Print, and PDF.</div>
               </div>
             </div>
           </div>
@@ -1642,7 +1889,7 @@
           </div>
         </div>
 
-        <!-- CARD 2: Dedicated Bank Details -->
+        <!-- Bank Details -->
         <div class="card">
           <div class="card-header">
             <h2 class="card-title">🏦 Bank Details</h2>
@@ -1682,13 +1929,13 @@
           </div>
         </div>
 
-        <!-- CARD 3: TYPOGRAPHY & INVOICE APPEARANCE CUSTOMIZATION -->
+        <!-- Typography & Customization -->
         <div class="card">
           <div class="card-header">
             <h2 class="card-title">🎨 Invoice Typography &amp; Appearance</h2>
           </div>
 
-          <!-- Section A: Primary Invoice Font -->
+          <!-- Base Font -->
           <div style="margin-bottom:18px; padding-bottom:14px; border-bottom:1px solid var(--h4-border);">
             <div style="font-size:0.92rem; font-weight:700; color:var(--h4-navy); margin-bottom:8px;">Base Typography (Entire Invoice)</div>
             <div class="grid-2">
@@ -1714,7 +1961,7 @@
             </div>
           </div>
 
-          <!-- Section B: Brand Name Customization -->
+          <!-- Brand Name -->
           <div style="margin-bottom:18px; padding-bottom:14px; border-bottom:1px solid var(--h4-border);">
             <div style="font-size:0.92rem; font-weight:700; color:var(--h4-navy); margin-bottom:8px;">Brand Name Styling</div>
             <div class="grid-4">
@@ -1757,7 +2004,7 @@
             </div>
           </div>
 
-          <!-- Section C: Company Name Customization -->
+          <!-- Company Name -->
           <div style="margin-bottom:18px; padding-bottom:14px; border-bottom:1px solid var(--h4-border);">
             <div style="font-size:0.92rem; font-weight:700; color:var(--h4-navy); margin-bottom:8px;">Company / Legal Name Styling</div>
             <div class="grid-4">
@@ -1800,7 +2047,7 @@
             </div>
           </div>
 
-          <!-- Section D: Grand Total Styling -->
+          <!-- Grand Total -->
           <div style="margin-bottom:18px; padding-bottom:14px; border-bottom:1px solid var(--h4-border);">
             <div style="font-size:0.92rem; font-weight:700; color:var(--h4-navy); margin-bottom:8px;">Grand Total Styling</div>
             <div class="grid-4">
@@ -1841,7 +2088,7 @@
             </div>
           </div>
 
-          <!-- Section E: Amount in Words Styling -->
+          <!-- Amount in Words -->
           <div style="margin-bottom:18px; padding-bottom:14px; border-bottom:1px solid var(--h4-border);">
             <div style="font-size:0.92rem; font-weight:700; color:var(--h4-navy); margin-bottom:8px;">Amount in Words Styling</div>
             <div class="grid-4">
@@ -1883,7 +2130,7 @@
             </div>
           </div>
 
-          <!-- Section F: Greeting Message Customization (Replacing Terms & Conditions) -->
+          <!-- Greeting Message -->
           <div style="margin-bottom:18px; padding-bottom:14px; border-bottom:1px solid var(--h4-border);">
             <div style="font-size:0.92rem; font-weight:700; color:var(--h4-navy); margin-bottom:8px;">Greeting Message (Displayed at Footer)</div>
             <div class="form-group" style="margin-bottom:12px;">
@@ -1929,7 +2176,7 @@
             </div>
           </div>
 
-          <!-- Section G: Brand Color Palette -->
+          <!-- H4 Palette -->
           <div>
             <div style="font-size:0.92rem; font-weight:700; color:var(--h4-navy); margin-bottom:8px;">H4 Brand Palette Controls</div>
             <div class="grid-3">
@@ -1962,7 +2209,7 @@
 
         </div>
 
-        <!-- CARD 4: Invoicing Defaults -->
+        <!-- Invoicing Defaults -->
         <div class="card">
           <div class="card-header">
             <h2 class="card-title">📝 Invoicing Defaults</h2>
@@ -1983,9 +2230,7 @@
 
   </main>
 
-  <!-- ==========================================================================
-       STICKY ACTIONS BAR (EDITOR VIEW)
-       ========================================================================== -->
+  <!-- Sticky Actions Bar -->
   <footer class="sticky-actions-bar no-print" id="editorActionsBar">
     <div class="actions-wrapper">
       <button type="button" class="btn btn-outline" id="btnNewDraft">🔄 New Draft</button>
@@ -1996,15 +2241,12 @@
     </div>
   </footer>
 
-  <!-- ==========================================================================
-       MODAL: FULL A4 INVOICE PREVIEW WITH ZOOM CONTROLS
-       ========================================================================== -->
+  <!-- Modal: Live Preview with Zoom Control -->
   <div class="modal-overlay" id="previewModal">
     <div class="modal-window">
       <div class="modal-header">
         <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
           <h2>A4 Invoice Live Preview</h2>
-          <!-- Small Zoom Control: Only affects on-screen preview, zero effect on print -->
           <div class="modal-zoom-bar">
             <button type="button" id="btnZoomOut" title="Zoom Out">−</button>
             <span class="zoom-text" id="zoomLevelDisplay">100%</span>
@@ -2021,7 +2263,7 @@
       <div class="modal-body">
         <div class="zoom-stage-wrapper" id="previewZoomWrapper">
           <div id="previewA4Container">
-            <!-- Rendered A4 Sheet -->
+            <!-- Rendered Sheet -->
           </div>
         </div>
       </div>
@@ -2031,18 +2273,14 @@
     </div>
   </div>
 
-  <!-- TOAST NOTIFICATION -->
+  <!-- Toast Notification -->
   <div class="toast-box" id="appToast">✓ Changes saved successfully</div>
 
-  <!-- ==========================================================================
-       JAVASCRIPT ARCHITECTURE & UNIFIED CALCULATION ENGINE
-       ========================================================================== -->
+  <!-- JavaScript Engine -->
   <script>
     'use strict';
 
-    /* ==========================================================================
-       1. CONSTANTS & DEFAULTS
-       ========================================================================== */
+    /* Storage Key */
     const STORAGE_KEY = 'h4_direct_invoice_module_v1';
 
     const STANDARD_PRODUCTS = [
@@ -2064,11 +2302,9 @@
     `;
 
     const ZOOM_LEVELS = [0.75, 0.85, 1.0, 1.10, 1.25];
-    let currentZoomIndex = 2; // Default 1.0 (100%)
+    let currentZoomIndex = 2;
 
-    /* ==========================================================================
-       2. SECURITY / HTML ESCAPING
-       ========================================================================== */
+    /* XSS Protection */
     function escapeHTML(str) {
       if (str === null || str === undefined) return '';
       return String(str)
@@ -2079,9 +2315,7 @@
         .replace(/'/g, '&#039;');
     }
 
-    /* ==========================================================================
-       3. DEFAULT SETTINGS & MIGRATION STATE
-       ========================================================================== */
+    /* Defaults */
     function defaultSettings() {
       return {
         legalName: "AV CHEM Chemical & Manufacturing",
@@ -2101,7 +2335,6 @@
         invoicePrefix: "INV-",
         nextNumber: 1,
 
-        // Bank Details
         showBankDetails: true,
         bankName: "State Bank of India",
         accountName: "AV CHEM Chemical & Manufacturing",
@@ -2110,12 +2343,10 @@
         branch: "Aluva Town",
         upiId: "avchem@sbi",
 
-        // Primary Palette
         primaryColor: "#A8238B",
         accentColor: "#F5BE00",
         headerColor: "#172554",
 
-        // Typography & Styling Customizations
         invoiceFontFamily: "Inter, sans-serif",
         invoiceFontSize: "9pt",
 
@@ -2207,9 +2438,7 @@
       }
     }
 
-    /* ==========================================================================
-       4. ROUNDING & CURRENCY HELPERS
-       ========================================================================== */
+    /* Rounding & Currency */
     function round2(num) {
       const n = Number(num);
       if (isNaN(n) || !isFinite(n)) return 0;
@@ -2224,9 +2453,7 @@
       });
     }
 
-    /* ==========================================================================
-       5. AMOUNT IN WORDS (INDIAN RUPEES WITH PAISE ACCURACY)
-       ========================================================================== */
+    /* Amount in Words */
     function amountInWords(num) {
       if (num === null || num === undefined || isNaN(num)) return "Indian Rupees Zero Only";
       let n = Math.round(Number(num) * 100) / 100;
@@ -2285,11 +2512,7 @@
       return res.replace(/\s+/g, ' ');
     }
 
-    /* ==========================================================================
-       6. UNIFIED CALCULATION ENGINE
-       computeTotals(invoice)
-       Single Source of Truth: Editor, Summary, Preview, Print, PDF, WhatsApp
-       ========================================================================== */
+    /* Core Calculation Engine */
     function computeTotals(inv) {
       const items = Array.isArray(inv.items) ? inv.items : [];
       const gstEnabled = Boolean(inv.gstEnabled);
@@ -2401,9 +2624,7 @@
       };
     }
 
-    /* ==========================================================================
-       7. INVOICE FACTORY & SEQUENTIAL NUMBERING
-       ========================================================================== */
+    /* Auto Sequential Invoice Generator */
     function generateNextInvoiceNumber() {
       const prefix = state.settings.invoicePrefix || 'INV-';
       const year = new Date().getFullYear();
@@ -2492,9 +2713,7 @@
       };
     }
 
-    /* ==========================================================================
-       8. INITIALIZATION & EVENT BINDINGS
-       ========================================================================== */
+    /* UI Initialization */
     function initUI() {
       loadState();
 
@@ -2514,7 +2733,6 @@
         });
       });
 
-      // Customer C/O Toggle
       const custCoToggle = document.getElementById('custCoToggle');
       custCoToggle.addEventListener('change', (e) => {
         const isChecked = e.target.checked;
@@ -2529,7 +2747,6 @@
         triggerRecalculate();
       });
 
-      // GST Toggle
       const gstToggle = document.getElementById('gstToggle');
       gstToggle.addEventListener('change', (e) => {
         const isChecked = e.target.checked;
@@ -2538,7 +2755,6 @@
         triggerRecalculate();
       });
 
-      // GST Rate Select
       const gstRateSelect = document.getElementById('gstRateSelect');
       gstRateSelect.addEventListener('change', (e) => {
         const val = e.target.value;
@@ -2553,7 +2769,6 @@
         triggerRecalculate();
       });
 
-      // Custom GST Input
       const customGstVal = document.getElementById('customGstVal');
       customGstVal.addEventListener('input', (e) => {
         let clean = e.target.value.replace(/[^0-9.]/g, '');
@@ -2571,7 +2786,6 @@
         triggerRecalculate();
       });
 
-      // Discount Toggle
       const discountToggle = document.getElementById('discountToggle');
       discountToggle.addEventListener('change', (e) => {
         const isChecked = e.target.checked;
@@ -2594,7 +2808,6 @@
         triggerRecalculate();
       });
 
-      // Add Line Item
       document.getElementById('btnAddLineItem').addEventListener('click', () => {
         addLineItemRow({
           id: 'item_' + Date.now(),
@@ -2607,7 +2820,6 @@
         triggerRecalculate();
       });
 
-      // Field Synchronizations
       const syncInput = (id, key) => {
         const el = document.getElementById(id);
         if (el) {
@@ -2634,7 +2846,6 @@
       syncInput('custPin', 'customerPinCode');
       syncInput('invNotes', 'notes');
 
-      // Top & Sticky Actions
       document.getElementById('btnSaveInvoice').addEventListener('click', saveCurrentInvoice);
       document.getElementById('btnPreviewInvoice').addEventListener('click', openPreviewModal);
       document.getElementById('btnShareWhatsApp').addEventListener('click', () => shareInvoiceWhatsApp(state.currentInvoice));
@@ -2647,7 +2858,6 @@
         }
       });
 
-      // Modal Zoom Controls
       document.getElementById('btnZoomOut').addEventListener('click', () => {
         if (currentZoomIndex > 0) {
           currentZoomIndex--;
@@ -2663,7 +2873,7 @@
       });
 
       document.getElementById('btnZoomReset').addEventListener('click', () => {
-        currentZoomIndex = 2; // 100%
+        currentZoomIndex = 2;
         applyPreviewZoom();
       });
 
@@ -2677,11 +2887,9 @@
         shareInvoiceWhatsApp(state.currentInvoice);
       });
 
-      // Settings Save Buttons
       document.getElementById('btnSaveSettingsTop').addEventListener('click', saveSettingsFromForm);
       document.getElementById('btnSaveSettingsBottom').addEventListener('click', saveSettingsFromForm);
 
-      // Logo Upload & Optimizer
       const logoFileInput = document.getElementById('logoFileInput');
       logoFileInput.addEventListener('change', handleLogoUpload);
 
@@ -2693,7 +2901,6 @@
         showToast("Reverted to H4 default logo");
       });
 
-      // Live Color Theme Binding
       const bindColorPair = (pickerId, textId, prop) => {
         const picker = document.getElementById(pickerId);
         const text = document.getElementById(textId);
@@ -2717,7 +2924,6 @@
       bindColorPair('pickerColorAccent', 'setColorAccent', 'accentColor');
       bindColorPair('pickerColorNavy', 'setColorNavy', 'headerColor');
 
-      // Live Appearance Selectors Sync (Font, Size, Weight, Color)
       const bindLiveSettingsField = (id, prop, isColor = false, colorPickerId = null) => {
         const el = document.getElementById(id);
         if (!el) return;
@@ -2786,7 +2992,6 @@
         showToast("Palette reset to H4 defaults");
       });
 
-      // History Search
       document.getElementById('historySearchInput').addEventListener('input', (e) => {
         renderHistory(e.target.value);
       });
@@ -2798,9 +3003,6 @@
       });
     }
 
-    /* ==========================================================================
-       9. MOBILE KEYBOARD & NEXT BUTTON NAVIGATION
-       ========================================================================== */
     function setupMobileNavigation() {
       document.getElementById('invoiceForm').addEventListener('keydown', (e) => {
         if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA' && e.target.type !== 'button') {
@@ -2826,9 +3028,6 @@
       });
     }
 
-    /* ==========================================================================
-       10. LOGO OPTIMIZER & IMAGE HANDLER
-       ========================================================================== */
     function handleLogoUpload(e) {
       const file = e.target.files[0];
       if (!file) return;
@@ -2881,9 +3080,6 @@
       reader.readAsDataURL(file);
     }
 
-    /* ==========================================================================
-       11. NAVIGATION TAB SWITCHING
-       ========================================================================== */
     function switchTab(tabId) {
       state.activeTab = tabId;
       document.querySelectorAll('.nav-tab-btn').forEach(btn => {
@@ -2908,9 +3104,6 @@
       }
     }
 
-    /* ==========================================================================
-       12. EDITOR MANAGEMENT & ROW RENDERING
-       ========================================================================== */
     function loadInvoiceIntoEditor(inv) {
       document.getElementById('invNumber').value = inv.invoiceNumber || generateNextInvoiceNumber();
       document.getElementById('invDate').value = inv.invoiceDate || '';
@@ -2972,6 +3165,9 @@
 
       tr.innerHTML = `
         <td class="td-num"></td>
+        <td class="td-action">
+          <button type="button" class="btn btn-sm btn-danger btn-item-del" title="Delete Line Item">✕</button>
+        </td>
         <td class="td-product">
           <select class="input-control item-product-select" style="margin-bottom: 4px;" enterkeyhint="next">
             ${STANDARD_PRODUCTS.map(p => `<option value="${p}" ${itemData.product === p ? 'selected' : ''}>${p}</option>`).join('')}
@@ -2993,9 +3189,6 @@
         <td class="td-taxable item-cell-taxable">₹0.00</td>
         <td class="td-tax item-cell-tax">₹0.00</td>
         <td class="td-amount item-cell-amount">₹0.00</td>
-        <td class="td-action">
-          <button type="button" class="btn btn-sm btn-danger btn-item-del" title="Delete Line Item">✕</button>
-        </td>
       `;
 
       tbody.appendChild(tr);
@@ -3089,9 +3282,6 @@
       return items;
     }
 
-    /* ==========================================================================
-       13. REAL-TIME RECALCULATION & TOTALS DISPLAY
-       ========================================================================== */
     function triggerRecalculate() {
       updateRowNumbers();
 
@@ -3113,7 +3303,6 @@
 
       document.getElementById('sumSubtotal').textContent = formatCurrency(totals.subtotal);
 
-      // DISCOUNT ROW: Completely hidden when OFF or totalDiscount <= 0, green text (#16A34A)
       const rowDiscount = document.getElementById('rowDiscount');
       if (state.currentInvoice.discountEnabled && totals.discountTotal > 0) {
         rowDiscount.style.display = 'flex';
@@ -3153,9 +3342,6 @@
       refreshOpenPreview();
     }
 
-    /* ==========================================================================
-       14. VALIDATION & SAVE RECORD
-       ========================================================================== */
     function validateInvoice(inv) {
       if (!inv.customerName || !inv.customerName.trim()) {
         alert("Please enter Customer / Company Name.");
@@ -3272,15 +3458,11 @@
       renderHistory();
     }
 
-    /* ==========================================================================
-       15. A4 INVOICE RENDERING TEMPLATE (PREVIEW & PRINT)
-       Single Source of Truth: XSS-safe via escapeHTML()
-       ========================================================================== */
+    /* A4 HTML Template */
     function invoiceHTML(inv) {
       const computed = computeTotals(inv);
       const s = state.settings;
 
-      // Logo rendering (Custom uploaded or fallback SVG)
       let logoMarkup = DEFAULT_H4_LOGO_SVG;
       const logoToUse = inv.sellerLogoUrl || s.logoUrl;
       if (logoToUse && logoToUse.trim()) {
@@ -3302,12 +3484,10 @@
         inv.bankName || inv.accountName || inv.accountNumber || inv.ifscCode || inv.branch || inv.upiId
       );
 
-      // Discount column presence logic
       const showDiscountCol = inv.discountEnabled && computed.discountTotal > 0;
 
       return `
         <div class="a4-sheet" id="renderedInvoiceA4" style="font-family: ${s.invoiceFontFamily || 'Inter, sans-serif'}; font-size: ${s.invoiceFontSize || '9pt'};">
-          <!-- TOP HEADER -->
           <div>
             <div class="inv-header">
               <div class="inv-seller">
@@ -3355,7 +3535,7 @@
               </div>
             </div>
 
-            <!-- BILL TO CARD -->
+            <!-- Customer Card -->
             <div class="inv-customer-card">
               <div class="inv-bill-to-title">BILL TO</div>
               ${inv.coEnabled && inv.coName ? `
@@ -3376,7 +3556,7 @@
               </div>
             </div>
 
-            <!-- PRODUCT LINE ITEMS TABLE (NO HSN/SAC) -->
+            <!-- Items Table -->
             <table class="inv-table">
               <thead>
                 <tr>
@@ -3414,10 +3594,9 @@
               </tbody>
             </table>
 
-            <!-- SUMMARY & TOTALS -->
+            <!-- Summary & Totals -->
             <div class="inv-summary-section">
               <div class="inv-notes-column">
-                <!-- Amount in Words with Custom Styling -->
                 <div class="inv-words-block">
                   <div style="font-weight:700; color:var(--h4-navy); margin-bottom:2px; font-size:7.5pt;">Amount Chargeable (in words):</div>
                   <div style="
@@ -3428,7 +3607,6 @@
                   ">${amountInWords(computed.grand)}</div>
                 </div>
 
-                <!-- Dedicated Bank Details -->
                 ${hasBankData ? `
                   <div class="inv-bank-card">
                     <strong>Bank &amp; Payment Details:</strong>
@@ -3443,7 +3621,7 @@
                   </div>
                 ` : ''}
 
-                <!-- GREETING MESSAGE (No legal/court terms paragraph) -->
+                <!-- Clean Greeting Banner -->
                 <div class="inv-greeting-box" style="
                   font-family: ${s.greetingFont !== 'inherit' ? s.greetingFont : 'inherit'};
                   font-size: ${s.greetingSize || '9pt'};
@@ -3498,7 +3676,7 @@
             </div>
           </div>
 
-          <!-- FOOTER / SIGNATURES -->
+          <!-- Signatures -->
           <div class="inv-footer-signatures">
             <div style="font-size:7.2pt; color:#6B7280; max-width:55%;">
               <p>Certified that the particulars given above are true and correct.</p>
@@ -3514,9 +3692,6 @@
       `;
     }
 
-    /* ==========================================================================
-       16. PREVIEW MODAL, ZOOM & PRINT
-       ========================================================================== */
     function openPreviewModal() {
       const record = buildInvoiceRecord();
       const modal = document.getElementById('previewModal');
@@ -3558,9 +3733,6 @@
       window.print();
     }
 
-    /* ==========================================================================
-       17. WHATSAPP SHARING
-       ========================================================================== */
     function shareInvoiceWhatsApp(inv) {
       const computed = computeTotals(inv);
       const cleanPhone = (inv.customerMobile || '').replace(/\D/g, '');
@@ -3613,9 +3785,6 @@
       window.open(waUrl, '_blank');
     }
 
-    /* ==========================================================================
-       18. INVOICE HISTORY TABLE & ACTIONS
-       ========================================================================== */
     function renderHistory(searchQuery = '') {
       const tbody = document.getElementById('historyTableBody');
       tbody.innerHTML = '';
@@ -3728,9 +3897,6 @@
       if (badge) badge.textContent = state.invoices.length;
     }
 
-    /* ==========================================================================
-       19. SETTINGS MANAGEMENT
-       ========================================================================== */
     function renderSettings() {
       const s = state.settings;
 
@@ -3759,7 +3925,6 @@
 
       document.getElementById('setInvoicePrefix').value = s.invoicePrefix || 'INV-';
 
-      // Typography fields
       document.getElementById('setFontFamily').value = s.invoiceFontFamily || 'Inter, sans-serif';
       document.getElementById('setFontSize').value = s.invoiceFontSize || '9pt';
 
@@ -3912,7 +4077,6 @@
       }, 2800);
     }
 
-    // Launch application
     document.addEventListener('DOMContentLoaded', initUI);
   </script>
 </body>
