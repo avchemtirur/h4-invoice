@@ -4,9 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <title>H4 Direct Invoice — AV CHEM Chemical &amp; Manufacturing</title>
+  
+  <!-- Web & Offline Safe Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
   <style>
     /* ==========================================================================
-       H4 DIRECT INVOICE — DESIGN SYSTEM & TOKENS
+       H4 DIRECT INVOICE — DESIGN SYSTEM & TOKENS (MATERIAL 3 INSPIRED)
        ========================================================================== */
     :root {
       --h4-primary: #A8238B;
@@ -23,19 +29,23 @@
       --h4-border-focus: #A8238B;
       --h4-danger: #EF4444;
       --h4-danger-light: #FEE2E2;
-      --h4-success: #10B981;
-      --h4-success-light: #D1FAE5;
+      --h4-success: #16A34A;
+      --h4-success-light: #DCFCE7;
       --h4-warning: #F59E0B;
       --h4-warning-light: #FEF3C7;
       --h4-radius-sm: 6px;
-      --h4-radius: 8px;
-      --h4-radius-lg: 12px;
-      --h4-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-      --h4-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --h4-radius: 10px;
+      --h4-radius-lg: 14px;
+      --h4-shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.06);
+      --h4-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
       --h4-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
       --h4-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      --touch-target: 44px;
       --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+      /* Mobile Input Touch Metrics (Requested: 46–50px height, 15–16px text, 13–14px labels) */
+      --input-height: 48px;
+      --input-font-size: 15.5px;
+      --label-font-size: 13.5px;
     }
 
     * {
@@ -83,8 +93,8 @@
     }
 
     .brand-logo-badge {
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
       background: #FFFFFF;
       border-radius: var(--h4-radius-sm);
       display: flex;
@@ -103,7 +113,7 @@
     }
 
     .brand-titles h1 {
-      font-size: 1.15rem;
+      font-size: 1.18rem;
       font-weight: 700;
       letter-spacing: -0.01em;
       line-height: 1.2;
@@ -111,7 +121,7 @@
     }
 
     .brand-titles p {
-      font-size: 0.75rem;
+      font-size: 0.78rem;
       color: var(--h4-accent);
       font-weight: 600;
       text-transform: uppercase;
@@ -121,7 +131,7 @@
     .nav-tabs {
       display: flex;
       gap: 6px;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.12);
       padding: 4px;
       border-radius: var(--h4-radius);
       overflow-x: auto;
@@ -129,12 +139,12 @@
     }
 
     .nav-tab-btn {
-      min-height: var(--touch-target);
+      min-height: var(--input-height);
       padding: 0 16px;
       background: transparent;
       border: none;
       color: #E2E8F0;
-      font-size: 0.875rem;
+      font-size: 0.92rem;
       font-weight: 600;
       border-radius: var(--h4-radius-sm);
       cursor: pointer;
@@ -146,22 +156,22 @@
     }
 
     .nav-tab-btn:hover {
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.16);
       color: #FFFFFF;
     }
 
     .nav-tab-btn.active {
       background: var(--h4-primary);
       color: #FFFFFF;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.22);
     }
 
     .badge-count {
       background: var(--h4-accent);
       color: var(--h4-navy);
-      font-size: 0.7rem;
-      font-weight: 700;
-      padding: 2px 6px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 2px 7px;
       border-radius: 12px;
       min-width: 18px;
       text-align: center;
@@ -172,8 +182,8 @@
        ========================================================================== */
     .app-main {
       max-width: 1200px;
-      margin: 16px auto 90px;
-      padding: 0 12px;
+      margin: 18px auto 95px;
+      padding: 0 14px;
     }
 
     .view-panel {
@@ -195,21 +205,21 @@
       border: 1px solid var(--h4-border);
       border-radius: var(--h4-radius-lg);
       box-shadow: var(--h4-shadow-sm);
-      padding: 16px;
-      margin-bottom: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
     }
 
     .card-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 14px;
-      padding-bottom: 10px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
       border-bottom: 1px solid var(--h4-border);
     }
 
     .card-title {
-      font-size: 0.95rem;
+      font-size: 1.05rem;
       font-weight: 700;
       color: var(--h4-navy);
       display: flex;
@@ -220,39 +230,40 @@
     .grid-2 {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
+      gap: 16px;
     }
 
     .grid-3 {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
+      gap: 16px;
     }
 
     .grid-4 {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
+      gap: 16px;
     }
 
     @media (max-width: 768px) {
       .grid-2, .grid-3, .grid-4 {
         grid-template-columns: 1fr;
-        gap: 10px;
+        gap: 14px;
       }
       .card {
-        padding: 14px;
+        padding: 16px;
+        margin-bottom: 16px;
       }
     }
 
     /* ==========================================================================
-       FORM CONTROLS & INPUTS (TOUCH OPTIMIZED)
+       LARGER MOBILE INPUT CONTROLS (HEIGHT: 48px, TEXT: 15.5px, LABELS: 13.5px)
        ========================================================================== */
     .form-group {
       display: flex;
       flex-direction: column;
-      gap: 4px;
-      margin-bottom: 8px;
+      gap: 6px;
+      margin-bottom: 10px;
     }
 
     .form-group.span-2 {
@@ -266,7 +277,7 @@
     }
 
     label {
-      font-size: 0.8rem;
+      font-size: var(--label-font-size);
       font-weight: 600;
       color: var(--h4-text);
       display: flex;
@@ -282,26 +293,28 @@
     label .sub-label {
       font-weight: 400;
       color: var(--h4-muted);
-      font-size: 0.72rem;
+      font-size: 0.75rem;
     }
 
     .input-control,
     select.input-control,
     textarea.input-control {
-      min-height: var(--touch-target);
-      padding: 8px 12px;
-      font-size: 0.9rem;
+      min-height: var(--input-height);
+      padding: 10px 14px;
+      font-size: var(--input-font-size);
       font-family: inherit;
       color: var(--h4-text);
       background-color: #FFFFFF;
       border: 1px solid var(--h4-border);
-      border-radius: var(--h4-radius-sm);
+      border-radius: var(--h4-radius);
       outline: none;
       transition: var(--h4-transition);
       width: 100%;
     }
 
-    .input-control:focus {
+    .input-control:focus,
+    select.input-control:focus,
+    textarea.input-control:focus {
       border-color: var(--h4-border-focus);
       box-shadow: 0 0 0 3px var(--h4-primary-light);
     }
@@ -315,23 +328,23 @@
 
     textarea.input-control {
       resize: vertical;
-      min-height: 72px;
+      min-height: 84px;
     }
 
     .switch-wrapper {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      min-height: var(--touch-target);
+      min-height: var(--input-height);
       background: #F8FAFC;
-      padding: 6px 12px;
-      border-radius: var(--h4-radius-sm);
+      padding: 8px 14px;
+      border-radius: var(--h4-radius);
       border: 1px solid var(--h4-border);
       cursor: pointer;
     }
 
     .switch-label {
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       font-weight: 600;
       color: var(--h4-text);
       cursor: pointer;
@@ -340,8 +353,8 @@
     .toggle-switch {
       position: relative;
       display: inline-block;
-      width: 44px;
-      height: 24px;
+      width: 48px;
+      height: 26px;
       flex-shrink: 0;
     }
 
@@ -360,14 +373,14 @@
       bottom: 0;
       background-color: #CBD5E1;
       transition: .2s;
-      border-radius: 24px;
+      border-radius: 26px;
     }
 
     .slider:before {
       position: absolute;
       content: "";
-      height: 18px;
-      width: 18px;
+      height: 20px;
+      width: 20px;
       left: 3px;
       bottom: 3px;
       background-color: white;
@@ -380,23 +393,23 @@
     }
 
     input:checked + .slider:before {
-      transform: translateX(20px);
+      transform: translateX(22px);
     }
 
     /* ==========================================================================
        BUTTONS
        ========================================================================== */
     .btn {
-      min-height: var(--touch-target);
-      padding: 0 14px;
-      border-radius: var(--h4-radius-sm);
-      font-size: 0.85rem;
+      min-height: var(--input-height);
+      padding: 0 18px;
+      border-radius: var(--h4-radius);
+      font-size: 0.92rem;
       font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 8px;
       border: 1px solid transparent;
       transition: var(--h4-transition);
       text-decoration: none;
@@ -460,9 +473,9 @@
     }
 
     .btn-sm {
-      min-height: 34px;
-      padding: 0 10px;
-      font-size: 0.78rem;
+      min-height: 40px;
+      padding: 0 12px;
+      font-size: 0.85rem;
     }
 
     /* ==========================================================================
@@ -472,7 +485,7 @@
       width: 100%;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       border: 1px solid var(--h4-border);
       border-radius: var(--h4-radius);
     }
@@ -480,24 +493,24 @@
     .items-table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 680px;
+      min-width: 720px;
       background: #FFFFFF;
     }
 
     .items-table th {
       background: #F8FAFC;
       color: var(--h4-muted);
-      font-size: 0.72rem;
+      font-size: 0.75rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      padding: 8px 6px;
+      padding: 10px 8px;
       text-align: left;
       border-bottom: 1px solid var(--h4-border);
     }
 
     .items-table td {
-      padding: 6px 4px;
+      padding: 8px 6px;
       border-bottom: 1px solid var(--h4-border);
       vertical-align: middle;
     }
@@ -507,40 +520,41 @@
     }
 
     .items-table .td-num {
-      width: 32px;
+      width: 36px;
       text-align: center;
       font-weight: 700;
       color: var(--h4-muted);
+      font-size: 0.88rem;
     }
 
     .items-table .td-product {
-      min-width: 200px;
+      min-width: 220px;
     }
 
     .items-table .td-qty {
-      width: 80px;
+      width: 88px;
     }
 
     .items-table .td-unit {
-      width: 85px;
+      width: 95px;
     }
 
     .items-table .td-rate {
-      width: 95px;
+      width: 105px;
     }
 
     .items-table .td-taxable,
     .items-table .td-tax,
     .items-table .td-amount {
-      width: 100px;
+      width: 110px;
       text-align: right;
       font-weight: 600;
-      font-size: 0.85rem;
-      padding-right: 8px;
+      font-size: 0.9rem;
+      padding-right: 10px;
     }
 
     .items-table .td-action {
-      width: 44px;
+      width: 48px;
       text-align: center;
     }
 
@@ -550,7 +564,7 @@
     .summary-grid {
       display: grid;
       grid-template-columns: 1.2fr 0.8fr;
-      gap: 16px;
+      gap: 18px;
     }
 
     @media (max-width: 900px) {
@@ -563,31 +577,31 @@
       background: #F8FAFC;
       border: 1px solid var(--h4-border);
       border-radius: var(--h4-radius);
-      padding: 14px;
+      padding: 16px;
     }
 
     .totals-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 5px 0;
-      font-size: 0.85rem;
+      padding: 6px 0;
+      font-size: 0.92rem;
       color: var(--h4-text);
     }
 
     .totals-row.grand-total {
-      margin-top: 8px;
-      padding-top: 10px;
+      margin-top: 10px;
+      padding-top: 12px;
       border-top: 2px solid var(--h4-navy);
-      font-size: 1.1rem;
+      font-size: 1.18rem;
       font-weight: 800;
       color: var(--h4-navy);
     }
 
     .gst-tag {
       display: inline-block;
-      padding: 3px 8px;
-      font-size: 0.72rem;
+      padding: 4px 10px;
+      font-size: 0.75rem;
       font-weight: 700;
       border-radius: var(--h4-radius-sm);
       text-transform: uppercase;
@@ -607,17 +621,17 @@
     .words-box {
       background: #FFFFFF;
       border: 1px dashed var(--h4-border);
-      padding: 10px 12px;
-      border-radius: var(--h4-radius-sm);
-      margin-top: 8px;
-      font-size: 0.8rem;
+      padding: 12px 14px;
+      border-radius: var(--h4-radius);
+      margin-top: 10px;
+      font-size: 0.85rem;
       color: var(--h4-muted);
     }
 
     .words-box strong {
       color: var(--h4-navy);
       display: block;
-      margin-bottom: 2px;
+      margin-bottom: 3px;
     }
 
     /* ==========================================================================
@@ -630,8 +644,8 @@
       right: 0;
       background: #FFFFFF;
       border-top: 1px solid var(--h4-border);
-      box-shadow: 0 -3px 10px rgba(0,0,0,0.06);
-      padding: 10px 14px;
+      box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
+      padding: 12px 16px;
       display: flex;
       justify-content: flex-end;
       align-items: center;
@@ -644,7 +658,7 @@
       margin: 0 auto;
       display: flex;
       justify-content: flex-end;
-      gap: 8px;
+      gap: 10px;
       flex-wrap: wrap;
     }
 
@@ -653,14 +667,14 @@
        ========================================================================== */
     .history-controls {
       display: flex;
-      gap: 10px;
-      margin-bottom: 12px;
+      gap: 12px;
+      margin-bottom: 14px;
       flex-wrap: wrap;
     }
 
     .search-input {
       flex: 1;
-      min-width: 220px;
+      min-width: 240px;
     }
 
     .history-table-wrapper {
@@ -679,17 +693,17 @@
     .history-table th {
       background: #F8FAFC;
       color: var(--h4-muted);
-      font-size: 0.72rem;
+      font-size: 0.75rem;
       font-weight: 700;
       text-transform: uppercase;
-      padding: 10px 12px;
+      padding: 12px 14px;
       border-bottom: 1px solid var(--h4-border);
     }
 
     .history-table td {
-      padding: 10px 12px;
+      padding: 12px 14px;
       border-bottom: 1px solid var(--h4-border);
-      font-size: 0.85rem;
+      font-size: 0.9rem;
     }
 
     .history-table tr:hover {
@@ -698,9 +712,9 @@
 
     .status-badge {
       display: inline-block;
-      padding: 2px 8px;
+      padding: 3px 9px;
       border-radius: 12px;
-      font-size: 0.72rem;
+      font-size: 0.75rem;
       font-weight: 700;
       text-transform: uppercase;
     }
@@ -730,12 +744,12 @@
       right: 0;
       bottom: 0;
       background: rgba(15, 23, 42, 0.75);
-      backdrop-filter: blur(2px);
+      backdrop-filter: blur(3px);
       display: none;
       align-items: center;
       justify-content: center;
       z-index: 1000;
-      padding: 12px;
+      padding: 14px;
     }
 
     .modal-overlay.active {
@@ -746,7 +760,7 @@
       background: #FFFFFF;
       border-radius: var(--h4-radius-lg);
       width: 100%;
-      max-width: 940px;
+      max-width: 960px;
       max-height: 95vh;
       display: flex;
       flex-direction: column;
@@ -755,59 +769,60 @@
     }
 
     .modal-header {
-      padding: 12px 16px;
+      padding: 14px 18px;
       background: var(--h4-navy);
       color: #FFFFFF;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
 
     .modal-header h2 {
-      font-size: 1rem;
+      font-size: 1.08rem;
       font-weight: 700;
     }
 
     .modal-zoom-bar {
       display: inline-flex;
       align-items: center;
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.16);
       border-radius: var(--h4-radius-sm);
-      padding: 2px 4px;
-      gap: 4px;
+      padding: 2px 6px;
+      gap: 6px;
     }
 
     .modal-zoom-bar button {
       background: transparent;
       border: none;
       color: #FFFFFF;
-      width: 28px;
-      height: 28px;
-      font-size: 1rem;
+      width: 32px;
+      height: 32px;
+      font-size: 1.15rem;
       font-weight: 700;
       cursor: pointer;
       border-radius: 4px;
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: var(--h4-transition);
     }
 
     .modal-zoom-bar button:hover {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.25);
     }
 
     .zoom-text {
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       font-weight: 700;
       color: var(--h4-accent);
-      min-width: 42px;
+      min-width: 44px;
       text-align: center;
     }
 
     .modal-body {
-      padding: 16px;
+      padding: 18px;
       overflow-y: auto;
       overflow-x: auto;
       background: #525659;
@@ -822,12 +837,12 @@
     }
 
     .modal-footer {
-      padding: 10px 16px;
+      padding: 12px 18px;
       background: #F8FAFC;
       border-top: 1px solid var(--h4-border);
       display: flex;
       justify-content: flex-end;
-      gap: 8px;
+      gap: 10px;
     }
 
     /* ==========================================================================
@@ -874,34 +889,28 @@
     .inv-seller-logo-row {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       margin-bottom: 6px;
     }
 
     .inv-seller-logo {
-      width: 56px;
-      height: 56px;
+      width: 60px;
+      height: 60px;
       object-fit: contain;
     }
 
     .inv-seller-brand {
-      font-size: 15pt;
-      font-weight: 800;
-      color: var(--h4-primary);
       line-height: 1.1;
     }
 
     .inv-seller-legal {
-      font-size: 9.5pt;
-      font-weight: 700;
-      color: var(--h4-navy);
-      margin-top: 2px;
+      margin-top: 3px;
     }
 
     .inv-seller-meta {
       font-size: 8pt;
       color: #4B5563;
-      margin-top: 3px;
+      margin-top: 4px;
       line-height: 1.35;
     }
 
@@ -911,7 +920,7 @@
     }
 
     .inv-title-badge {
-      font-size: 17pt;
+      font-size: 18pt;
       font-weight: 900;
       letter-spacing: 0.05em;
       color: var(--h4-navy);
@@ -925,7 +934,7 @@
       padding: 2px 8px;
       background: #F3F4F6;
       border: 1px solid #D1D5DB;
-      font-size: 7pt;
+      font-size: 7.2pt;
       font-weight: 800;
       border-radius: 4px;
       text-transform: uppercase;
@@ -971,7 +980,7 @@
     }
 
     .inv-cust-co {
-      font-size: 8pt;
+      font-size: 8.2pt;
       font-weight: 700;
       color: var(--h4-primary);
       margin-bottom: 2px;
@@ -1047,18 +1056,8 @@
     }
 
     .inv-totals-table td {
-      padding: 3px 5px;
+      padding: 3.5px 5px;
       font-size: 8pt;
-    }
-
-    .inv-totals-table tr.total-highlight td {
-      border-top: 1.5px solid var(--h4-navy);
-      border-bottom: 1.5px solid var(--h4-navy);
-      font-size: 10.5pt;
-      font-weight: 800;
-      color: var(--h4-navy);
-      background: #FEF3C7;
-      padding: 5px 6px;
     }
 
     .inv-words-block {
@@ -1066,7 +1065,6 @@
       border: 1px solid #E5E7EB;
       padding: 7px 9px;
       border-radius: 4px;
-      font-size: 7.8pt;
       margin-top: 6px;
     }
 
@@ -1092,12 +1090,22 @@
       margin-top: 3px;
     }
 
+    /* Greeting Banner (Replaces Terms & Conditions Completely) */
+    .inv-greeting-box {
+      margin-top: 10px;
+      padding: 8px 12px;
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 4px;
+      letter-spacing: 0.02em;
+    }
+
     .inv-footer-signatures {
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
       margin-top: auto;
-      padding-top: 16px;
+      padding-top: 14px;
       border-top: 1px solid #E5E7EB;
     }
 
@@ -1112,7 +1120,7 @@
     }
 
     .inv-sign-line {
-      height: 42px;
+      height: 40px;
       border-bottom: 1px solid #4B5563;
       margin-bottom: 4px;
     }
@@ -1183,12 +1191,6 @@
         print-color-adjust: exact;
       }
 
-      .inv-totals-table tr.total-highlight td {
-        background-color: #FEF3C7 !important;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-      }
-
       .inv-header {
         border-bottom-color: #A8238B !important;
         -webkit-print-color-adjust: exact;
@@ -1204,9 +1206,9 @@
       transform: translateX(-50%) translateY(100px);
       background: var(--h4-navy);
       color: #FFFFFF;
-      padding: 8px 18px;
+      padding: 10px 22px;
       border-radius: 30px;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       font-weight: 600;
       box-shadow: var(--h4-shadow-lg);
       z-index: 2000;
@@ -1214,7 +1216,7 @@
       transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
 
     .toast-box.show {
@@ -1302,8 +1304,8 @@
         <div class="card">
           <div class="card-header">
             <h2 class="card-title">👤 Bill To (Customer Details)</h2>
-            <div class="switch-wrapper" style="padding: 2px 8px;">
-              <span class="switch-label" style="font-size:0.75rem; margin-right:8px;">C/O / Contact Person</span>
+            <div class="switch-wrapper" style="padding: 4px 10px;">
+              <span class="switch-label" style="font-size:0.82rem; margin-right:8px;">C/O / Contact Person</span>
               <label class="toggle-switch">
                 <input type="checkbox" id="custCoToggle">
                 <span class="slider"></span>
@@ -1327,8 +1329,8 @@
           </div>
 
           <!-- C/O Section (Conditional) -->
-          <div id="custCoSection" style="display: none; background:#F8FAFC; border:1px dashed var(--h4-border); border-radius:var(--h4-radius-sm); padding:10px 12px; margin-bottom:12px;">
-            <div style="font-size:0.78rem; font-weight:700; color:var(--h4-primary); margin-bottom:6px;">C/O / Contact Person (Site Contact, Agent, Field Worker)</div>
+          <div id="custCoSection" style="display: none; background:#F8FAFC; border:1px dashed var(--h4-border); border-radius:var(--h4-radius); padding:12px 14px; margin-bottom:14px;">
+            <div style="font-size:0.85rem; font-weight:700; color:var(--h4-primary); margin-bottom:8px;">C/O / Contact Person (Site Contact, Agent, Field Worker)</div>
             <div class="grid-2">
               <div class="form-group">
                 <label for="custCoName">C/O Contact Person Name</label>
@@ -1409,9 +1411,9 @@
 
           <div class="grid-2">
             <!-- Discount Box -->
-            <div style="background:#F8FAFC; padding:12px; border-radius:var(--h4-radius-sm); border:1px solid var(--h4-border);">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <span style="font-weight:700; font-size:0.85rem;">Invoice Discount</span>
+            <div style="background:#F8FAFC; padding:14px; border-radius:var(--h4-radius); border:1px solid var(--h4-border);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <span style="font-weight:700; font-size:0.92rem;">Invoice Discount</span>
                 <label class="toggle-switch">
                   <input type="checkbox" id="discountToggle">
                   <span class="slider"></span>
@@ -1433,9 +1435,9 @@
             </div>
 
             <!-- GST Box (Automatic CGST + SGST for Kerala) -->
-            <div style="background:#F8FAFC; padding:12px; border-radius:var(--h4-radius-sm); border:1px solid var(--h4-border);">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <span style="font-weight:700; font-size:0.85rem;">GST (CGST + SGST)</span>
+            <div style="background:#F8FAFC; padding:14px; border-radius:var(--h4-radius); border:1px solid var(--h4-border);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <span style="font-weight:700; font-size:0.92rem;">GST (CGST + SGST)</span>
                 <label class="toggle-switch">
                   <input type="checkbox" id="gstToggle" checked>
                   <span class="slider"></span>
@@ -1474,7 +1476,7 @@
                 <strong>Amount Chargeable (in words):</strong>
                 <span id="editorAmountInWords">Indian Rupees Zero Only</span>
               </div>
-              <div class="form-group" style="margin-top: 10px;">
+              <div class="form-group" style="margin-top: 12px;">
                 <label for="invNotes">Invoice Notes / Remarks</label>
                 <textarea id="invNotes" class="input-control" rows="2" placeholder="Optional notes for customer..."></textarea>
               </div>
@@ -1485,7 +1487,8 @@
                 <span>Subtotal (Gross):</span>
                 <span id="sumSubtotal">₹0.00</span>
               </div>
-              <div class="totals-row" id="rowDiscount" style="display: none; color: var(--h4-danger);">
+              <!-- Discount row in GREEN (#16A34A) and hidden when OFF -->
+              <div class="totals-row" id="rowDiscount" style="display: none; color: #16A34A; font-weight: 700;">
                 <span>Discount Total:</span>
                 <span id="sumDiscount">-₹0.00</span>
               </div>
@@ -1498,7 +1501,7 @@
                 <!-- CGST + SGST Rows -->
               </div>
 
-              <div class="totals-row grand-total">
+              <div class="totals-row grand-total" id="sumGrandTotalRow">
                 <span>Grand Total:</span>
                 <span id="sumGrandTotal">₹0.00</span>
               </div>
@@ -1546,11 +1549,32 @@
     <section id="viewSettings" class="view-panel">
       <form id="settingsForm" onsubmit="event.preventDefault();">
         
-        <!-- Company Profile -->
+        <!-- CARD 1: Company Profile & Company Logo -->
         <div class="card">
           <div class="card-header">
             <h2 class="card-title">🏢 Company Details (Seller Profile)</h2>
             <button type="button" class="btn btn-sm btn-accent" id="btnSaveSettingsTop">Save Settings</button>
+          </div>
+
+          <!-- CLEAR COMPANY LOGO MANAGEMENT SECTION -->
+          <div class="form-group" style="background:#F8FAFC; padding:16px; border-radius:var(--h4-radius); border:1px solid var(--h4-border); margin-bottom:18px;">
+            <label style="font-size:0.95rem; font-weight:700; color:var(--h4-navy); margin-bottom:8px;">
+              Company Logo Management
+              <span class="sub-label">(PNG, JPG, JPEG, WebP, SVG)</span>
+            </label>
+            <div style="display:flex; align-items:center; gap:18px; margin-top:8px; flex-wrap:wrap;">
+              <div id="settingsLogoPreviewBox" style="width:78px; height:78px; border:2px solid #CBD5E1; border-radius:8px; display:flex; align-items:center; justify-content:center; background:#FFF; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,0.08);">
+                <!-- Logo preview -->
+              </div>
+              <div style="display:flex; flex-direction:column; gap:8px;">
+                <input type="file" id="logoFileInput" accept="image/png, image/jpeg, image/jpg, image/webp, image/svg+xml" style="display:none;">
+                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                  <button type="button" class="btn btn-sm btn-outline" onclick="document.getElementById('logoFileInput').click();">📁 Upload / Change Logo</button>
+                  <button type="button" class="btn btn-sm btn-danger" id="btnRemoveLogo">✕ Remove Custom Logo</button>
+                </div>
+                <div style="font-size:0.75rem; color:var(--h4-muted);">Logo is stored locally and automatically renders in Live Preview, Print, and PDF.</div>
+              </div>
+            </div>
           </div>
 
           <div class="grid-3">
@@ -1565,21 +1589,6 @@
             <div class="form-group">
               <label for="setGstin">Seller GSTIN</label>
               <input type="text" id="setGstin" class="input-control" maxlength="15" style="text-transform: uppercase;" enterkeyhint="next">
-            </div>
-          </div>
-
-          <!-- Company Logo -->
-          <div class="form-group" style="background:#F8FAFC; padding:12px; border-radius:var(--h4-radius-sm); border:1px solid var(--h4-border); margin: 8px 0 12px;">
-            <label>Company Logo (PNG, JPG, SVG, WebP)</label>
-            <div style="display:flex; align-items:center; gap:14px; margin-top:8px; flex-wrap:wrap;">
-              <div id="settingsLogoPreviewBox" style="width:68px; height:68px; border:1px solid #CBD5E1; border-radius:6px; display:flex; align-items:center; justify-content:center; background:#FFF; overflow:hidden;">
-                <!-- Logo preview -->
-              </div>
-              <div style="display:flex; flex-direction:column; gap:6px;">
-                <input type="file" id="logoFileInput" accept="image/png, image/jpeg, image/jpg, image/svg+xml, image/webp" style="display:none;">
-                <button type="button" class="btn btn-sm btn-outline" onclick="document.getElementById('logoFileInput').click();">📁 Upload / Replace Logo</button>
-                <button type="button" class="btn btn-sm btn-danger" id="btnRemoveLogo">Reset to H4 Default Logo</button>
-              </div>
             </div>
           </div>
 
@@ -1633,12 +1642,12 @@
           </div>
         </div>
 
-        <!-- Dedicated Bank Details Section -->
+        <!-- CARD 2: Dedicated Bank Details -->
         <div class="card">
           <div class="card-header">
             <h2 class="card-title">🏦 Bank Details</h2>
-            <div class="switch-wrapper" style="padding: 2px 8px;">
-              <span class="switch-label" style="font-size:0.75rem; margin-right:8px;">Show Bank Details on Invoice</span>
+            <div class="switch-wrapper" style="padding: 4px 10px;">
+              <span class="switch-label" style="font-size:0.82rem; margin-right:8px;">Show Bank Details on Invoice</span>
               <label class="toggle-switch">
                 <input type="checkbox" id="setShowBankDetails" checked>
                 <span class="slider"></span>
@@ -1668,58 +1677,301 @@
             </div>
             <div class="form-group">
               <label for="setUpiId">UPI ID</label>
-              <input type="text" id="setUpiId" class="input-control" placeholder="e.g. company@upi" enterkeyhint="next">
+              <input type="text" id="setUpiId" class="input-control" placeholder="e.g. avchem@upi" enterkeyhint="next">
             </div>
           </div>
         </div>
 
-        <!-- Invoicing Defaults & Terms -->
+        <!-- CARD 3: TYPOGRAPHY & INVOICE APPEARANCE CUSTOMIZATION -->
         <div class="card">
           <div class="card-header">
-            <h2 class="card-title">📝 Invoicing Defaults &amp; Terms</h2>
+            <h2 class="card-title">🎨 Invoice Typography &amp; Appearance</h2>
+          </div>
+
+          <!-- Section A: Primary Invoice Font -->
+          <div style="margin-bottom:18px; padding-bottom:14px; border-bottom:1px solid var(--h4-border);">
+            <div style="font-size:0.92rem; font-weight:700; color:var(--h4-navy); margin-bottom:8px;">Base Typography (Entire Invoice)</div>
+            <div class="grid-2">
+              <div class="form-group">
+                <label for="setFontFamily">Font Family</label>
+                <select id="setFontFamily" class="input-control">
+                  <option value="Inter, sans-serif">Inter (Modern Corporate)</option>
+                  <option value="Poppins, sans-serif">Poppins (Clean &amp; Stylish)</option>
+                  <option value="Roboto, sans-serif">Roboto (Structured &amp; Precise)</option>
+                  <option value="Arial, sans-serif">Arial (Standard Clean)</option>
+                  <option value="Georgia, serif">Georgia (Classic Executive)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="setFontSize">Base Body Size</label>
+                <select id="setFontSize" class="input-control">
+                  <option value="8.5pt">8.5pt (Compact)</option>
+                  <option value="9pt" selected>9pt (Recommended A4)</option>
+                  <option value="9.5pt">9.5pt (Spacious)</option>
+                  <option value="10pt">10pt (Large)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section B: Brand Name Customization -->
+          <div style="margin-bottom:18px; padding-bottom:14px; border-bottom:1px solid var(--h4-border);">
+            <div style="font-size:0.92rem; font-weight:700; color:var(--h4-navy); margin-bottom:8px;">Brand Name Styling</div>
+            <div class="grid-4">
+              <div class="form-group">
+                <label for="setBrandFont">Font</label>
+                <select id="setBrandFont" class="input-control">
+                  <option value="inherit">Inherit Base</option>
+                  <option value="Inter, sans-serif">Inter</option>
+                  <option value="Poppins, sans-serif">Poppins</option>
+                  <option value="Roboto, sans-serif">Roboto</option>
+                  <option value="Arial, sans-serif">Arial</option>
+                  <option value="Georgia, serif">Georgia</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="setBrandSize">Font Size</label>
+                <select id="setBrandSize" class="input-control">
+                  <option value="13pt">13pt</option>
+                  <option value="15pt" selected>15pt</option>
+                  <option value="17pt">17pt</option>
+                  <option value="19pt">19pt</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="setBrandWeight">Font Weight</label>
+                <select id="setBrandWeight" class="input-control">
+                  <option value="600">600 (Semi Bold)</option>
+                  <option value="700">700 (Bold)</option>
+                  <option value="800" selected>800 (Extra Bold)</option>
+                  <option value="900">900 (Black)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="setBrandColor">Text Color</label>
+                <div style="display:flex; gap:6px;">
+                  <input type="color" id="pickerBrandColor" value="#A8238B" style="height:var(--input-height); width:46px; padding:0; border:none; border-radius:6px; cursor:pointer;">
+                  <input type="text" id="setBrandColor" class="input-control" value="#A8238B">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section C: Company Name Customization -->
+          <div style="margin-bottom:18px; padding-bottom:14px; border-bottom:1px solid var(--h4-border);">
+            <div style="font-size:0.92rem; font-weight:700; color:var(--h4-navy); margin-bottom:8px;">Company / Legal Name Styling</div>
+            <div class="grid-4">
+              <div class="form-group">
+                <label for="setCompanyFont">Font</label>
+                <select id="setCompanyFont" class="input-control">
+                  <option value="inherit">Inherit Base</option>
+                  <option value="Inter, sans-serif">Inter</option>
+                  <option value="Poppins, sans-serif">Poppins</option>
+                  <option value="Roboto, sans-serif">Roboto</option>
+                  <option value="Arial, sans-serif">Arial</option>
+                  <option value="Georgia, serif">Georgia</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="setCompanySize">Font Size</label>
+                <select id="setCompanySize" class="input-control">
+                  <option value="8.5pt">8.5pt</option>
+                  <option value="9.5pt" selected>9.5pt</option>
+                  <option value="10.5pt">10.5pt</option>
+                  <option value="12pt">12pt</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="setCompanyWeight">Font Weight</label>
+                <select id="setCompanyWeight" class="input-control">
+                  <option value="400">400 (Regular)</option>
+                  <option value="600">600 (Semi Bold)</option>
+                  <option value="700" selected>700 (Bold)</option>
+                  <option value="800">800 (Extra Bold)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="setCompanyColor">Text Color</label>
+                <div style="display:flex; gap:6px;">
+                  <input type="color" id="pickerCompanyColor" value="#172554" style="height:var(--input-height); width:46px; padding:0; border:none; border-radius:6px; cursor:pointer;">
+                  <input type="text" id="setCompanyColor" class="input-control" value="#172554">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section D: Grand Total Styling -->
+          <div style="margin-bottom:18px; padding-bottom:14px; border-bottom:1px solid var(--h4-border);">
+            <div style="font-size:0.92rem; font-weight:700; color:var(--h4-navy); margin-bottom:8px;">Grand Total Styling</div>
+            <div class="grid-4">
+              <div class="form-group">
+                <label for="setTotalFont">Font</label>
+                <select id="setTotalFont" class="input-control">
+                  <option value="inherit">Inherit Base</option>
+                  <option value="Inter, sans-serif">Inter</option>
+                  <option value="Poppins, sans-serif">Poppins</option>
+                  <option value="Roboto, sans-serif">Roboto</option>
+                  <option value="Arial, sans-serif">Arial</option>
+                  <option value="Georgia, serif">Georgia</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="setTotalSize">Font Size</label>
+                <select id="setTotalSize" class="input-control">
+                  <option value="10pt">10pt</option>
+                  <option value="11pt" selected>11pt</option>
+                  <option value="12pt">12pt</option>
+                  <option value="13pt">13pt</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="setTotalColor">Text Color</label>
+                <div style="display:flex; gap:6px;">
+                  <input type="color" id="pickerTotalColor" value="#172554" style="height:var(--input-height); width:46px; padding:0; border:none; border-radius:6px; cursor:pointer;">
+                  <input type="text" id="setTotalColor" class="input-control" value="#172554">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="setTotalBgColor">Background Color</label>
+                <div style="display:flex; gap:6px;">
+                  <input type="color" id="pickerTotalBgColor" value="#FEF3C7" style="height:var(--input-height); width:46px; padding:0; border:none; border-radius:6px; cursor:pointer;">
+                  <input type="text" id="setTotalBgColor" class="input-control" value="#FEF3C7">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section E: Amount in Words Styling -->
+          <div style="margin-bottom:18px; padding-bottom:14px; border-bottom:1px solid var(--h4-border);">
+            <div style="font-size:0.92rem; font-weight:700; color:var(--h4-navy); margin-bottom:8px;">Amount in Words Styling</div>
+            <div class="grid-4">
+              <div class="form-group">
+                <label for="setWordsFont">Font</label>
+                <select id="setWordsFont" class="input-control">
+                  <option value="inherit">Inherit Base</option>
+                  <option value="Inter, sans-serif">Inter</option>
+                  <option value="Poppins, sans-serif">Poppins</option>
+                  <option value="Roboto, sans-serif">Roboto</option>
+                  <option value="Arial, sans-serif">Arial</option>
+                  <option value="Georgia, serif">Georgia</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="setWordsSize">Font Size</label>
+                <select id="setWordsSize" class="input-control">
+                  <option value="7.5pt">7.5pt</option>
+                  <option value="8pt" selected>8pt</option>
+                  <option value="8.5pt">8.5pt</option>
+                  <option value="9pt">9pt</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="setWordsWeight">Font Weight</label>
+                <select id="setWordsWeight" class="input-control">
+                  <option value="500">500 (Medium)</option>
+                  <option value="600" selected>600 (Semi Bold)</option>
+                  <option value="700">700 (Bold)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="setWordsColor">Text Color</label>
+                <div style="display:flex; gap:6px;">
+                  <input type="color" id="pickerWordsColor" value="#1F2937" style="height:var(--input-height); width:46px; padding:0; border:none; border-radius:6px; cursor:pointer;">
+                  <input type="text" id="setWordsColor" class="input-control" value="#1F2937">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section F: Greeting Message Customization (Replacing Terms & Conditions) -->
+          <div style="margin-bottom:18px; padding-bottom:14px; border-bottom:1px solid var(--h4-border);">
+            <div style="font-size:0.92rem; font-weight:700; color:var(--h4-navy); margin-bottom:8px;">Greeting Message (Displayed at Footer)</div>
+            <div class="form-group" style="margin-bottom:12px;">
+              <label for="setGreetingText">Greeting Text</label>
+              <input type="text" id="setGreetingText" class="input-control" value="Thank You for Choosing H4 Construction Solutions.">
+            </div>
+            <div class="grid-4">
+              <div class="form-group">
+                <label for="setGreetingFont">Font</label>
+                <select id="setGreetingFont" class="input-control">
+                  <option value="inherit">Inherit Base</option>
+                  <option value="Inter, sans-serif">Inter</option>
+                  <option value="Poppins, sans-serif">Poppins</option>
+                  <option value="Roboto, sans-serif">Roboto</option>
+                  <option value="Arial, sans-serif">Arial</option>
+                  <option value="Georgia, serif">Georgia</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="setGreetingSize">Size</label>
+                <select id="setGreetingSize" class="input-control">
+                  <option value="8pt">8pt</option>
+                  <option value="9pt" selected>9pt</option>
+                  <option value="10pt">10pt</option>
+                  <option value="11pt">11pt</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="setGreetingAlign">Alignment</label>
+                <select id="setGreetingAlign" class="input-control">
+                  <option value="center" selected>Center</option>
+                  <option value="left">Left</option>
+                  <option value="right">Right</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="setGreetingColor">Color</label>
+                <div style="display:flex; gap:6px;">
+                  <input type="color" id="pickerGreetingColor" value="#172554" style="height:var(--input-height); width:46px; padding:0; border:none; border-radius:6px; cursor:pointer;">
+                  <input type="text" id="setGreetingColor" class="input-control" value="#172554">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section G: Brand Color Palette -->
+          <div>
+            <div style="font-size:0.92rem; font-weight:700; color:var(--h4-navy); margin-bottom:8px;">H4 Brand Palette Controls</div>
+            <div class="grid-3">
+              <div class="form-group">
+                <label for="setColorPrimary">Primary Brand Color</label>
+                <div style="display:flex; gap:6px;">
+                  <input type="color" id="pickerColorPrimary" value="#A8238B" style="height:var(--input-height); width:46px; padding:0; border:none; border-radius:6px; cursor:pointer;">
+                  <input type="text" id="setColorPrimary" class="input-control" value="#A8238B">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="setColorAccent">Accent Color (Gold)</label>
+                <div style="display:flex; gap:6px;">
+                  <input type="color" id="pickerColorAccent" value="#F5BE00" style="height:var(--input-height); width:46px; padding:0; border:none; border-radius:6px; cursor:pointer;">
+                  <input type="text" id="setColorAccent" class="input-control" value="#F5BE00">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="setColorNavy">Header Navy Color</label>
+                <div style="display:flex; gap:6px;">
+                  <input type="color" id="pickerColorNavy" value="#172554" style="height:var(--input-height); width:46px; padding:0; border:none; border-radius:6px; cursor:pointer;">
+                  <input type="text" id="setColorNavy" class="input-control" value="#172554">
+                </div>
+              </div>
+            </div>
+            <div style="margin-top:10px;">
+              <button type="button" class="btn btn-sm btn-outline" id="btnResetColors">Reset to H4 Default Theme</button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- CARD 4: Invoicing Defaults -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">📝 Invoicing Defaults</h2>
           </div>
           <div class="grid-2">
             <div class="form-group">
               <label for="setInvoicePrefix">Invoice Number Prefix</label>
-              <input type="text" id="setInvoicePrefix" class="input-control" value="INV-" enterkeyhint="next">
+              <input type="text" id="setInvoicePrefix" class="input-control" value="INV-" enterkeyhint="done">
             </div>
-            <div class="form-group span-2">
-              <label for="setTerms">Terms &amp; Conditions (Only non-empty terms are displayed)</label>
-              <textarea id="setTerms" class="input-control" rows="3" enterkeyhint="done"></textarea>
-            </div>
-          </div>
-        </div>
-
-        <!-- Brand Appearance -->
-        <div class="card">
-          <div class="card-header">
-            <h2 class="card-title">🎨 Brand Appearance</h2>
-          </div>
-          <div class="grid-3">
-            <div class="form-group">
-              <label for="setColorPrimary">Primary Brand Color</label>
-              <div style="display:flex; gap:8px;">
-                <input type="color" id="pickerColorPrimary" value="#A8238B" style="height:44px; width:50px; padding:0; border:none; border-radius:4px; cursor:pointer;">
-                <input type="text" id="setColorPrimary" class="input-control" value="#A8238B">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="setColorAccent">Accent Color (Gold)</label>
-              <div style="display:flex; gap:8px;">
-                <input type="color" id="pickerColorAccent" value="#F5BE00" style="height:44px; width:50px; padding:0; border:none; border-radius:4px; cursor:pointer;">
-                <input type="text" id="setColorAccent" class="input-control" value="#F5BE00">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="setColorNavy">Header Navy Color</label>
-              <div style="display:flex; gap:8px;">
-                <input type="color" id="pickerColorNavy" value="#172554" style="height:44px; width:50px; padding:0; border:none; border-radius:4px; cursor:pointer;">
-                <input type="text" id="setColorNavy" class="input-control" value="#172554">
-              </div>
-            </div>
-          </div>
-          <div style="margin-top:8px;">
-            <button type="button" class="btn btn-sm btn-outline" id="btnResetColors">Reset to H4 Default Palette</button>
           </div>
         </div>
 
@@ -1733,8 +1985,7 @@
 
   <!-- ==========================================================================
        STICKY ACTIONS BAR (EDITOR VIEW)
-       ========================================================================== */
-  ========================================================================== -->
+       ========================================================================== -->
   <footer class="sticky-actions-bar no-print" id="editorActionsBar">
     <div class="actions-wrapper">
       <button type="button" class="btn btn-outline" id="btnNewDraft">🔄 New Draft</button>
@@ -1850,7 +2101,7 @@
         invoicePrefix: "INV-",
         nextNumber: 1,
 
-        // Dedicated Bank Details (Editable & Optional)
+        // Bank Details
         showBankDetails: true,
         bankName: "State Bank of India",
         accountName: "AV CHEM Chemical & Manufacturing",
@@ -1859,10 +2110,40 @@
         branch: "Aluva Town",
         upiId: "avchem@sbi",
 
-        terms: "1. Goods once sold will not be taken back.\n2. Payment is due strictly within the specified period.\n3. All disputes are subject to local Ernakulam jurisdiction only.",
+        // Primary Palette
         primaryColor: "#A8238B",
         accentColor: "#F5BE00",
-        headerColor: "#172554"
+        headerColor: "#172554",
+
+        // Typography & Styling Customizations
+        invoiceFontFamily: "Inter, sans-serif",
+        invoiceFontSize: "9pt",
+
+        brandFont: "inherit",
+        brandSize: "15pt",
+        brandWeight: "800",
+        brandColor: "#A8238B",
+
+        companyFont: "inherit",
+        companySize: "9.5pt",
+        companyWeight: "700",
+        companyColor: "#172554",
+
+        totalFont: "inherit",
+        totalSize: "11pt",
+        totalColor: "#172554",
+        totalBgColor: "#FEF3C7",
+
+        wordsFont: "inherit",
+        wordsSize: "8pt",
+        wordsWeight: "600",
+        wordsColor: "#1F2937",
+
+        greetingText: "Thank You for Choosing H4 Construction Solutions.",
+        greetingFont: "inherit",
+        greetingSize: "9pt",
+        greetingAlign: "center",
+        greetingColor: "#172554"
       };
     }
 
@@ -1878,14 +2159,11 @@
         const raw = localStorage.getItem(STORAGE_KEY);
         if (raw) {
           const parsed = JSON.parse(raw);
-          // Preserve existing settings and seamlessly backfill new fields
           state.settings = { ...defaultSettings(), ...(parsed.settings || {}) };
 
-          // Kerala state defaults
           if (!state.settings.state) state.settings.state = "Kerala";
           if (!state.settings.stateCode) state.settings.stateCode = "32";
 
-          // Safely migrate existing invoices
           const loadedInvoices = Array.isArray(parsed.invoices) ? parsed.invoices : [];
           state.invoices = loadedInvoices.map(inv => {
             return {
@@ -2019,7 +2297,6 @@
       const discountType = inv.discountType || 'percent';
       const discountValue = Math.max(0, Number(inv.discountValue) || 0);
 
-      // Determine effective GST Rate
       let effectiveGstRate = 0;
       if (gstEnabled) {
         if (inv.gstRateType === 'custom') {
@@ -2030,7 +2307,6 @@
         }
       }
 
-      // Step 1: Line Item Gross Calculations
       let calculatedItems = items.map((it, idx) => {
         const qty = Math.max(0, Number(it.qty) || 0);
         const rate = Math.max(0, Number(it.rate) || 0);
@@ -2053,7 +2329,6 @@
 
       const subtotal = round2(calculatedItems.reduce((acc, it) => acc + it.gross, 0));
 
-      // Step 2: Proportional Discount Allocation across line items
       let totalDiscount = 0;
       if (discountEnabled && subtotal > 0) {
         if (discountType === 'percent') {
@@ -2068,7 +2343,6 @@
         let allocatedSoFar = 0;
         for (let i = 0; i < calculatedItems.length; i++) {
           if (i === calculatedItems.length - 1) {
-            // Final line absorbs rounding difference
             calculatedItems[i].discount = round2(totalDiscount - allocatedSoFar);
           } else {
             const lineShare = round2((calculatedItems[i].gross / subtotal) * totalDiscount);
@@ -2084,7 +2358,6 @@
         });
       }
 
-      // Step 3: Compute Taxes (Kerala CGST + SGST automatic split)
       let totalTax = 0;
       calculatedItems.forEach(it => {
         if (gstEnabled && effectiveGstRate > 0) {
@@ -2099,7 +2372,6 @@
       const taxableTotal = round2(calculatedItems.reduce((acc, it) => acc + it.taxable, 0));
       const grandTotal = round2(taxableTotal + totalTax);
 
-      // Reconcile odd-paisa CGST + SGST split so: CGST + SGST === Total GST exactly
       let cgst = 0;
       let sgst = 0;
       let cgstRate = 0;
@@ -2110,7 +2382,7 @@
         sgstRate = round2(effectiveGstRate / 2);
 
         cgst = round2(totalTax / 2);
-        sgst = round2(totalTax - cgst); // Reconciles odd paisa (e.g. ₹101.01 -> 50.51 & 50.50)
+        sgst = round2(totalTax - cgst);
       }
 
       return {
@@ -2165,7 +2437,6 @@
         dueDate: dueDateObj.toISOString().slice(0, 10),
         paymentStatus: 'UNPAID',
 
-        // Seller Snapshot
         sellerLegalName: state.settings.legalName,
         sellerBrandName: state.settings.brandName,
         sellerLogoUrl: state.settings.logoUrl,
@@ -2181,7 +2452,6 @@
         sellerWebsite: state.settings.website,
         sellerGstin: state.settings.gstin,
 
-        // Bank Snapshot
         showBankDetails: state.settings.showBankDetails,
         bankName: state.settings.bankName,
         accountName: state.settings.accountName,
@@ -2190,7 +2460,6 @@
         branch: state.settings.branch,
         upiId: state.settings.upiId,
 
-        // Customer Details
         customerName: '',
         customerMobile: '',
         customerAltMobile: '',
@@ -2204,7 +2473,6 @@
         customerState: 'Kerala',
         customerPinCode: '',
 
-        // Taxes & Discount
         gstEnabled: true,
         gstRateType: '18',
         gstRate: 18,
@@ -2213,7 +2481,6 @@
         discountType: 'percent',
         discountValue: 0,
 
-        // Initial Line Items
         items: [
           { id: 'item_1', product: 'H4 Tile Adhesive', customProduct: '', qty: 20, unit: 'Bag', rate: 450 },
           { id: 'item_2', product: 'H4 Waterproofing', customProduct: '', qty: 10, unit: 'Bag', rate: 650 },
@@ -2221,7 +2488,6 @@
         ],
 
         notes: '',
-        terms: state.settings.terms,
         createdAt: new Date().toISOString()
       };
     }
@@ -2232,7 +2498,6 @@
     function initUI() {
       loadState();
 
-      // Initialize with new draft
       state.currentInvoice = newDraft();
       loadInvoiceIntoEditor(state.currentInvoice);
 
@@ -2243,7 +2508,6 @@
     }
 
     function bindEvents() {
-      // Navigation Tabs
       document.querySelectorAll('.nav-tab-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           switchTab(btn.getAttribute('data-tab'));
@@ -2289,7 +2553,7 @@
         triggerRecalculate();
       });
 
-      // Custom GST Input (Supports decimals like 7.5%, 12.5%)
+      // Custom GST Input
       const customGstVal = document.getElementById('customGstVal');
       customGstVal.addEventListener('input', (e) => {
         let clean = e.target.value.replace(/[^0-9.]/g, '');
@@ -2349,6 +2613,7 @@
         if (el) {
           el.addEventListener('input', (e) => {
             state.currentInvoice[key] = e.target.value;
+            refreshOpenPreview();
           });
         }
       };
@@ -2382,7 +2647,7 @@
         }
       });
 
-      // Modal Zoom Controls (75%, 85%, 100%, 110%, 125%)
+      // Modal Zoom Controls
       document.getElementById('btnZoomOut').addEventListener('click', () => {
         if (currentZoomIndex > 0) {
           currentZoomIndex--;
@@ -2416,17 +2681,19 @@
       document.getElementById('btnSaveSettingsTop').addEventListener('click', saveSettingsFromForm);
       document.getElementById('btnSaveSettingsBottom').addEventListener('click', saveSettingsFromForm);
 
-      // Logo Upload & Optimizer (Canvas-based compression to protect LocalStorage)
+      // Logo Upload & Optimizer
       const logoFileInput = document.getElementById('logoFileInput');
       logoFileInput.addEventListener('change', handleLogoUpload);
 
       document.getElementById('btnRemoveLogo').addEventListener('click', () => {
         state.settings.logoUrl = "";
         renderSettingsLogoPreview();
+        saveState();
+        refreshOpenPreview();
         showToast("Reverted to H4 default logo");
       });
 
-      // Color Theme Sync
+      // Live Color Theme Binding
       const bindColorPair = (pickerId, textId, prop) => {
         const picker = document.getElementById(pickerId);
         const text = document.getElementById(textId);
@@ -2434,12 +2701,14 @@
           text.value = e.target.value.toUpperCase();
           state.settings[prop] = text.value;
           applyAppearance();
+          refreshOpenPreview();
         });
         text.addEventListener('input', (e) => {
           if (/^#[0-9A-Fa-f]{6}$/.test(e.target.value)) {
             picker.value = e.target.value;
             state.settings[prop] = e.target.value;
             applyAppearance();
+            refreshOpenPreview();
           }
         });
       };
@@ -2447,6 +2716,60 @@
       bindColorPair('pickerColorPrimary', 'setColorPrimary', 'primaryColor');
       bindColorPair('pickerColorAccent', 'setColorAccent', 'accentColor');
       bindColorPair('pickerColorNavy', 'setColorNavy', 'headerColor');
+
+      // Live Appearance Selectors Sync (Font, Size, Weight, Color)
+      const bindLiveSettingsField = (id, prop, isColor = false, colorPickerId = null) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener(isColor ? 'input' : 'change', (e) => {
+          state.settings[prop] = e.target.value;
+          if (colorPickerId && /^#[0-9A-Fa-f]{6}$/.test(e.target.value)) {
+            document.getElementById(colorPickerId).value = e.target.value;
+          }
+          applyAppearance();
+          refreshOpenPreview();
+        });
+        if (colorPickerId) {
+          const picker = document.getElementById(colorPickerId);
+          if (picker) {
+            picker.addEventListener('input', (e) => {
+              el.value = e.target.value.toUpperCase();
+              state.settings[prop] = el.value;
+              applyAppearance();
+              refreshOpenPreview();
+            });
+          }
+        }
+      };
+
+      bindLiveSettingsField('setFontFamily', 'invoiceFontFamily');
+      bindLiveSettingsField('setFontSize', 'invoiceFontSize');
+
+      bindLiveSettingsField('setBrandFont', 'brandFont');
+      bindLiveSettingsField('setBrandSize', 'brandSize');
+      bindLiveSettingsField('setBrandWeight', 'brandWeight');
+      bindLiveSettingsField('setBrandColor', 'brandColor', true, 'pickerBrandColor');
+
+      bindLiveSettingsField('setCompanyFont', 'companyFont');
+      bindLiveSettingsField('setCompanySize', 'companySize');
+      bindLiveSettingsField('setCompanyWeight', 'companyWeight');
+      bindLiveSettingsField('setCompanyColor', 'companyColor', true, 'pickerCompanyColor');
+
+      bindLiveSettingsField('setTotalFont', 'totalFont');
+      bindLiveSettingsField('setTotalSize', 'totalSize');
+      bindLiveSettingsField('setTotalColor', 'totalColor', true, 'pickerTotalColor');
+      bindLiveSettingsField('setTotalBgColor', 'totalBgColor', true, 'pickerTotalBgColor');
+
+      bindLiveSettingsField('setWordsFont', 'wordsFont');
+      bindLiveSettingsField('setWordsSize', 'wordsSize');
+      bindLiveSettingsField('setWordsWeight', 'wordsWeight');
+      bindLiveSettingsField('setWordsColor', 'wordsColor', true, 'pickerWordsColor');
+
+      bindLiveSettingsField('setGreetingText', 'greetingText', true);
+      bindLiveSettingsField('setGreetingFont', 'greetingFont');
+      bindLiveSettingsField('setGreetingSize', 'greetingSize');
+      bindLiveSettingsField('setGreetingAlign', 'greetingAlign');
+      bindLiveSettingsField('setGreetingColor', 'greetingColor', true, 'pickerGreetingColor');
 
       document.getElementById('btnResetColors').addEventListener('click', () => {
         state.settings.primaryColor = "#A8238B";
@@ -2459,6 +2782,7 @@
         document.getElementById('setColorNavy').value = "#172554";
         document.getElementById('pickerColorNavy').value = "#172554";
         applyAppearance();
+        refreshOpenPreview();
         showToast("Palette reset to H4 defaults");
       });
 
@@ -2478,7 +2802,6 @@
        9. MOBILE KEYBOARD & NEXT BUTTON NAVIGATION
        ========================================================================== */
     function setupMobileNavigation() {
-      // Enter key moves smoothly to next logical input without form submission
       document.getElementById('invoiceForm').addEventListener('keydown', (e) => {
         if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA' && e.target.type !== 'button') {
           e.preventDefault();
@@ -2494,7 +2817,6 @@
         }
       });
 
-      // Soft keyboard scroll assist
       window.addEventListener('focusin', (e) => {
         if (['INPUT', 'SELECT', 'TEXTAREA'].includes(e.target.tagName)) {
           setTimeout(() => {
@@ -2516,13 +2838,14 @@
         reader.onload = (evt) => {
           state.settings.logoUrl = evt.target.result;
           renderSettingsLogoPreview();
+          saveState();
+          refreshOpenPreview();
           showToast("SVG Logo uploaded successfully");
         };
         reader.readAsDataURL(file);
         return;
       }
 
-      // Downscale raster images to max 600px width/height to safeguard LocalStorage
       const reader = new FileReader();
       reader.onload = (evt) => {
         const img = new Image();
@@ -2549,7 +2872,9 @@
 
           state.settings.logoUrl = canvas.toDataURL('image/png', 0.88);
           renderSettingsLogoPreview();
-          showToast("Logo optimized and uploaded!");
+          saveState();
+          refreshOpenPreview();
+          showToast("Logo optimized and saved!");
         };
         img.src = evt.target.result;
       };
@@ -2627,7 +2952,6 @@
 
       document.getElementById('invNotes').value = inv.notes || '';
 
-      // Line Items Table Population
       const tbody = document.getElementById('itemsTableBody');
       tbody.innerHTML = '';
       if (Array.isArray(inv.items) && inv.items.length > 0) {
@@ -2777,7 +3101,6 @@
 
       const totals = computeTotals(state.currentInvoice);
 
-      // Update Line Item Table cells
       const rows = document.querySelectorAll('#itemsTableBody tr');
       rows.forEach((tr, i) => {
         const itemComputed = totals.items[i];
@@ -2788,11 +3111,11 @@
         }
       });
 
-      // Update Summary Card
       document.getElementById('sumSubtotal').textContent = formatCurrency(totals.subtotal);
 
+      // DISCOUNT ROW: Completely hidden when OFF or totalDiscount <= 0, green text (#16A34A)
       const rowDiscount = document.getElementById('rowDiscount');
-      if (totals.discountTotal > 0) {
+      if (state.currentInvoice.discountEnabled && totals.discountTotal > 0) {
         rowDiscount.style.display = 'flex';
         document.getElementById('sumDiscount').textContent = '-' + formatCurrency(totals.discountTotal);
       } else {
@@ -2801,7 +3124,6 @@
 
       document.getElementById('sumTaxable').textContent = formatCurrency(totals.taxable);
 
-      // GST Rows: Automatic CGST + SGST (Kerala)
       const gstContainer = document.getElementById('gstRowsContainer');
       gstContainer.innerHTML = '';
       const tag = document.getElementById('editorGstClassificationTag');
@@ -2827,6 +3149,8 @@
 
       document.getElementById('sumGrandTotal').textContent = formatCurrency(totals.grand);
       document.getElementById('editorAmountInWords').textContent = amountInWords(totals.grand);
+
+      refreshOpenPreview();
     }
 
     /* ==========================================================================
@@ -2875,7 +3199,6 @@
     }
 
     function buildInvoiceRecord() {
-      // Synchronize latest values
       state.currentInvoice.invoiceNumber = document.getElementById('invNumber').value;
       state.currentInvoice.invoiceDate = document.getElementById('invDate').value;
       state.currentInvoice.dueDate = document.getElementById('invDueDate').value;
@@ -2899,7 +3222,6 @@
       state.currentInvoice.items = readItemsFromEditor();
       state.currentInvoice.notes = document.getElementById('invNotes').value.trim();
 
-      // Snapshot seller & bank details
       state.currentInvoice.sellerLegalName = state.settings.legalName;
       state.currentInvoice.sellerBrandName = state.settings.brandName;
       state.currentInvoice.sellerLogoUrl = state.settings.logoUrl;
@@ -2922,8 +3244,6 @@
       state.currentInvoice.ifscCode = state.settings.ifscCode;
       state.currentInvoice.branch = state.settings.branch;
       state.currentInvoice.upiId = state.settings.upiId;
-
-      state.currentInvoice.terms = state.settings.terms;
 
       return JSON.parse(JSON.stringify(state.currentInvoice));
     }
@@ -2958,20 +3278,18 @@
        ========================================================================== */
     function invoiceHTML(inv) {
       const computed = computeTotals(inv);
+      const s = state.settings;
 
-      // Logo rendering
+      // Logo rendering (Custom uploaded or fallback SVG)
       let logoMarkup = DEFAULT_H4_LOGO_SVG;
-      if (inv.sellerLogoUrl && inv.sellerLogoUrl.trim()) {
-        logoMarkup = `<img src="${inv.sellerLogoUrl}" alt="Brand Logo" class="inv-seller-logo">`;
-      } else if (state.settings.logoUrl && state.settings.logoUrl.trim()) {
-        logoMarkup = `<img src="${state.settings.logoUrl}" alt="Brand Logo" class="inv-seller-logo">`;
+      const logoToUse = inv.sellerLogoUrl || s.logoUrl;
+      if (logoToUse && logoToUse.trim()) {
+        logoMarkup = `<img src="${logoToUse}" alt="Brand Logo" class="inv-seller-logo">`;
       }
 
-      // GST Title & Classification
       const invoiceTitle = inv.gstEnabled ? "TAX INVOICE" : "INVOICE";
       const gstTagText = inv.gstEnabled ? `INTRA-STATE (CGST + SGST)` : "GST NOT APPLICABLE";
 
-      // Non-empty Customer Address Line
       const custAddressParts = [
         inv.customerAddress,
         inv.customerCity,
@@ -2980,24 +3298,37 @@
         inv.customerPinCode ? `PIN: ${inv.customerPinCode}` : ''
       ].filter(p => p && String(p).trim().length > 0);
 
-      // Bank Details Section Check
       const hasBankData = inv.showBankDetails && (
         inv.bankName || inv.accountName || inv.accountNumber || inv.ifscCode || inv.branch || inv.upiId
       );
 
+      // Discount column presence logic
+      const showDiscountCol = inv.discountEnabled && computed.discountTotal > 0;
+
       return `
-        <div class="a4-sheet" id="renderedInvoiceA4">
+        <div class="a4-sheet" id="renderedInvoiceA4" style="font-family: ${s.invoiceFontFamily || 'Inter, sans-serif'}; font-size: ${s.invoiceFontSize || '9pt'};">
           <!-- TOP HEADER -->
           <div>
             <div class="inv-header">
               <div class="inv-seller">
                 <div class="inv-seller-logo-row">
-                  <div style="width:48px; height:48px; flex-shrink:0;">
+                  <div style="width:60px; height:60px; flex-shrink:0;">
                     ${logoMarkup}
                   </div>
                   <div>
-                    <div class="inv-seller-brand">${escapeHTML(inv.sellerBrandName || 'H4 Construction Solutions')}</div>
-                    <div class="inv-seller-legal">${escapeHTML(inv.sellerLegalName || 'AV CHEM Chemical & Manufacturing')}</div>
+                    <div class="inv-seller-brand" style="
+                      font-family: ${s.brandFont !== 'inherit' ? s.brandFont : 'inherit'};
+                      font-size: ${s.brandSize || '15pt'};
+                      font-weight: ${s.brandWeight || '800'};
+                      color: ${s.brandColor || 'var(--h4-primary)'};
+                    ">${escapeHTML(inv.sellerBrandName || 'H4 Construction Solutions')}</div>
+                    
+                    <div class="inv-seller-legal" style="
+                      font-family: ${s.companyFont !== 'inherit' ? s.companyFont : 'inherit'};
+                      font-size: ${s.companySize || '9.5pt'};
+                      font-weight: ${s.companyWeight || '700'};
+                      color: ${s.companyColor || 'var(--h4-navy)'};
+                    ">${escapeHTML(inv.sellerLegalName || 'AV CHEM Chemical & Manufacturing')}</div>
                   </div>
                 </div>
                 <div class="inv-seller-meta">
@@ -3054,7 +3385,7 @@
                   <th style="width: 48px;" class="text-center">Qty</th>
                   <th style="width: 52px;" class="text-center">Unit</th>
                   <th style="width: 72px;" class="text-right">Rate</th>
-                  ${inv.discountEnabled ? `<th style="width: 60px;" class="text-right">Disc</th>` : ''}
+                  ${showDiscountCol ? `<th style="width: 60px;" class="text-right">Disc</th>` : ''}
                   <th style="width: 78px;" class="text-right">Taxable</th>
                   ${inv.gstEnabled ? `
                     <th style="width: 46px;" class="text-center">GST</th>
@@ -3071,7 +3402,7 @@
                     <td class="text-center">${it.qty}</td>
                     <td class="text-center">${escapeHTML(it.unit)}</td>
                     <td class="text-right">₹${it.rate.toFixed(2)}</td>
-                    ${inv.discountEnabled ? `<td class="text-right">₹${it.discount.toFixed(2)}</td>` : ''}
+                    ${showDiscountCol ? `<td class="text-right" style="color:#16A34A; font-weight:600;">₹${it.discount.toFixed(2)}</td>` : ''}
                     <td class="text-right">₹${it.taxable.toFixed(2)}</td>
                     ${inv.gstEnabled ? `
                       <td class="text-center">${it.gstRate}%</td>
@@ -3086,9 +3417,15 @@
             <!-- SUMMARY & TOTALS -->
             <div class="inv-summary-section">
               <div class="inv-notes-column">
+                <!-- Amount in Words with Custom Styling -->
                 <div class="inv-words-block">
-                  <div style="font-weight:700; color:var(--h4-navy); margin-bottom:2px;">Amount Chargeable (in words):</div>
-                  <div style="font-weight:600; color:#374151;">${amountInWords(computed.grand)}</div>
+                  <div style="font-weight:700; color:var(--h4-navy); margin-bottom:2px; font-size:7.5pt;">Amount Chargeable (in words):</div>
+                  <div style="
+                    font-family: ${s.wordsFont !== 'inherit' ? s.wordsFont : 'inherit'};
+                    font-size: ${s.wordsSize || '8pt'};
+                    font-weight: ${s.wordsWeight || '600'};
+                    color: ${s.wordsColor || '#1F2937'};
+                  ">${amountInWords(computed.grand)}</div>
                 </div>
 
                 <!-- Dedicated Bank Details -->
@@ -3106,13 +3443,16 @@
                   </div>
                 ` : ''}
 
-                <!-- Terms & Conditions (Only non-empty) -->
-                ${inv.terms && inv.terms.trim() ? `
-                  <div style="margin-top:6px; font-size:7.2pt; color:#6B7280; white-space:pre-line;">
-                    <strong>Terms &amp; Conditions:</strong>
-                    ${escapeHTML(inv.terms.trim())}
-                  </div>
-                ` : ''}
+                <!-- GREETING MESSAGE (No legal/court terms paragraph) -->
+                <div class="inv-greeting-box" style="
+                  font-family: ${s.greetingFont !== 'inherit' ? s.greetingFont : 'inherit'};
+                  font-size: ${s.greetingSize || '9pt'};
+                  font-weight: 600;
+                  color: ${s.greetingColor || '#172554'};
+                  text-align: ${s.greetingAlign || 'center'};
+                ">
+                  ${escapeHTML(s.greetingText || "Thank You for Choosing H4 Construction Solutions.")}
+                </div>
               </div>
 
               <div class="inv-totals-column">
@@ -3121,10 +3461,10 @@
                     <td>Subtotal (Gross):</td>
                     <td class="text-right font-bold">${formatCurrency(computed.subtotal)}</td>
                   </tr>
-                  ${computed.discountTotal > 0 ? `
+                  ${showDiscountCol ? `
                     <tr>
-                      <td style="color:#DC2626;">Discount:</td>
-                      <td class="text-right font-bold" style="color:#DC2626;">-${formatCurrency(computed.discountTotal)}</td>
+                      <td style="color:#16A34A; font-weight:700;">Discount:</td>
+                      <td class="text-right font-bold" style="color:#16A34A;">-${formatCurrency(computed.discountTotal)}</td>
                     </tr>
                   ` : ''}
                   <tr>
@@ -3141,9 +3481,17 @@
                       <td class="text-right font-bold">${formatCurrency(computed.sgst)}</td>
                     </tr>
                   ` : ''}
-                  <tr class="total-highlight">
-                    <td>Grand Total:</td>
-                    <td class="text-right">${formatCurrency(computed.grand)}</td>
+                  <tr style="
+                    border-top: 1.5px solid var(--h4-navy);
+                    border-bottom: 1.5px solid var(--h4-navy);
+                    background-color: ${s.totalBgColor || '#FEF3C7'};
+                    color: ${s.totalColor || '#172554'};
+                    font-family: ${s.totalFont !== 'inherit' ? s.totalFont : 'inherit'};
+                    font-size: ${s.totalSize || '11pt'};
+                    font-weight: 800;
+                  ">
+                    <td style="padding: 5px 6px;">Grand Total:</td>
+                    <td class="text-right" style="padding: 5px 6px;">${formatCurrency(computed.grand)}</td>
                   </tr>
                 </table>
               </div>
@@ -3178,13 +3526,20 @@
       modal.classList.add('active');
     }
 
+    function refreshOpenPreview() {
+      const modal = document.getElementById('previewModal');
+      if (modal && modal.classList.contains('active')) {
+        const record = buildInvoiceRecord();
+        document.getElementById('previewA4Container').innerHTML = invoiceHTML(record);
+      }
+    }
+
     function applyPreviewZoom() {
       const zoom = ZOOM_LEVELS[currentZoomIndex];
       const stage = document.getElementById('previewZoomWrapper');
       const display = document.getElementById('zoomLevelDisplay');
       if (stage) {
         stage.style.transform = `scale(${zoom})`;
-        // Handle vertical offset space smoothly
         const heightExtra = (zoom - 1) * 297 * 3.77;
         stage.style.marginBottom = heightExtra > 0 ? `${heightExtra}px` : '0px';
       }
@@ -3224,7 +3579,9 @@
       });
 
       text += `\nSubtotal: ₹${computed.subtotal.toFixed(2)}\n`;
-      if (computed.discountTotal > 0) text += `Discount: -₹${computed.discountTotal.toFixed(2)}\n`;
+      if (inv.discountEnabled && computed.discountTotal > 0) {
+        text += `Discount: -₹${computed.discountTotal.toFixed(2)}\n`;
+      }
       text += `Taxable: ₹${computed.taxable.toFixed(2)}\n`;
       if (inv.gstEnabled && computed.gstRate > 0) {
         text += `CGST (${computed.cgstRate}%): ₹${computed.cgst.toFixed(2)}\n`;
@@ -3242,7 +3599,7 @@
       }
 
       text += `Payment Status: *${inv.paymentStatus || 'UNPAID'}*\n`;
-      text += `Thank you for your business with H4 Construction Solutions!`;
+      text += `${state.settings.greetingText || "Thank You for Choosing H4 Construction Solutions."}`;
 
       const encoded = encodeURIComponent(text);
       let waUrl = `https://wa.me/`;
@@ -3375,38 +3732,75 @@
        19. SETTINGS MANAGEMENT
        ========================================================================== */
     function renderSettings() {
-      document.getElementById('setLegalName').value = state.settings.legalName || '';
-      document.getElementById('setBrandName').value = state.settings.brandName || '';
-      document.getElementById('setGstin').value = state.settings.gstin || '';
-      document.getElementById('setAddress').value = state.settings.address || '';
-      document.getElementById('setCity').value = state.settings.city || '';
-      document.getElementById('setDistrict').value = state.settings.district || '';
-      document.getElementById('setSellerState').value = state.settings.state || 'Kerala';
-      document.getElementById('setSellerStateCode').value = state.settings.stateCode || '32';
-      document.getElementById('setPin').value = state.settings.pinCode || '';
+      const s = state.settings;
 
-      document.getElementById('setMobile').value = state.settings.mobile || '';
-      document.getElementById('setWhatsapp').value = state.settings.whatsapp || '';
-      document.getElementById('setEmail').value = state.settings.email || '';
-      document.getElementById('setWebsite').value = state.settings.website || '';
+      document.getElementById('setLegalName').value = s.legalName || '';
+      document.getElementById('setBrandName').value = s.brandName || '';
+      document.getElementById('setGstin').value = s.gstin || '';
+      document.getElementById('setAddress').value = s.address || '';
+      document.getElementById('setCity').value = s.city || '';
+      document.getElementById('setDistrict').value = s.district || '';
+      document.getElementById('setSellerState').value = s.state || 'Kerala';
+      document.getElementById('setSellerStateCode').value = s.stateCode || '32';
+      document.getElementById('setPin').value = s.pinCode || '';
 
-      document.getElementById('setShowBankDetails').checked = Boolean(state.settings.showBankDetails);
-      document.getElementById('setBankName').value = state.settings.bankName || '';
-      document.getElementById('setAccountName').value = state.settings.accountName || '';
-      document.getElementById('setAccountNumber').value = state.settings.accountNumber || '';
-      document.getElementById('setIfscCode').value = state.settings.ifscCode || '';
-      document.getElementById('setBranch').value = state.settings.branch || '';
-      document.getElementById('setUpiId').value = state.settings.upiId || '';
+      document.getElementById('setMobile').value = s.mobile || '';
+      document.getElementById('setWhatsapp').value = s.whatsapp || '';
+      document.getElementById('setEmail').value = s.email || '';
+      document.getElementById('setWebsite').value = s.website || '';
 
-      document.getElementById('setInvoicePrefix').value = state.settings.invoicePrefix || 'INV-';
-      document.getElementById('setTerms').value = state.settings.terms || '';
+      document.getElementById('setShowBankDetails').checked = Boolean(s.showBankDetails);
+      document.getElementById('setBankName').value = s.bankName || '';
+      document.getElementById('setAccountName').value = s.accountName || '';
+      document.getElementById('setAccountNumber').value = s.accountNumber || '';
+      document.getElementById('setIfscCode').value = s.ifscCode || '';
+      document.getElementById('setBranch').value = s.branch || '';
+      document.getElementById('setUpiId').value = s.upiId || '';
 
-      document.getElementById('setColorPrimary').value = state.settings.primaryColor || '#A8238B';
-      document.getElementById('pickerColorPrimary').value = state.settings.primaryColor || '#A8238B';
-      document.getElementById('setColorAccent').value = state.settings.accentColor || '#F5BE00';
-      document.getElementById('pickerColorAccent').value = state.settings.accentColor || '#F5BE00';
-      document.getElementById('setColorNavy').value = state.settings.headerColor || '#172554';
-      document.getElementById('pickerColorNavy').value = state.settings.headerColor || '#172554';
+      document.getElementById('setInvoicePrefix').value = s.invoicePrefix || 'INV-';
+
+      // Typography fields
+      document.getElementById('setFontFamily').value = s.invoiceFontFamily || 'Inter, sans-serif';
+      document.getElementById('setFontSize').value = s.invoiceFontSize || '9pt';
+
+      document.getElementById('setBrandFont').value = s.brandFont || 'inherit';
+      document.getElementById('setBrandSize').value = s.brandSize || '15pt';
+      document.getElementById('setBrandWeight').value = s.brandWeight || '800';
+      document.getElementById('setBrandColor').value = s.brandColor || '#A8238B';
+      document.getElementById('pickerBrandColor').value = s.brandColor || '#A8238B';
+
+      document.getElementById('setCompanyFont').value = s.companyFont || 'inherit';
+      document.getElementById('setCompanySize').value = s.companySize || '9.5pt';
+      document.getElementById('setCompanyWeight').value = s.companyWeight || '700';
+      document.getElementById('setCompanyColor').value = s.companyColor || '#172554';
+      document.getElementById('pickerCompanyColor').value = s.companyColor || '#172554';
+
+      document.getElementById('setTotalFont').value = s.totalFont || 'inherit';
+      document.getElementById('setTotalSize').value = s.totalSize || '11pt';
+      document.getElementById('setTotalColor').value = s.totalColor || '#172554';
+      document.getElementById('pickerTotalColor').value = s.totalColor || '#172554';
+      document.getElementById('setTotalBgColor').value = s.totalBgColor || '#FEF3C7';
+      document.getElementById('pickerTotalBgColor').value = s.totalBgColor || '#FEF3C7';
+
+      document.getElementById('setWordsFont').value = s.wordsFont || 'inherit';
+      document.getElementById('setWordsSize').value = s.wordsSize || '8pt';
+      document.getElementById('setWordsWeight').value = s.wordsWeight || '600';
+      document.getElementById('setWordsColor').value = s.wordsColor || '#1F2937';
+      document.getElementById('pickerWordsColor').value = s.wordsColor || '#1F2937';
+
+      document.getElementById('setGreetingText').value = s.greetingText || 'Thank You for Choosing H4 Construction Solutions.';
+      document.getElementById('setGreetingFont').value = s.greetingFont || 'inherit';
+      document.getElementById('setGreetingSize').value = s.greetingSize || '9pt';
+      document.getElementById('setGreetingAlign').value = s.greetingAlign || 'center';
+      document.getElementById('setGreetingColor').value = s.greetingColor || '#172554';
+      document.getElementById('pickerGreetingColor').value = s.greetingColor || '#172554';
+
+      document.getElementById('setColorPrimary').value = s.primaryColor || '#A8238B';
+      document.getElementById('pickerColorPrimary').value = s.primaryColor || '#A8238B';
+      document.getElementById('setColorAccent').value = s.accentColor || '#F5BE00';
+      document.getElementById('pickerColorAccent').value = s.accentColor || '#F5BE00';
+      document.getElementById('setColorNavy').value = s.headerColor || '#172554';
+      document.getElementById('pickerColorNavy').value = s.headerColor || '#172554';
 
       renderSettingsLogoPreview();
     }
@@ -3434,35 +3828,64 @@
         return;
       }
 
-      state.settings.legalName = legal;
-      state.settings.brandName = brand;
-      state.settings.gstin = document.getElementById('setGstin').value.trim().toUpperCase();
-      state.settings.address = document.getElementById('setAddress').value.trim();
-      state.settings.city = document.getElementById('setCity').value.trim();
-      state.settings.district = document.getElementById('setDistrict').value.trim();
-      state.settings.state = document.getElementById('setSellerState').value.trim() || 'Kerala';
-      state.settings.stateCode = "32";
-      state.settings.pinCode = document.getElementById('setPin').value.trim();
+      const s = state.settings;
+      s.legalName = legal;
+      s.brandName = brand;
+      s.gstin = document.getElementById('setGstin').value.trim().toUpperCase();
+      s.address = document.getElementById('setAddress').value.trim();
+      s.city = document.getElementById('setCity').value.trim();
+      s.district = document.getElementById('setDistrict').value.trim();
+      s.state = document.getElementById('setSellerState').value.trim() || 'Kerala';
+      s.stateCode = "32";
+      s.pinCode = document.getElementById('setPin').value.trim();
 
-      state.settings.mobile = document.getElementById('setMobile').value.trim();
-      state.settings.whatsapp = document.getElementById('setWhatsapp').value.trim();
-      state.settings.email = document.getElementById('setEmail').value.trim();
-      state.settings.website = document.getElementById('setWebsite').value.trim();
+      s.mobile = document.getElementById('setMobile').value.trim();
+      s.whatsapp = document.getElementById('setWhatsapp').value.trim();
+      s.email = document.getElementById('setEmail').value.trim();
+      s.website = document.getElementById('setWebsite').value.trim();
 
-      state.settings.showBankDetails = document.getElementById('setShowBankDetails').checked;
-      state.settings.bankName = document.getElementById('setBankName').value.trim();
-      state.settings.accountName = document.getElementById('setAccountName').value.trim();
-      state.settings.accountNumber = document.getElementById('setAccountNumber').value.trim();
-      state.settings.ifscCode = document.getElementById('setIfscCode').value.trim().toUpperCase();
-      state.settings.branch = document.getElementById('setBranch').value.trim();
-      state.settings.upiId = document.getElementById('setUpiId').value.trim();
+      s.showBankDetails = document.getElementById('setShowBankDetails').checked;
+      s.bankName = document.getElementById('setBankName').value.trim();
+      s.accountName = document.getElementById('setAccountName').value.trim();
+      s.accountNumber = document.getElementById('setAccountNumber').value.trim();
+      s.ifscCode = document.getElementById('setIfscCode').value.trim().toUpperCase();
+      s.branch = document.getElementById('setBranch').value.trim();
+      s.upiId = document.getElementById('setUpiId').value.trim();
 
-      state.settings.invoicePrefix = document.getElementById('setInvoicePrefix').value.trim() || 'INV-';
-      state.settings.terms = document.getElementById('setTerms').value.trim();
+      s.invoicePrefix = document.getElementById('setInvoicePrefix').value.trim() || 'INV-';
 
-      state.settings.primaryColor = document.getElementById('setColorPrimary').value.trim() || '#A8238B';
-      state.settings.accentColor = document.getElementById('setColorAccent').value.trim() || '#F5BE00';
-      state.settings.headerColor = document.getElementById('setColorNavy').value.trim() || '#172554';
+      s.invoiceFontFamily = document.getElementById('setFontFamily').value;
+      s.invoiceFontSize = document.getElementById('setFontSize').value;
+
+      s.brandFont = document.getElementById('setBrandFont').value;
+      s.brandSize = document.getElementById('setBrandSize').value;
+      s.brandWeight = document.getElementById('setBrandWeight').value;
+      s.brandColor = document.getElementById('setBrandColor').value;
+
+      s.companyFont = document.getElementById('setCompanyFont').value;
+      s.companySize = document.getElementById('setCompanySize').value;
+      s.companyWeight = document.getElementById('setCompanyWeight').value;
+      s.companyColor = document.getElementById('setCompanyColor').value;
+
+      s.totalFont = document.getElementById('setTotalFont').value;
+      s.totalSize = document.getElementById('setTotalSize').value;
+      s.totalColor = document.getElementById('setTotalColor').value;
+      s.totalBgColor = document.getElementById('setTotalBgColor').value;
+
+      s.wordsFont = document.getElementById('setWordsFont').value;
+      s.wordsSize = document.getElementById('setWordsSize').value;
+      s.wordsWeight = document.getElementById('setWordsWeight').value;
+      s.wordsColor = document.getElementById('setWordsColor').value;
+
+      s.greetingText = document.getElementById('setGreetingText').value.trim() || "Thank You for Choosing H4 Construction Solutions.";
+      s.greetingFont = document.getElementById('setGreetingFont').value;
+      s.greetingSize = document.getElementById('setGreetingSize').value;
+      s.greetingAlign = document.getElementById('setGreetingAlign').value;
+      s.greetingColor = document.getElementById('setGreetingColor').value;
+
+      s.primaryColor = document.getElementById('setColorPrimary').value.trim() || '#A8238B';
+      s.accentColor = document.getElementById('setColorAccent').value.trim() || '#F5BE00';
+      s.headerColor = document.getElementById('setColorNavy').value.trim() || '#172554';
 
       document.getElementById('appBarBrandSubtitle').textContent = legal;
 
@@ -3474,9 +3897,10 @@
 
     function applyAppearance() {
       const r = document.documentElement;
-      r.style.setProperty('--h4-primary', state.settings.primaryColor || '#A8238B');
-      r.style.setProperty('--h4-accent', state.settings.accentColor || '#F5BE00');
-      r.style.setProperty('--h4-navy', state.settings.headerColor || '#172554');
+      const s = state.settings;
+      r.style.setProperty('--h4-primary', s.primaryColor || '#A8238B');
+      r.style.setProperty('--h4-accent', s.accentColor || '#F5BE00');
+      r.style.setProperty('--h4-navy', s.headerColor || '#172554');
     }
 
     function showToast(message) {
