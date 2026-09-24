@@ -1208,6 +1208,13 @@
       font-size: 8pt;
     }
 
+    /* Keep the designer Grand Total highlight in browser Print / Save as PDF */
+    .inv-grand-total-row,
+    .inv-grand-total-row td {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
     .inv-words-block {
       background: #F9FAFB;
       border: 1px solid #E5E7EB;
@@ -1967,6 +1974,18 @@
                         <label>Company Legal Color</label>
                         <input type="color" id="dsHeaderLegalColor" value="#172554" style="height:var(--input-height); width:100%; border:none; border-radius:6px; cursor:pointer;">
                       </div>
+                      <div class="form-group">
+                        <label>Show WhatsApp on Invoice</label>
+                        <select id="dsHeaderShowWhatsapp" class="input-control">
+                          <option value="true">ON</option><option value="false">OFF</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label>Show Website on Invoice</label>
+                        <select id="dsHeaderShowWebsite" class="input-control">
+                          <option value="true">ON</option><option value="false">OFF</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -2170,14 +2189,55 @@
                           <option value="Inter, sans-serif">Inter</option>
                           <option value="Poppins, sans-serif">Poppins</option>
                           <option value="Roboto, sans-serif">Roboto</option>
+                          <option value="Montserrat, sans-serif">Montserrat</option>
+                          <option value="Lato, sans-serif">Lato</option>
+                          <option value="Open Sans, sans-serif">Open Sans</option>
+                          <option value="Nunito Sans, sans-serif">Nunito Sans</option>
                           <option value="Arial, sans-serif">Arial</option>
+                          <option value="Helvetica, sans-serif">Helvetica</option>
                           <option value="Georgia, serif">Georgia</option>
+                          <option value="Times New Roman, serif">Times New Roman</option>
                         </select>
                       </div>
                       <div class="form-group">
-                        <label>Upload Custom Font (.ttf, .otf, .woff)</label>
+                        <label>➕ Add Your Font (.woff2 recommended)</label>
                         <input type="file" id="dsCustomFontInput" accept=".ttf,.otf,.woff,.woff2" class="input-control" style="padding:6px;">
+                        <div id="dsCustomFontStatus" style="font-size:.72rem;color:var(--h4-muted);margin-top:5px;">No custom font loaded</div>
                       </div>
+                    </div>
+                  </div>
+                  <div class="grid-3" style="margin-top:10px;">
+                    <div class="form-group">
+                      <label>Base Body Size</label>
+                      <select id="dsBaseBodySize" class="input-control">
+                        <option value="8pt">8pt</option>
+                        <option value="8.5pt">8.5pt</option>
+                        <option value="9pt">9pt</option>
+                        <option value="9.5pt">9.5pt</option>
+                        <option value="10pt">10pt</option>
+                        <option value="10.5pt">10.5pt</option>
+                        <option value="11pt">11pt</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Line Height</label>
+                      <select id="dsBaseLineHeight" class="input-control">
+                        <option value="1.15">1.15 Compact</option>
+                        <option value="1.25">1.25</option>
+                        <option value="1.35">1.35 Standard</option>
+                        <option value="1.45">1.45</option>
+                        <option value="1.55">1.55 Airy</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Letter Spacing</label>
+                      <select id="dsLetterSpacing" class="input-control">
+                        <option value="-0.2px">-0.2px</option>
+                        <option value="0px">0px Normal</option>
+                        <option value="0.2px">0.2px</option>
+                        <option value="0.4px">0.4px</option>
+                        <option value="0.6px">0.6px</option>
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -2227,6 +2287,26 @@
                         <button type="button" class="btn btn-outline" id="btnResetDesignerAll" style="width:100%;">♻️ Reset All to H4 Default</button>
                       </div>
                     </div>
+                    <div style="margin-top:14px; padding-top:14px; border-top:1px solid var(--h4-border);">
+                      <div class="grid-3">
+                        <div class="form-group">
+                          <label for="dsTemplateName">Save Custom Template</label>
+                          <input type="text" id="dsTemplateName" class="input-control" placeholder="e.g. H4 Dealer Premium" maxlength="40">
+                        </div>
+                        <div class="form-group">
+                          <label for="dsTemplateSelect">Saved Templates</label>
+                          <select id="dsTemplateSelect" class="input-control">
+                            <option value="">Select saved template</option>
+                          </select>
+                        </div>
+                        <div class="form-group" style="display:flex; align-items:flex-end; gap:6px; flex-wrap:wrap;">
+                          <button type="button" class="btn btn-sm btn-primary" id="btnSaveTemplate">Save</button>
+                          <button type="button" class="btn btn-sm btn-outline" id="btnLoadTemplate">Load</button>
+                          <button type="button" class="btn btn-sm btn-danger" id="btnDeleteTemplate">Delete</button>
+                        </div>
+                      </div>
+                      <div style="font-size:.75rem;color:var(--h4-muted);margin-top:6px;">Custom templates store visual designer settings only. Invoice data, calculations and history are never changed.</div>
+                    </div>
                   </div>
                 </div>
 
@@ -2245,11 +2325,11 @@
             <span style="font-weight:700; font-size:0.85rem;">Live A4 Sheet Preview</span>
             <div style="display:flex; gap:6px; align-items:center;">
               <button type="button" class="btn btn-sm btn-outline" id="btnZoomOutDs" style="color:#FFF; border-color:rgba(255,255,255,0.4); padding:0 8px;">−</button>
-              <span id="zoomDisplayDs" style="font-size:0.75rem; font-weight:700;">65%</span>
+              <span id="zoomDisplayDs" style="font-size:0.75rem; font-weight:700;">85%</span>
               <button type="button" class="btn btn-sm btn-outline" id="btnZoomInDs" style="color:#FFF; border-color:rgba(255,255,255,0.4); padding:0 8px;">+</button>
             </div>
           </div>
-          <div id="designerA4Wrapper" style="transform: scale(0.65); transform-origin: top center; transition: transform 0.15s ease;">
+          <div id="designerA4Wrapper" style="transform: scale(0.85); transform-origin: top center; transition: transform 0.15s ease;">
             <!-- Rendered live via invoiceHTML() -->
           </div>
         </div>
@@ -2332,7 +2412,7 @@
 
     const ZOOM_LEVELS = [0.75, 0.85, 1.0, 1.10, 1.25];
     let currentZoomIndex = 2;
-    let designerZoom = 0.65;
+    let designerZoom = 0.85;
 
     /* XSS Protection */
     function escapeHTML(str) {
@@ -2367,7 +2447,9 @@
           brandColor: "#A8238B",
           showLegal: true,
           legalSize: "9.5pt",
-          legalColor: "#172554"
+          legalColor: "#172554",
+          showWhatsapp: true,
+          showWebsite: true
         },
         customer: {
           bgColor: "#F8FAFC",
@@ -2412,17 +2494,45 @@
           text: "Thank You for Choosing H4 Construction Solutions.",
           size: "9pt",
           align: "center",
-          color: "#172554"
+          color: "#172554",
+          bgColor: "#F8FAFC",
+          borderColor: "#E2E8F0"
         },
         fonts: {
-          base: "Inter, sans-serif"
+          base: "Inter, sans-serif",
+          bodySize: "9pt",
+          lineHeight: "1.35",
+          letterSpacing: "0px",
+          customName: "",
+          customData: ""
         },
         layout: {
           paddingTop: 14,
           paddingHoriz: 16,
           paddingBottom: 14
-        }
+        },
+        templates: {}
       };
+    }
+
+    function mergeDesignerSettings(defaults, saved) {
+      const src = (saved && typeof saved === 'object') ? saved : {};
+      const out = { ...defaults, ...src };
+      for (const key of Object.keys(defaults)) {
+        const dv = defaults[key];
+        const sv = src[key];
+        if (dv && typeof dv === 'object' && !Array.isArray(dv)) {
+          out[key] = mergeDesignerSettings(dv, sv);
+        }
+      }
+      if (!Array.isArray(src.columns) || !src.columns.length) out.columns = defaults.columns.map(c => ({...c}));
+      return out;
+    }
+
+    function ensureDesignerSettings() {
+      const def = defaultDesignerSettings();
+      state.settings.designer = mergeDesignerSettings(def, state.settings.designer);
+      return state.settings.designer;
     }
 
     function defaultSettings() {
@@ -2472,10 +2582,10 @@
           state.settings = {
             ...def,
             ...(parsed.settings || {}),
-            designer: {
-              ...def.designer,
-              ...((parsed.settings && parsed.settings.designer) ? parsed.settings.designer : {})
-            }
+            designer: mergeDesignerSettings(
+              def.designer,
+              (parsed.settings && parsed.settings.designer) ? parsed.settings.designer : {}
+            )
           };
 
           if (!state.settings.state) state.settings.state = "Kerala";
@@ -2507,7 +2617,19 @@
         state.settings = defaultSettings();
         state.invoices = [];
       }
+      applyCustomFontFromState();
       applyAppearance();
+    }
+
+    function applyCustomFontFromState() {
+      const ds = state.settings?.designer;
+      if (!ds?.fonts?.customData || !ds?.fonts?.customName) return;
+      const styleId = 'h4-custom-font-style';
+      document.getElementById(styleId)?.remove();
+      const style = document.createElement('style');
+      style.id = styleId;
+      style.textContent = `@font-face{font-family:"${ds.fonts.customName}";src:url("${ds.fonts.customData}");font-display:swap;}`;
+      document.head.appendChild(style);
     }
 
     function saveState() {
@@ -2811,6 +2933,10 @@
       const computed = computeTotals(inv);
       const s = state.settings;
       const ds = s.designer || defaultDesignerSettings();
+      // Use the invoice snapshot when available, but fall back to current Company Settings.
+      // This keeps WhatsApp and Website visible even on an older/open draft.
+      const sellerWhatsapp = String(inv.sellerWhatsapp || s.whatsapp || '').trim();
+      const sellerWebsite = String(inv.sellerWebsite || s.website || '').trim();
 
       // Logo rendering
       let logoMarkup = DEFAULT_H4_LOGO_SVG;
@@ -2889,6 +3015,9 @@
       return `
         <div class="a4-sheet" id="renderedInvoiceA4" style="
           font-family: ${ds.fonts.base || 'Inter, sans-serif'};
+          font-size: ${ds.fonts.bodySize || '9pt'};
+          line-height: ${ds.fonts.lineHeight || '1.35'};
+          letter-spacing: ${ds.fonts.letterSpacing || '0px'};
           padding-top: ${ds.layout.paddingTop}mm;
           padding-left: ${ds.layout.paddingHoriz}mm;
           padding-right: ${ds.layout.paddingHoriz}mm;
@@ -2925,10 +3054,10 @@
                   <div>State: <strong>${escapeHTML(inv.sellerState || 'Kerala')}</strong> (Code: 32) ${inv.sellerPinCode ? '- PIN ' + escapeHTML(inv.sellerPinCode) : ''}</div>
                   <div>
                     ${inv.sellerMobile ? `Phone: ${escapeHTML(inv.sellerMobile)}` : ''}
-                    ${inv.sellerWhatsapp ? ` | WhatsApp: ${escapeHTML(inv.sellerWhatsapp)}` : ''}
+                    ${ds.header.showWhatsapp && sellerWhatsapp ? ` | WhatsApp: ${escapeHTML(sellerWhatsapp)}` : ''}
                   </div>
                   ${inv.sellerEmail ? `<div>Email: ${escapeHTML(inv.sellerEmail)}</div>` : ''}
-                  ${inv.sellerWebsite ? `<div>Web: ${escapeHTML(String(inv.sellerWebsite).replace(/^https?:\/\//i, '').replace(/\/+$/, ''))}</div>` : ''}
+                  ${ds.header.showWebsite && sellerWebsite ? `<div>Web: ${escapeHTML(sellerWebsite.replace(/^https?:\/\//i, '').replace(/\/+$/, ''))}</div>` : ''}
                   ${inv.sellerGstin ? `<div><strong>GSTIN: ${escapeHTML(inv.sellerGstin)}</strong></div>` : ''}
                 </div>
               </div>
@@ -3056,16 +3185,18 @@
                       <td class="text-right font-bold">${formatCurrency(computed.sgst)}</td>
                     </tr>
                   ` : ''}
-                  <tr style="
+                  <tr class="inv-grand-total-row" style="
                     border-top: 1.5px solid ${ds.global.navyColor};
                     border-bottom: 1.5px solid ${ds.global.navyColor};
                     background-color: ${ds.totals.bgColor};
                     color: ${ds.totals.color};
                     font-size: ${ds.totals.size};
                     font-weight: 800;
+                    -webkit-print-color-adjust: exact;
+                    print-color-adjust: exact;
                   ">
-                    <td style="padding: 5px 6px;">Grand Total:</td>
-                    <td class="text-right" style="padding: 5px 6px;">${formatCurrency(computed.grand)}</td>
+                    <td style="padding: 5px 6px; background-color:${ds.totals.bgColor}; -webkit-print-color-adjust:exact; print-color-adjust:exact;">Grand Total:</td>
+                    <td class="text-right" style="padding: 5px 6px; background-color:${ds.totals.bgColor}; -webkit-print-color-adjust:exact; print-color-adjust:exact;">${formatCurrency(computed.grand)}</td>
                   </tr>
                 </table>
               </div>
@@ -3358,6 +3489,8 @@
       document.getElementById('dsHeaderShowLegal').value = String(ds.header.showLegal);
       document.getElementById('dsHeaderLegalSize').value = ds.header.legalSize;
       document.getElementById('dsHeaderLegalColor').value = ds.header.legalColor;
+      document.getElementById('dsHeaderShowWhatsapp').value = String(ds.header.showWhatsapp !== false);
+      document.getElementById('dsHeaderShowWebsite').value = String(ds.header.showWebsite !== false);
 
       document.getElementById('dsCustBgColor').value = ds.customer.bgColor;
       document.getElementById('dsCustBorderColor').value = ds.customer.borderColor;
@@ -3387,7 +3520,14 @@
       document.getElementById('dsGreetingAlign').value = ds.greeting.align;
       document.getElementById('dsGreetingColor').value = ds.greeting.color;
 
-      document.getElementById('dsBaseFontFamily').value = ds.fonts.base;
+      document.getElementById('dsBaseFontFamily').value = ds.fonts.base || 'Inter, sans-serif';
+      document.getElementById('dsBaseBodySize').value = ds.fonts.bodySize || '9pt';
+      document.getElementById('dsBaseLineHeight').value = ds.fonts.lineHeight || '1.35';
+      document.getElementById('dsLetterSpacing').value = ds.fonts.letterSpacing || '0px';
+      const fontStatus = document.getElementById('dsCustomFontStatus');
+      if (fontStatus) fontStatus.textContent = ds.fonts.customName ? `Loaded: ${ds.fonts.customName}` : 'No custom font loaded';
+      document.getElementById('dsPresetSelect').value = ds.preset || 'H4_PREMIUM';
+      renderDesignerTemplateSelect();
 
       document.getElementById('dsLayoutPaddingTop').value = ds.layout.paddingTop;
       document.getElementById('dsLayoutPaddingHoriz').value = ds.layout.paddingHoriz;
@@ -3407,42 +3547,44 @@
       cols.forEach((col, idx) => {
         const item = document.createElement('div');
         item.className = 'col-order-item';
+        item.style.cssText = 'display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;';
         item.innerHTML = `
-          <span class="col-name">${escapeHTML(col.name)} (${col.width})</span>
-          <div class="col-order-btns">
+          <div style="min-width:0;">
+            <div class="col-name" style="font-weight:700;">${escapeHTML(col.name)}</div>
+            <div style="display:flex;gap:6px;align-items:center;margin-top:5px;flex-wrap:wrap;">
+              <input type="text" class="input-control" data-action="width" value="${escapeHTML(col.width || 'auto')}" aria-label="${escapeHTML(col.name)} width" style="width:90px;height:34px;">
+              <select class="input-control" data-action="align" aria-label="${escapeHTML(col.name)} alignment" style="width:100px;height:34px;">
+                <option value="left" ${col.align === 'left' ? 'selected' : ''}>Left</option>
+                <option value="center" ${col.align === 'center' ? 'selected' : ''}>Center</option>
+                <option value="right" ${col.align === 'right' ? 'selected' : ''}>Right</option>
+              </select>
+              <label style="display:flex;align-items:center;gap:4px;font-size:.75rem;">
+                <input type="checkbox" ${col.show !== false ? 'checked' : ''} data-action="toggle"> Show
+              </label>
+            </div>
+          </div>
+          <div class="col-order-btns" style="display:flex;gap:4px;">
             <button type="button" class="btn btn-sm btn-outline" data-action="up" ${idx === 0 ? 'disabled' : ''}>▲</button>
             <button type="button" class="btn btn-sm btn-outline" data-action="down" ${idx === cols.length - 1 ? 'disabled' : ''}>▼</button>
-            <label style="display:flex; align-items:center; gap:4px; font-size:0.75rem; margin-left:6px;">
-              <input type="checkbox" ${col.show !== false ? 'checked' : ''} data-action="toggle"> Show
-            </label>
           </div>
         `;
 
         item.querySelector('[data-action="up"]')?.addEventListener('click', () => {
-          if (idx > 0) {
-            const temp = cols[idx - 1];
-            cols[idx - 1] = cols[idx];
-            cols[idx] = temp;
-            renderColumnOrderList();
-            refreshOpenPreview();
-          }
+          if (idx > 0) { [cols[idx - 1], cols[idx]] = [cols[idx], cols[idx - 1]]; renderColumnOrderList(); refreshOpenPreview(); saveState(); }
         });
-
         item.querySelector('[data-action="down"]')?.addEventListener('click', () => {
-          if (idx < cols.length - 1) {
-            const temp = cols[idx + 1];
-            cols[idx + 1] = cols[idx];
-            cols[idx] = temp;
-            renderColumnOrderList();
-            refreshOpenPreview();
-          }
+          if (idx < cols.length - 1) { [cols[idx + 1], cols[idx]] = [cols[idx], cols[idx + 1]]; renderColumnOrderList(); refreshOpenPreview(); saveState(); }
         });
-
-        item.querySelector('[data-action="toggle"]')?.addEventListener('change', (e) => {
-          col.show = e.target.checked;
-          refreshOpenPreview();
+        item.querySelector('[data-action="toggle"]')?.addEventListener('change', e => {
+          col.show = e.target.checked; refreshOpenPreview(); saveState();
         });
-
+        item.querySelector('[data-action="width"]')?.addEventListener('input', e => {
+          const v = String(e.target.value || '').trim();
+          if (/^(auto|\d+(?:\.\d+)?(?:px|mm|pt|%)?)$/i.test(v)) { col.width = v; refreshOpenPreview(); saveState(); }
+        });
+        item.querySelector('[data-action="align"]')?.addEventListener('change', e => {
+          col.align = e.target.value; refreshOpenPreview(); saveState();
+        });
         listEl.appendChild(item);
       });
     }
@@ -3462,7 +3604,7 @@
     }
 
     function syncDesignerInputsToState() {
-      const ds = state.settings.designer;
+      const ds = ensureDesignerSettings();
 
       ds.global.primaryColor = document.getElementById('dsGlobalPrimaryColor').value;
       ds.global.secondaryColor = document.getElementById('dsGlobalSecondaryColor').value;
@@ -3480,6 +3622,8 @@
       ds.header.showLegal = document.getElementById('dsHeaderShowLegal').value === 'true';
       ds.header.legalSize = document.getElementById('dsHeaderLegalSize').value;
       ds.header.legalColor = document.getElementById('dsHeaderLegalColor').value;
+      ds.header.showWhatsapp = document.getElementById('dsHeaderShowWhatsapp').value === 'true';
+      ds.header.showWebsite = document.getElementById('dsHeaderShowWebsite').value === 'true';
 
       ds.customer.bgColor = document.getElementById('dsCustBgColor').value;
       ds.customer.borderColor = document.getElementById('dsCustBorderColor').value;
@@ -3510,6 +3654,9 @@
       ds.greetingColor = document.getElementById('dsGreetingColor').value;
 
       ds.fonts.base = document.getElementById('dsBaseFontFamily').value;
+      ds.fonts.bodySize = document.getElementById('dsBaseBodySize').value || '9pt';
+      ds.fonts.lineHeight = document.getElementById('dsBaseLineHeight').value || '1.35';
+      ds.fonts.letterSpacing = document.getElementById('dsLetterSpacing').value || '0px';
 
       ds.layout.paddingTop = Number(document.getElementById('dsLayoutPaddingTop').value) || 14;
       ds.layout.paddingHoriz = Number(document.getElementById('dsLayoutPaddingHoriz').value) || 16;
@@ -3517,6 +3664,57 @@
 
       applyAppearance();
       refreshOpenPreview();
+    }
+
+    function renderDesignerTemplateSelect() {
+      const sel = document.getElementById('dsTemplateSelect');
+      if (!sel) return;
+      const templates = (state.settings.designer && state.settings.designer.templates) || {};
+      const current = sel.value;
+      sel.innerHTML = '<option value="">Select saved template</option>';
+      Object.keys(templates).sort((a,b)=>a.localeCompare(b)).forEach(name => {
+        const opt = document.createElement('option'); opt.value = name; opt.textContent = name; sel.appendChild(opt);
+      });
+      if (templates[current]) sel.value = current;
+    }
+
+    function saveDesignerTemplate() {
+      const name = String(document.getElementById('dsTemplateName')?.value || '').trim();
+      if (!name) { alert('Enter a template name first.'); return; }
+      const ds = ensureDesignerSettings();
+      ds.templates = ds.templates || {};
+      const copy = JSON.parse(JSON.stringify(ds));
+      delete copy.templates;
+      ds.templates[name] = copy;
+      saveState();
+      renderDesignerTemplateSelect();
+      document.getElementById('dsTemplateSelect').value = name;
+      showToast(`Template saved: ${name}`);
+    }
+
+    function loadDesignerTemplate() {
+      const name = document.getElementById('dsTemplateSelect')?.value;
+      const ds = ensureDesignerSettings();
+      if (!name || !ds.templates?.[name]) { alert('Select a saved template.'); return; }
+      const templates = ds.templates;
+      const loaded = mergeDesignerSettings(defaultDesignerSettings(), templates[name]);
+      loaded.templates = templates;
+      state.settings.designer = loaded;
+      renderSettings();
+      saveState();
+      refreshOpenPreview();
+      showToast(`Template loaded: ${name}`);
+    }
+
+    function deleteDesignerTemplate() {
+      const name = document.getElementById('dsTemplateSelect')?.value;
+      const ds = ensureDesignerSettings();
+      if (!name || !ds.templates?.[name]) { alert('Select a saved template.'); return; }
+      if (!confirm(`Delete template “${name}”?`)) return;
+      delete ds.templates[name];
+      saveState();
+      renderDesignerTemplateSelect();
+      showToast(`Template deleted: ${name}`);
     }
 
     function saveSettingsFromForm() {
@@ -3679,53 +3877,70 @@
         }
       });
 
-      // Custom Font Upload
+      // Custom Font Upload — stored locally and applied to invoice preview/print/PDF
       document.getElementById('dsCustomFontInput')?.addEventListener('change', (e) => {
-        const file = e.target.files[0];
+        const file = e.target.files?.[0];
         if (!file) return;
-        if (file.size > 2.5 * 1024 * 1024) {
-          alert("Font file is larger than 2.5MB. Please upload a smaller compressed web font (.woff2).");
+        if (file.size > 1024 * 1024) {
+          alert("Please use a font file up to 1 MB. WOFF2 is recommended.");
+          e.target.value = "";
           return;
         }
         const reader = new FileReader();
         reader.onload = (evt) => {
-          const fontData = evt.target.result;
-          const fontName = file.name.split('.')[0].replace(/[^a-zA-Z0-9]/g, '');
-          const newStyle = document.createElement('style');
-          newStyle.textContent = `@font-face { font-family: '${fontName}'; src: url('${fontData}'); }`;
-          document.head.appendChild(newStyle);
+          const fontData = String(evt.target.result || "");
+          const fontName = file.name.replace(/\.[^.]+$/, '').replace(/[^a-zA-Z0-9_-]/g, '') || 'H4CustomFont';
+          const safeName = `H4Custom_${fontName}`;
+          const styleId = 'h4-custom-font-style';
+          document.getElementById(styleId)?.remove();
+          const style = document.createElement('style');
+          style.id = styleId;
+          style.textContent = `@font-face{font-family:"${safeName}";src:url("${fontData}");font-display:swap;}`;
+          document.head.appendChild(style);
+
+          const ds = ensureDesignerSettings();
+          ds.fonts.customName = safeName;
+          ds.fonts.customData = fontData;
+          ds.fonts.base = `"${safeName}", sans-serif`;
 
           const sel = document.getElementById('dsBaseFontFamily');
-          const opt = document.createElement('option');
-          opt.value = `'${fontName}', sans-serif`;
-          opt.textContent = `${fontName} (Uploaded)`;
-          opt.selected = true;
-          sel.appendChild(opt);
-
-          syncDesignerInputsToState();
-          showToast(`Loaded custom font: ${fontName}`);
+          if (sel && !Array.from(sel.options).some(o => o.value === ds.fonts.base)) {
+            const opt = document.createElement('option');
+            opt.value = ds.fonts.base;
+            opt.textContent = `${fontName} (Custom)`;
+            sel.appendChild(opt);
+          }
+          if (sel) sel.value = ds.fonts.base;
+          const status = document.getElementById('dsCustomFontStatus');
+          if (status) status.textContent = `Loaded: ${fontName}`;
+          saveState();
+          refreshOpenPreview();
+          showToast(`Custom font added: ${fontName}`);
         };
         reader.readAsDataURL(file);
       });
 
       // Designer Canvas Zoom Controls
       document.getElementById('btnZoomInDs')?.addEventListener('click', () => {
-        if (designerZoom < 1.0) {
-          designerZoom += 0.05;
+        if (designerZoom < 1.25) {
+          designerZoom = Math.min(1.25, designerZoom + 0.05);
           applyDesignerZoom();
         }
       });
 
       document.getElementById('btnZoomOutDs')?.addEventListener('click', () => {
-        if (designerZoom > 0.4) {
-          designerZoom -= 0.05;
+        if (designerZoom > 0.75) {
+          designerZoom = Math.max(0.75, designerZoom - 0.05);
           applyDesignerZoom();
         }
       });
 
-      document.getElementById('btnSaveDesignerSettings')?.addEventListener('click', () => {
-        saveSettingsFromForm();
-      });
+      document.getElementById('btnSaveDesignerSettings')?.addEventListener('click', saveSettingsFromForm);
+      document.getElementById('btnSaveSettingsTop')?.addEventListener('click', saveSettingsFromForm);
+      document.getElementById('btnSaveSettingsBottom')?.addEventListener('click', saveSettingsFromForm);
+      document.getElementById('btnSaveTemplate')?.addEventListener('click', saveDesignerTemplate);
+      document.getElementById('btnLoadTemplate')?.addEventListener('click', loadDesignerTemplate);
+      document.getElementById('btnDeleteTemplate')?.addEventListener('click', deleteDesignerTemplate);
     }
 
     function applyDesignerZoom() {
