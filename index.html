@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>H4 Direct Invoice</title>
   <meta name="theme-color" content="#A8238B">
   
@@ -38,6 +38,46 @@
       flex-direction: column;
       height: 100vh;
       overflow: hidden;
+    }
+
+    /* PULL TO REFRESH INDICATOR */
+    #pull-refresh-indicator {
+      position: fixed;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--primary-h4);
+      color: white;
+      padding: 8px 18px;
+      border-radius: 25px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: top 0.2s ease, opacity 0.2s;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #pull-refresh-indicator.visible {
+      top: 20px;
+      opacity: 1;
+    }
+
+    .spinner {
+      width: 14px;
+      height: 14px;
+      border: 2px solid #FFFFFF;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
 
     /* TOP NAVIGATION */
@@ -283,6 +323,8 @@
       align-items: center;
       padding: 24px;
       position: relative;
+      touch-action: pan-y;
+      -webkit-overflow-scrolling: touch;
     }
 
     .zoom-toolbar {
@@ -381,7 +423,7 @@
       font-size: 10px;
       color: #475569;
       line-height: 1.4;
-      white-space: pre-line; /* Allows address to break into multiple lines cleanly */
+      white-space: pre-line;
     }
 
     .inv-meta-block {
@@ -625,7 +667,8 @@
 
       header.app-header,
       section.controls-panel,
-      .zoom-toolbar {
+      .zoom-toolbar,
+      #pull-refresh-indicator {
         display: none !important;
       }
 
@@ -661,6 +704,12 @@
   </style>
 </head>
 <body>
+
+  <!-- PULL TO REFRESH NOTIFICATION BADGE -->
+  <div id="pull-refresh-indicator">
+    <div class="spinner"></div>
+    <span>Refreshing Invoice...</span>
+  </div>
 
   <!-- HEADER -->
   <header class="app-header">
@@ -781,13 +830,13 @@
         
         <div class="card">
           <div class="card-title">
-            Typography & Font Styling
+            Document Typography
             <button class="btn btn-secondary" id="btn-reset-designer">Reset</button>
           </div>
           
           <div class="form-group">
-            <label>Active Document Font</label>
-            <select id="sel-active-font">
+            <label>General Document Font</label>
+            <select id="sel-active-font" class="font-selector-sync">
               <option value="system-ui, sans-serif">Standard System Sans</option>
               <option value="Georgia, serif">Georgia Editorial</option>
               <option value="'Courier New', monospace">Monospace Classic</option>
@@ -831,6 +880,41 @@
           </div>
         </div>
 
+        <!-- CUSTOM GREETING DESIGNER CONTROLS -->
+        <div class="card">
+          <div class="card-title">Greeting Word & Banner Designer</div>
+          <label class="switch-label" style="margin-bottom: 8px;">
+            <input type="checkbox" id="chk-greeting-on" checked> Show Greeting
+          </label>
+          <div class="form-group">
+            <label>Greeting Text</label>
+            <input type="text" id="inp-greeting-text" value="Thank You for Choosing H4 Construction Solutions.">
+          </div>
+          <div class="form-group">
+            <label>Greeting Font Family</label>
+            <select id="sel-greeting-font" class="font-selector-sync">
+              <option value="inherit">Same as Document Font</option>
+              <option value="system-ui, sans-serif">Standard System Sans</option>
+              <option value="Georgia, serif">Georgia Editorial</option>
+              <option value="'Courier New', monospace">Monospace Classic</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Font Size (px)</label>
+              <input type="number" id="num-greeting-size" value="11" min="8" max="26">
+            </div>
+            <div class="form-group">
+              <label>Text Color</label>
+              <input type="color" id="clr-greeting-text" value="#A8238B">
+            </div>
+            <div class="form-group">
+              <label>Background Color</label>
+              <input type="color" id="clr-greeting-bg" value="#F5F3FF">
+            </div>
+          </div>
+        </div>
+
         <!-- Column Visibility & Widths -->
         <div class="card">
           <div class="card-title">Item Table Columns</div>
@@ -867,28 +951,6 @@
             <div class="form-group">
               <label>Section Gap (px)</label>
               <input type="number" id="num-section-gap" value="12" min="4" max="30">
-            </div>
-          </div>
-        </div>
-
-        <!-- Greeting Customization -->
-        <div class="card">
-          <div class="card-title">Customer Greeting Bar</div>
-          <label class="switch-label" style="margin-bottom: 8px;">
-            <input type="checkbox" id="chk-greeting-on" checked> Show Greeting
-          </label>
-          <div class="form-group">
-            <label>Greeting Text</label>
-            <input type="text" id="inp-greeting-text" value="Thank You for Choosing H4 Construction Solutions.">
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Background</label>
-              <input type="color" id="clr-greeting-bg" value="#F3E8FF">
-            </div>
-            <div class="form-group">
-              <label>Text Color</label>
-              <input type="color" id="clr-greeting-text" value="#A8238B">
             </div>
           </div>
         </div>
@@ -1008,7 +1070,7 @@ Malappuram, Kerala</textarea>
           <div class="card-title">Add Custom Offline Font</div>
           <div class="form-group">
             <label>Font Name</label>
-            <input type="text" id="inp-font-name" placeholder="e.g. MalayalamFont">
+            <input type="text" id="inp-font-name" placeholder="e.g. ElegantKerala">
           </div>
           <div class="form-group">
             <label>Font File (.ttf, .otf, .woff, .woff2)</label>
@@ -1049,7 +1111,7 @@ Malappuram, Kerala</textarea>
     </section>
 
     <!-- RIGHT A4 PREVIEW STAGE -->
-    <section class="preview-stage">
+    <section class="preview-stage" id="preview-stage-container">
       <div class="zoom-toolbar">
         <button class="zoom-btn" id="btn-zoom-out">-</button>
         <button class="zoom-btn" data-zoom="75">75%</button>
@@ -1141,6 +1203,8 @@ Malappuram, Kerala</textarea>
       greeting: {
         show: true,
         text: "Thank You for Choosing H4 Construction Solutions.",
+        fontFamily: "inherit",
+        size: 11,
         bg: "#F5F3FF",
         color: "#A8238B"
       }
@@ -1206,6 +1270,7 @@ Malappuram, Kerala</textarea>
       };
     }
 
+    // AMOUNT IN WORDS: 'RUPEES' BEFORE 'ONLY'
     function convertNumberToIndianWords(amount) {
       const num = Math.floor(amount);
       if (num === 0) return "Zero Rupees Only";
@@ -1233,7 +1298,8 @@ Malappuram, Kerala</textarea>
       if (thousand > 0) words += inWords(thousand) + " Thousand ";
       if (remainder > 0) words += inWords(remainder);
 
-      return "Rupees " + words.trim() + " Only";
+      // 'Rupees' comes immediately before 'Only'
+      return words.trim() + " Rupees Only";
     }
 
     function formatINR(val) {
@@ -1265,21 +1331,25 @@ Malappuram, Kerala</textarea>
         `;
       }).join("");
 
+      // Specific Greeting styling
+      const greetingFontFamily = (designer.greeting && designer.greeting.fontFamily && designer.greeting.fontFamily !== "inherit")
+        ? designer.greeting.fontFamily
+        : designer.fontFamily;
+      const greetingFontSize = (designer.greeting && designer.greeting.size) ? designer.greeting.size : 11;
+
       return `
         <div style="font-family: ${designer.fontFamily}; display: flex; flex-direction: column; height: 100%; justify-content: space-between;">
           <div>
             <!-- INVOICE HEADER -->
-            <div class="inv-header" style="border-bottom-color: ${designer.primaryColor}; margin-bottom: ${designer.sectionGap}px;">
+            <div class="inv-header" style="border-bottom-color: ${designer.primaryColor}; margin-bottom:${designer.sectionGap}px;">
               <div class="inv-company-block">
                 ${company.showLogo && company.logo ? `<img src="${company.logo}" class="inv-logo-img" style="max-height: ${company.logoHeight}px;" alt="Logo" />` : ""}
                 <div class="inv-brand-name" style="color: ${designer.primaryColor};">${escapeHTML(company.brandName)}</div>
                 <div class="inv-legal-name">${escapeHTML(company.legalName)}</div>
-                <!-- Multi-line address -->
                 <div class="inv-company-details">
 ${escapeHTML(company.address)}
-Phone: ${escapeHTML(company.phone)} | WhatsApp: ${escapeHTML(company.whatsapp)}
-Email: ${escapeHTML(company.email)}
-${company.showWebsite && company.website ? `Web: <strong>${escapeHTML(company.website)}</strong>` : ""}
+Phone: ${escapeHTML(company.phone)} \vert{} WhatsApp:${escapeHTML(company.whatsapp)}
+Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `Web: <strong>${escapeHTML(company.website)}</strong>` : ""}
 <strong>GSTIN: ${escapeHTML(company.gstin)}</strong>
                 </div>
               </div>
@@ -1300,7 +1370,7 @@ ${company.showWebsite && company.website ? `Web: <strong>${escapeHTML(company.we
             </div>
 
             <!-- CUSTOMER DETAILS -->
-            <div class="inv-customer-card" style="border-left-color: ${designer.primaryColor}; margin-bottom: ${designer.sectionGap}px;">
+            <div class="inv-customer-card" style="border-left-color: ${designer.primaryColor}; margin-bottom:${designer.sectionGap}px;">
               <div class="inv-customer-title" style="color: ${designer.primaryColor};">Billed To</div>
               <div class="inv-customer-name">${escapeHTML(inv.customer.name || "Customer")}</div>
               <div class="inv-customer-details">
@@ -1333,9 +1403,14 @@ ${company.showWebsite && company.website ? `Web: <strong>${escapeHTML(company.we
                 <span class="inv-words-title">Amount in Words:</span>
                 <span class="inv-words-text">${words}</span>
                 
-                <!-- GREETING MESSAGE: PLACED EXACTLY AFTER AMOUNT IN WORDS -->
+                <!-- GREETING MESSAGE: LOCATED AFTER AMOUNT IN WORDS WITH CUSTOM FONT/SIZE/COLOR -->
                 ${designer.greeting.show ? `
-                  <div class="inv-greeting-box" style="background: ${designer.greeting.bg}; color: ${designer.greeting.color}; font-size: 11px; border-left: 3px solid${designer.primaryColor};">
+                  <div class="inv-greeting-box" style="
+                    font-family: ${greetingFontFamily};
+                    font-size: ${greetingFontSize}px;
+                    background: ${designer.greeting.bg};
+                    color: ${designer.greeting.color};
+                    border-left: 3px solid ${designer.primaryColor};">
                     ${escapeHTML(designer.greeting.text)}
                   </div>
                 ` : ""}
@@ -1372,11 +1447,11 @@ ${company.showWebsite && company.website ? `Web: <strong>${escapeHTML(company.we
                 ` : ""}
 
                 <tr style="border-top: 2px solid #CBD5E1;">
-                  <td class="label-col" style="font-size: ${designer.totalSize}px; padding: ${designer.totalPad}px 8px; color: #000; font-weight:800;">
+                  <td class="label-col" style="font-size: ${designer.totalSize}px; padding:${designer.totalPad}px 8px; color: #000; font-weight:800;">
                     Grand Total:
                   </td>
                   <td class="val-col inv-grand-total-box" 
-                      style="font-size: ${designer.totalSize}px; padding: ${designer.totalPad}px 8px; background: ${designer.totalBg}; color: ${designer.totalText}; font-weight:900;">
+                      style="font-size: ${designer.totalSize}px; padding:${designer.totalPad}px 8px; background: ${designer.totalBg}; color:${designer.totalText}; font-weight:900;">
                     ${formatINR(calc.grandTotal)}
                   </td>
                 </tr>
@@ -1385,7 +1460,7 @@ ${company.showWebsite && company.website ? `Web: <strong>${escapeHTML(company.we
 
           </div>
 
-          <!-- BOTTOM SECTION: BANK & AUTHORIZED SIGNATORY -->
+          <!-- BOTTOM SECTION -->
           <div>
             <div class="inv-footer-details">
               ${company.bank && company.bank.show ? `
@@ -1394,7 +1469,7 @@ ${company.showWebsite && company.website ? `Web: <strong>${escapeHTML(company.we
                   Bank: <strong>${escapeHTML(company.bank.bankName)}</strong><br/>
                   A/C Name: ${escapeHTML(company.bank.accountName)}<br/>
                   A/C No: <strong>${escapeHTML(company.bank.accountNumber)}</strong><br/>
-                  IFSC: <strong>${escapeHTML(company.bank.ifsc)}</strong> \vert{} Branch:${escapeHTML(company.bank.branch)}<br/>
+                  IFSC: <strong>${escapeHTML(company.bank.ifsc)}</strong> | Branch: ${escapeHTML(company.bank.branch)}<br/>
                   UPI ID: <strong>${escapeHTML(company.bank.upi)}</strong>
                 </div>
               ` : `<div></div>`}
@@ -1624,8 +1699,11 @@ ${company.showWebsite && company.website ? `Web: <strong>${escapeHTML(company.we
       document.getElementById("num-cell-padding").addEventListener("input", e => { designerSettings.cellPadding = parseInt(e.target.value, 10); saveDesignerToStorage(); updateLivePreview(); });
       document.getElementById("num-section-gap").addEventListener("input", e => { designerSettings.sectionGap = parseInt(e.target.value, 10); saveDesignerToStorage(); updateLivePreview(); });
 
+      // Greeting Specific Designer Events
       document.getElementById("chk-greeting-on").addEventListener("change", e => { designerSettings.greeting.show = e.target.checked; saveDesignerToStorage(); updateLivePreview(); });
       document.getElementById("inp-greeting-text").addEventListener("input", e => { designerSettings.greeting.text = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
+      document.getElementById("sel-greeting-font").addEventListener("change", e => { designerSettings.greeting.fontFamily = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
+      document.getElementById("num-greeting-size").addEventListener("input", e => { designerSettings.greeting.size = parseInt(e.target.value, 10) || 11; saveDesignerToStorage(); updateLivePreview(); });
       document.getElementById("clr-greeting-bg").addEventListener("input", e => { designerSettings.greeting.bg = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
       document.getElementById("clr-greeting-text").addEventListener("input", e => { designerSettings.greeting.color = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
 
@@ -1638,6 +1716,52 @@ ${company.showWebsite && company.website ? `Web: <strong>${escapeHTML(company.we
       document.getElementById("btn-save-invoice").addEventListener("click", saveCurrentInvoice);
       document.getElementById("btn-share-whatsapp").addEventListener("click", shareInvoiceWhatsApp);
       document.getElementById("btn-upload-font").addEventListener("click", handleFontUpload);
+
+      // PULL TO REFRESH TOUCH LOGIC
+      initPullToRefresh();
+    }
+
+    // PULL TO REFRESH IMPLEMENTATION
+    function initPullToRefresh() {
+      const container = document.getElementById("preview-stage-container");
+      const indicator = document.getElementById("pull-refresh-indicator");
+      let startY = 0;
+      let currentY = 0;
+      let isPulling = false;
+
+      container.addEventListener("touchstart", e => {
+        if (container.scrollTop === 0) {
+          startY = e.touches[0].pageY;
+          isPulling = true;
+        }
+      }, { passive: true });
+
+      container.addEventListener("touchmove", e => {
+        if (!isPulling) return;
+        currentY = e.touches[0].pageY;
+        const diff = currentY - startY;
+
+        if (diff > 40 && container.scrollTop === 0) {
+          indicator.classList.add("visible");
+        } else {
+          indicator.classList.remove("visible");
+        }
+      }, { passive: true });
+
+      container.addEventListener("touchend", e => {
+        if (!isPulling) return;
+        const diff = currentY - startY;
+        isPulling = false;
+
+        if (diff > 80 && container.scrollTop === 0) {
+          indicator.classList.add("visible");
+          setTimeout(() => {
+            window.location.reload();
+          }, 450);
+        } else {
+          indicator.classList.remove("visible");
+        }
+      });
     }
 
     function applyZoom(val) {
@@ -1762,11 +1886,11 @@ ${company.showWebsite && company.website ? `Web: <strong>${escapeHTML(company.we
         customFonts.push({ name: fontName, data: e.target.result });
         localStorage.setItem(STORAGE_KEY_FONTS, JSON.stringify(customFonts));
         applyCustomFontsToDOM();
-        refreshFontSelectDropdown();
+        refreshAllFontDropdowns();
         renderCustomFontsList();
         nameInput.value = "";
         fileInput.value = "";
-        alert(`Font '${fontName}' installed.`);
+        alert(`Font '${fontName}' installed successfully.`);
       };
       reader.readAsDataURL(file);
     }
@@ -1779,22 +1903,28 @@ ${company.showWebsite && company.website ? `Web: <strong>${escapeHTML(company.we
       document.getElementById("dynamic-custom-fonts").innerHTML = cssRules;
     }
 
-    function refreshFontSelectDropdown() {
-      const select = document.getElementById("sel-active-font");
-      select.innerHTML = `
-        <option value="system-ui, sans-serif">Standard System Sans</option>
-        <option value="Georgia, serif">Georgia Editorial</option>
-        <option value="'Courier New', monospace">Monospace Classic</option>
-      `;
+    function refreshAllFontDropdowns() {
+      const docSelect = document.getElementById("sel-active-font");
+      const greetSelect = document.getElementById("sel-greeting-font");
 
-      customFonts.forEach(f => {
-        const opt = document.createElement("option");
-        opt.value = `'${f.name}', sans-serif`;
-        opt.textContent = `${f.name} (Custom Installed)`;
-        select.appendChild(opt);
-      });
+      const generateOptions = (includeInherit = false) => {
+        let opts = includeInherit ? `<option value="inherit">Same as Document Font</option>` : ``;
+        opts += `
+          <option value="system-ui, sans-serif">Standard System Sans</option>
+          <option value="Georgia, serif">Georgia Editorial</option>
+          <option value="'Courier New', monospace">Monospace Classic</option>
+        `;
+        customFonts.forEach(f => {
+          opts += `<option value="'${f.name}', sans-serif">${f.name} (Custom)</option>`;
+        });
+        return opts;
+      };
 
-      select.value = designerSettings.fontFamily;
+      docSelect.innerHTML = generateOptions(false);
+      greetSelect.innerHTML = generateOptions(true);
+
+      docSelect.value = designerSettings.fontFamily || "system-ui, sans-serif";
+      greetSelect.value = designerSettings.greeting.fontFamily || "inherit";
     }
 
     function renderCustomFontsList() {
@@ -1820,7 +1950,7 @@ ${company.showWebsite && company.website ? `Web: <strong>${escapeHTML(company.we
       customFonts.splice(index, 1);
       localStorage.setItem(STORAGE_KEY_FONTS, JSON.stringify(customFonts));
       applyCustomFontsToDOM();
-      refreshFontSelectDropdown();
+      refreshAllFontDropdowns();
       renderCustomFontsList();
       updateLivePreview();
     };
@@ -1841,7 +1971,13 @@ ${company.showWebsite && company.website ? `Web: <strong>${escapeHTML(company.we
 
       const savedDesigner = localStorage.getItem(STORAGE_KEY_DESIGNER);
       if (savedDesigner) {
-        try { designerSettings = Object.assign(designerSettings, JSON.parse(savedDesigner)); } catch (e) {}
+        try { 
+          const parsed = JSON.parse(savedDesigner);
+          designerSettings = Object.assign(designerSettings, parsed);
+          if (parsed.greeting) {
+            designerSettings.greeting = Object.assign(designerSettings.greeting, parsed.greeting);
+          }
+        } catch (e) {}
       }
 
       const savedFonts = localStorage.getItem(STORAGE_KEY_FONTS);
@@ -1906,11 +2042,12 @@ ${company.showWebsite && company.website ? `Web: <strong>${escapeHTML(company.we
       if (designerSettings.greeting) {
         document.getElementById("chk-greeting-on").checked = designerSettings.greeting.show;
         document.getElementById("inp-greeting-text").value = designerSettings.greeting.text;
+        document.getElementById("num-greeting-size").value = designerSettings.greeting.size || 11;
         document.getElementById("clr-greeting-bg").value = designerSettings.greeting.bg;
         document.getElementById("clr-greeting-text").value = designerSettings.greeting.color;
       }
 
-      refreshFontSelectDropdown();
+      refreshAllFontDropdowns();
       renderCustomFontsList();
     }
 
