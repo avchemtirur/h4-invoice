@@ -17,7 +17,7 @@
       --primary-dark: #7b1664;
       --gold-h4: #D4AF37;
       --navy-h4: #1E293B;
-      --bg-gray: #334155;
+      --bg-gray: #F1F5F9;
       --border-color: #CBD5E1;
       --text-main: #0F172A;
       --success-green: #15803D;
@@ -82,7 +82,7 @@
 
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* TOP HEADER */
+    /* HEADER */
     header.app-header {
       background-color: var(--primary-h4);
       color: white;
@@ -92,15 +92,19 @@
       align-items: center;
       box-shadow: 0 2px 5px rgba(0,0,0,0.15);
       z-index: 100;
-      min-height: 50px;
+      min-height: 52px;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
     .brand-title {
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       font-weight: 700;
+      letter-spacing: 0.5px;
       display: flex;
       align-items: center;
       gap: 6px;
+      white-space: nowrap;
     }
 
     .brand-badge {
@@ -110,6 +114,46 @@
       padding: 2px 5px;
       border-radius: 4px;
       font-weight: 800;
+    }
+
+    nav.nav-tabs {
+      display: flex;
+      gap: 5px;
+      overflow-x: auto;
+      max-width: 100%;
+      scrollbar-width: none;
+    }
+
+    nav.nav-tabs::-webkit-scrollbar { display: none; }
+
+    .nav-tab-btn {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .nav-tab-btn:hover, .nav-tab-btn.active {
+      background: white;
+      color: var(--primary-h4);
+      border-color: white;
+    }
+
+    .nav-tab-preview {
+      background: #0284C7 !important;
+      border-color: #38BDF8 !important;
+      color: white !important;
+    }
+
+    .nav-tab-preview.active {
+      background: white !important;
+      color: #0284C7 !important;
     }
 
     .header-actions {
@@ -122,7 +166,7 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      padding: 5px 10px;
+      padding: 6px 12px;
       border-radius: 6px;
       font-size: 0.78rem;
       font-weight: 600;
@@ -140,46 +184,99 @@
     .btn-danger { background: var(--danger-red); color: white; }
     .btn-secondary { background: #E2E8F0; color: #1E293B; border: 1px solid #CBD5E1; }
     .btn-wa { background: #25D366; color: white; }
-    .btn-settings { background: #0F172A; color: white; border: 1px solid #475569; }
 
     /* WORKSPACE */
     main.workspace {
       display: flex;
       flex: 1;
-      height: calc(100vh - 50px);
+      height: calc(100vh - 52px);
       overflow: hidden;
       position: relative;
+      background: #F8FAFC;
     }
 
-    /* A4 PREVIEW STAGE (ALWAYS ACTIVE AND VISIBLE) */
-    section.preview-stage {
-      flex: 1;
+    /* FULL WIDTH CONTAINER FOR TABS */
+    .tab-content-container {
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .panel-view {
+      display: none;
+      width: 100%;
+      max-width: 680px;
+      flex-direction: column;
+      gap: 14px;
+      padding-bottom: 40px;
+    }
+
+    .panel-view.active {
+      display: flex;
+    }
+
+    /* PREVIEW PANEL STYLES */
+    #tab-preview.panel-view {
+      max-width: 100% !important;
       height: 100%;
       background: #475569;
-      overflow: auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       padding: 12px 6px;
-      position: relative;
+      align-items: center;
+      overflow-y: auto;
       touch-action: pan-x pan-y;
       -webkit-overflow-scrolling: touch;
       user-select: none;
     }
 
+    .card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 14px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .card-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--primary-h4);
+      border-bottom: 1px solid #E2E8F0;
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .form-group { display: flex; flex-direction: column; gap: 4px; margin-bottom: 8px; }
+    .form-row { display: flex; gap: 8px; }
+    .form-row .form-group { flex: 1; }
+    label { font-size: 0.72rem; font-weight: 600; color: #475569; text-transform: uppercase; }
+    input, select, textarea { padding: 8px 10px; border: 1px solid var(--border-color); border-radius: 5px; font-size: 0.82rem; outline: none; width: 100%; }
+    input:focus, select:focus, textarea:focus { border-color: var(--primary-h4); }
+    .switch-label { display: flex; align-items: center; gap: 6px; font-size: 0.82rem; font-weight: 600; cursor: pointer; }
+    .switch-label input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--primary-h4); }
+    .item-entry-row { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 10px; margin-bottom: 8px; }
+    .item-row-header { display: flex; justify-content: space-between; margin-bottom: 4px; }
+    .item-row-num { font-size: 0.72rem; font-weight: 700; color: #64748B; }
+
+    /* PREVIEW ZOOM TOOLBAR */
     .zoom-toolbar {
       position: sticky;
       top: 0;
       background: rgba(15, 23, 42, 0.9);
       backdrop-filter: blur(4px);
-      padding: 4px 10px;
+      padding: 5px 12px;
       border-radius: 20px;
       display: flex;
       gap: 6px;
       align-items: center;
       color: white;
       z-index: 10;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
 
@@ -187,22 +284,22 @@
       background: transparent;
       border: 1px solid rgba(255,255,255,0.4);
       color: white;
-      padding: 2px 7px;
+      padding: 3px 8px;
       border-radius: 4px;
       cursor: pointer;
-      font-size: 0.72rem;
+      font-size: 0.75rem;
     }
 
     .zoom-btn:hover { background: white; color: black; }
 
     .zoom-level-text {
-      font-size: 0.72rem;
+      font-size: 0.75rem;
       font-weight: 700;
-      min-width: 40px;
+      min-width: 44px;
       text-align: center;
     }
 
-    /* STRICT ONE PAGE A4 INVOICE SHEET */
+    /* A4 CONTAINER */
     .invoice-container-wrapper {
       transform-origin: top center;
       transition: transform 0.08s ease-out;
@@ -224,7 +321,7 @@
       box-sizing: border-box;
     }
 
-    /* INVOICE DESIGN */
+    /* INVOICE PREVIEW CONTENT */
     .inv-header {
       display: flex;
       justify-content: space-between;
@@ -282,122 +379,18 @@
     .inv-bottom-sign { display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-end; width: 170px; text-align: center; font-size: 9.5px; }
     .sign-line { width: 130px; border-bottom: 1px solid #475569; margin-bottom: 4px; }
 
-    /* SETTINGS MODAL / SLIDE-IN DRAWER (Contains Editor, Designer, Company, Fonts, Save) */
-    #settings-drawer {
-      position: fixed;
-      top: 0;
-      right: -100%;
-      width: 480px;
-      max-width: 95vw;
-      height: 100vh;
-      background: #FFFFFF;
-      box-shadow: -4px 0 20px rgba(0,0,0,0.3);
-      z-index: 200;
-      transition: right 0.25s ease-in-out;
-      display: flex;
-      flex-direction: column;
-    }
-
-    #settings-drawer.open {
-      right: 0;
-    }
-
-    .drawer-header {
-      background: var(--primary-h4);
-      color: white;
-      padding: 10px 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .drawer-nav-tabs {
-      display: flex;
-      gap: 4px;
-      background: #F1F5F9;
-      padding: 6px;
-      overflow-x: auto;
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .drawer-tab-btn {
-      padding: 5px 10px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      border-radius: 5px;
-      border: 1px solid #CBD5E1;
-      background: white;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .drawer-tab-btn.active {
-      background: var(--primary-h4);
-      color: white;
-      border-color: var(--primary-h4);
-    }
-
-    .drawer-content {
-      flex: 1;
-      overflow-y: auto;
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .card {
-      background: #FFFFFF;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 12px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-    }
-
-    .card-title {
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--primary-h4);
-      border-bottom: 1px solid #E2E8F0;
-      padding-bottom: 6px;
-      margin-bottom: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .form-group { display: flex; flex-direction: column; gap: 4px; margin-bottom: 8px; }
-    .form-row { display: flex; gap: 8px; }
-    .form-row .form-group { flex: 1; }
-    label { font-size: 0.7rem; font-weight: 600; color: #475569; text-transform: uppercase; }
-    input, select, textarea { padding: 7px 10px; border: 1px solid var(--border-color); border-radius: 5px; font-size: 0.82rem; outline: none; width: 100%; }
-    input:focus, select:focus, textarea:focus { border-color: var(--primary-h4); }
-    .switch-label { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
-    .switch-label input[type="checkbox"] { width: 15px; height: 15px; accent-color: var(--primary-h4); }
-    .item-entry-row { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 9px; margin-bottom: 8px; }
-    .item-row-header { display: flex; justify-content: space-between; margin-bottom: 4px; }
-    .item-row-num { font-size: 0.72rem; font-weight: 700; color: #64748B; }
-
     .history-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
     .history-table th, .history-table td { border: 1px solid var(--border-color); padding: 7px; text-align: left; }
     .history-table th { background: #F1F5F9; font-weight: 700; }
 
-    .drawer-footer {
-      padding: 10px 14px;
-      border-top: 1px solid var(--border-color);
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-      background: #F8FAFC;
-    }
-
-    /* PRINT */
+    /* STRICT A4 PRINT */
     @media print {
       @page { size: A4 portrait; margin: 0; }
       html, body { overflow: visible !important; height: auto !important; background: #FFFFFF !important; }
-      header.app-header, .zoom-toolbar, #pull-refresh-indicator, #settings-drawer { display: none !important; }
-      main.workspace { display: block !important; height: auto !important; }
-      section.preview-stage { display: block !important; padding: 0 !important; background: #FFFFFF !important; }
+      header.app-header, .zoom-toolbar, #pull-refresh-indicator, .tab-content-container > :not(#tab-preview) { display: none !important; }
+      main.workspace { display: block !important; height: auto !important; background: #FFFFFF !important; }
+      .tab-content-container { display: block !important; padding: 0 !important; height: auto !important; }
+      #tab-preview.panel-view { display: block !important; padding: 0 !important; background: #FFFFFF !important; height: auto !important; }
       .invoice-container-wrapper { transform: none !important; }
       .invoice-sheet {
         width: 210mm !important;
@@ -417,69 +410,46 @@
 </head>
 <body>
 
-  <!-- REFRESH BADGE -->
+  <!-- PULL REFRESH -->
   <div id="pull-refresh-indicator">
     <div class="spinner"></div>
     <span>Refreshing...</span>
   </div>
 
-  <!-- HEADER (ONLY PREVIEW & ACTIONS VISIBLE INITIALLY) -->
+  <!-- HEADER -->
   <header class="app-header">
     <div class="brand-title">
       H4 Invoice
       <span class="brand-badge">A4 PRO</span>
     </div>
 
+    <!-- TABS: EDITOR IS ACTIVE FIRST BY DEFAULT -->
+    <nav class="nav-tabs">
+      <button class="nav-tab-btn active" data-tab="tab-editor">📝 Editor</button>
+      <button class="nav-tab-btn nav-tab-preview" data-tab="tab-preview">👁️ Preview</button>
+      <button class="nav-tab-btn" data-tab="tab-designer">🎨 Designer</button>
+      <button class="nav-tab-btn" data-tab="tab-company">🏢 Company</button>
+      <button class="nav-tab-btn" data-tab="tab-fonts">🔤 Fonts</button>
+      <button class="nav-tab-btn" data-tab="tab-history">📜 History</button>
+    </nav>
+
     <div class="header-actions">
-      <button class="btn btn-settings" id="btn-open-settings">⚙️ Settings</button>
-      <button class="btn btn-wa" id="btn-share-whatsapp">WhatsApp</button>
-      <button class="btn btn-white" id="btn-print-invoice">Print/PDF</button>
+      <button class="btn btn-white" id="btn-new-invoice">+ Clean</button>
+      <button class="btn btn-gold" id="btn-save-invoice">💾 Save</button>
+      <button class="btn btn-wa" id="btn-share-whatsapp">WA</button>
+      <button class="btn btn-white" id="btn-print-invoice">Print</button>
     </div>
   </header>
 
-  <!-- WORKSPACE WITH LIVE A4 PREVIEW (ONE PAGE AUTO FIT) -->
+  <!-- WORKSPACE -->
   <main class="workspace">
-    <section class="preview-stage" id="preview-stage-container">
-      <div class="zoom-toolbar">
-        <button class="zoom-btn" id="btn-zoom-out">-</button>
-        <button class="zoom-btn" id="btn-zoom-fit">Auto Fit</button>
-        <button class="zoom-btn" id="btn-zoom-in">+</button>
-        <span class="zoom-level-text" id="lbl-zoom-val">100%</span>
-      </div>
+    <div class="tab-content-container">
 
-      <!-- THE SINGLE SOURCE CONTAINER REQUIRED BY SPEC -->
-      <div class="invoice-container-wrapper" id="invoice-wrapper">
-        <div class="invoice-sheet" id="previewA4Container">
-          <!-- Live rendered by invoiceHTML() -->
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- SLIDE-IN SETTINGS DRAWER (HOUSES EDITOR, DESIGNER, COMPANY, FONTS, SAVE) -->
-  <aside id="settings-drawer">
-    <div class="drawer-header">
-      <strong style="font-size: 0.95rem;">Settings & Editor</strong>
-      <button class="btn btn-white" id="btn-close-settings" style="padding: 2px 8px;">✕ Close</button>
-    </div>
-
-    <div class="drawer-nav-tabs">
-      <button class="drawer-tab-btn active" data-tab="tab-editor">Editor</button>
-      <button class="drawer-tab-btn" data-tab="tab-designer">Designer</button>
-      <button class="drawer-tab-btn" data-tab="tab-company">Company</button>
-      <button class="drawer-tab-btn" data-tab="tab-fonts">Fonts</button>
-      <button class="drawer-tab-btn" data-tab="tab-history">History</button>
-    </div>
-
-    <div class="drawer-content">
-      
-      <!-- 1. EDITOR VIEW -->
+      <!-- 1. TAB: EDITOR (MAIN VIEW ON OPEN) -->
       <div class="panel-view active" id="tab-editor">
+        
         <div class="card">
-          <div class="card-title">
-            Invoice Meta
-            <button class="btn btn-gold" id="btn-new-invoice" style="padding: 2px 6px;">+ Clean New</button>
-          </div>
+          <div class="card-title">Invoice Meta</div>
           <div class="form-row">
             <div class="form-group">
               <label>Invoice Number</label>
@@ -496,7 +466,7 @@
           <div class="card-title">Customer Information</div>
           <div class="form-group">
             <label>Customer Name</label>
-            <input type="text" id="inp-cust-name" placeholder="Enter Customer Name" />
+            <input type="text" id="inp-cust-name" placeholder="Enter Customer / Party Name" />
           </div>
           <div class="form-row">
             <div class="form-group">
@@ -510,14 +480,14 @@
           </div>
           <div class="form-group">
             <label>Address</label>
-            <textarea id="inp-cust-address" rows="2" placeholder="Site, Location"></textarea>
+            <textarea id="inp-cust-address" rows="2" placeholder="Site, Location details"></textarea>
           </div>
         </div>
 
         <div class="card">
           <div class="card-title">Product Items</div>
           <div id="items-list-container"></div>
-          <button class="btn btn-gold" id="btn-add-item" style="width: 100%; margin-top: 8px; justify-content: center; padding: 8px; font-weight: 700;">
+          <button class="btn btn-gold" id="btn-add-item" style="width: 100%; margin-top: 8px; justify-content: center; padding: 10px; font-weight: 700;">
             + Add Item
           </button>
         </div>
@@ -528,7 +498,7 @@
             <label class="switch-label">
               <input type="checkbox" id="chk-discount-on"> Discount
             </label>
-            <select id="sel-discount-type" style="width: 110px;" disabled>
+            <select id="sel-discount-type" style="width: 120px;" disabled>
               <option value="PERCENT">Percentage (%)</option>
               <option value="FLAT" selected>Flat (₹)</option>
             </select>
@@ -539,7 +509,7 @@
             <label class="switch-label">
               <input type="checkbox" id="chk-gst-on"> Enable GST
             </label>
-            <select id="sel-gst-rate" style="width: 110px;" disabled>
+            <select id="sel-gst-rate" style="width: 120px;" disabled>
               <option value="5">5%</option>
               <option value="12">12%</option>
               <option value="18" selected>18%</option>
@@ -549,12 +519,34 @@
         </div>
 
         <div class="card">
-          <div class="card-title">Terms & Notes (Right-aligned in PDF)</div>
-          <textarea id="inp-invoice-notes" rows="2" placeholder="Terms and notes"></textarea>
+          <div class="card-title">Terms & Notes (Right-aligned in Invoice)</div>
+          <textarea id="inp-invoice-notes" rows="2" placeholder="Terms and conditions"></textarea>
+        </div>
+
+        <!-- ACTION BUTTON TO GO TO PREVIEW DIRECTLY -->
+        <button class="btn btn-gold" id="btn-goto-preview" style="width: 100%; padding: 12px; font-size: 0.95rem; font-weight: 800; background: #0284C7; color: white; justify-content: center;">
+          👁️ View Invoice Preview (ഇൻവോയ്സ് കാണുക)
+        </button>
+
+      </div>
+
+      <!-- 2. TAB: PREVIEW (ACCESSED VIA TAB OR PREVIEW BUTTON) -->
+      <div class="panel-view" id="tab-preview">
+        <div class="zoom-toolbar">
+          <button class="zoom-btn" id="btn-zoom-out">-</button>
+          <button class="zoom-btn" id="btn-zoom-fit">Auto Fit</button>
+          <button class="zoom-btn" id="btn-zoom-in">+</button>
+          <span class="zoom-level-text" id="lbl-zoom-val">100%</span>
+        </div>
+
+        <div class="invoice-container-wrapper" id="invoice-wrapper">
+          <div class="invoice-sheet" id="previewA4Container">
+            <!-- Rendered by invoiceHTML() -->
+          </div>
         </div>
       </div>
 
-      <!-- 2. DESIGNER VIEW -->
+      <!-- 3. TAB: DESIGNER -->
       <div class="panel-view" id="tab-designer">
         <div class="card">
           <div class="card-title">
@@ -562,7 +554,7 @@
             <button class="btn btn-secondary" id="btn-reset-designer">Reset</button>
           </div>
           <div class="form-group">
-            <label>General Font</label>
+            <label>General Document Font</label>
             <select id="sel-active-font" class="font-dropdown-target"></select>
           </div>
           <div class="form-row">
@@ -689,7 +681,7 @@
         </div>
       </div>
 
-      <!-- 3. COMPANY VIEW -->
+      <!-- 4. TAB: COMPANY -->
       <div class="panel-view" id="tab-company">
         <div class="card">
           <div class="card-title">Company Profile</div>
@@ -784,7 +776,7 @@ Malappuram, Kerala</textarea>
         </div>
       </div>
 
-      <!-- 4. UNLIMITED FONTS VIEW -->
+      <!-- 5. TAB: FONTS -->
       <div class="panel-view" id="tab-fonts">
         <div class="card">
           <div class="card-title">Add Unlimited Offline Fonts</div>
@@ -805,7 +797,7 @@ Malappuram, Kerala</textarea>
         </div>
       </div>
 
-      <!-- 5. HISTORY VIEW -->
+      <!-- 6. TAB: HISTORY -->
       <div class="panel-view" id="tab-history">
         <div class="card">
           <div class="card-title">Saved Invoices (Edit ക്ലിക്ക് ചെയ്താൽ മാത്രം ലോഡ് ആവും)</div>
@@ -827,20 +819,14 @@ Malappuram, Kerala</textarea>
       </div>
 
     </div>
-
-    <!-- DRAWER FOOTER: SAVE & DONE -->
-    <div class="drawer-footer">
-      <button class="btn btn-gold" id="btn-save-invoice" style="flex:1; justify-content:center;">💾 Save Invoice</button>
-      <button class="btn btn-secondary" id="btn-done-settings" style="flex:1; justify-content:center;">Done (View)</button>
-    </div>
-  </aside>
+  </main>
 
   <script>
-    const STORAGE_KEY_STATE = "h4_app_state_v3";
+    const STORAGE_KEY_STATE = "h4_app_state_v4";
     const STORAGE_KEY_HISTORY = "h4_app_history_v1";
     const STORAGE_KEY_SEQ = "h4_invoice_seq_v1";
 
-    // INDEXEDDB ENGINE FOR OFFLINE FONTS
+    // INDEXEDDB ENGINE
     const DB_NAME = "H4FontsDB";
     const DB_VERSION = 1;
     const STORE_NAME = "fonts";
@@ -909,7 +895,7 @@ Malappuram, Kerala</textarea>
       };
     }
 
-    // UNIFIED APPLICATION STATE ARCHITECTURE
+    // STATE
     const state = {
       invoice: createCleanInvoice(),
       settings: {
@@ -989,7 +975,6 @@ Malappuram, Kerala</textarea>
       }
     }
 
-    // CALCULATION ENGINE
     function computeTotals(inv) {
       let subtotal = 0;
       const calculatedItems = (inv.items || []).map(item => {
@@ -1069,7 +1054,7 @@ Malappuram, Kerala</textarea>
       return (fontVal && fontVal !== "inherit") ? fontVal : defaultFont;
     }
 
-    // THE SINGLE SOURCE INVOICE RENDERER (TERMS & NOTES AT RIGHT SIDE AS REQUESTED)
+    // SINGLE SOURCE OF TRUTH RENDERER
     function invoiceHTML(inv, company, designer) {
       const calc = computeTotals(inv);
       const words = convertNumberToIndianWords(calc.grandTotal);
@@ -1174,9 +1159,8 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
               </tbody>
             </table>
 
-            <!-- TOTALS & SUMMARY: WITH TERMS AND NOTE RIGHT-ALIGNED -->
+            <!-- TOTALS & SUMMARY: TERMS & NOTES ON THE RIGHT -->
             <div class="inv-summary-row">
-              <!-- Left side: Words & Greeting -->
               <div class="inv-words-block">
                 <span class="inv-words-title">Amount in Words:</span>
                 <span class="inv-words-text">${words}</span>${designer.greeting?.show ? `
@@ -1192,7 +1176,6 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
                 ` : ""}
               </div>
 
-              <!-- Right side: Calculation table & Terms & Notes on right -->
               <div style="width: 250px; display: flex; flex-direction: column; align-items: flex-end;">
                 <table class="inv-totals-table">
                   <tr>
@@ -1239,7 +1222,6 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
                   </tr>
                 </table>
 
-                <!-- TERMS AND NOTE ON RIGHT SIDE AS REQUESTED -->
                 ${inv.notes ? `
                   <div style="margin-top: 6px; width: 100%; text-align: right; font-size: 8.5px; color: #475569; background: #F8FAFC; border: 1px dashed #CBD5E1; border-radius: 4px; padding: 5px 8px; white-space: pre-line;">
                     <strong style="color: #1E293B;">Terms & Notes:</strong><br/>${escapeHTML(inv.notes)}
@@ -1277,8 +1259,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
     }
 
     // ==================================================
-    // CRITICAL FUNCTION 1: renderSettings()
-    // Purpose: Synchronize state into the Settings UI safely
+    // 1. renderSettings()
     // ==================================================
     function renderSettings() {
       ensureDesignerSettings();
@@ -1293,7 +1274,6 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
         else el.value = val;
       };
 
-      // Company profile fields
       setVal("inp-comp-legal", s.legalName);
       setVal("inp-comp-brand", s.brandName);
       setVal("inp-comp-address", s.address);
@@ -1305,7 +1285,6 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       setVal("chk-show-website", s.showWebsite);
       setVal("chk-show-logo", s.showLogo);
 
-      // Bank fields
       if (s.bank) {
         setVal("chk-bank-on", s.bank.show);
         setVal("inp-bank-name", s.bank.bankName);
@@ -1316,12 +1295,10 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
         setVal("inp-bank-upi", s.bank.upi);
       }
 
-      // Designer fields
       setVal("sel-active-font", d.fontFamily);
       setVal("clr-primary", d.primaryColor);
       setVal("clr-gold", d.goldColor);
 
-      // Typography specific
       setVal("sel-brand-font", d.brand?.fontFamily);
       setVal("num-brand-size", d.brand?.size);
       setVal("clr-brand-color", d.brand?.color);
@@ -1347,7 +1324,6 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       setVal("clr-greeting-bg", d.greeting?.bg);
       setVal("clr-greeting-text", d.greeting?.color);
 
-      // Editor values
       setVal("inp-inv-num", inv.invoiceNumber);
       setVal("inp-inv-date", inv.date);
       setVal("inp-cust-name", inv.customer?.name);
@@ -1368,16 +1344,13 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
         discVal.disabled = !inv.discount?.enabled;
       }
       const gstRate = document.getElementById("sel-gst-rate");
-      if (gstRate) {
-        gstRate.disabled = !inv.gst?.enabled;
-      }
+      if (gstRate) gstRate.disabled = !inv.gst?.enabled;
 
       renderItemInputs();
     }
 
     // ==================================================
-    // CRITICAL FUNCTION 2: syncDesignerInputsToState()
-    // Purpose: Synchronize user changes from Designer UI into application state
+    // 2. syncDesignerInputsToState()
     // ==================================================
     function syncDesignerInputsToState() {
       ensureDesignerSettings();
@@ -1407,30 +1380,25 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
         return el ? el.checked : fallback;
       };
 
-      // Global Colors & Font
       d.fontFamily = getVal("sel-active-font", d.fontFamily);
       d.primaryColor = getColor("clr-primary", d.primaryColor);
       d.goldColor = getColor("clr-gold", d.goldColor);
 
-      // Brand
       if (!d.brand) d.brand = {};
       d.brand.fontFamily = getVal("sel-brand-font", d.brand.fontFamily || "inherit");
       d.brand.size = getNum("num-brand-size", 19);
       d.brand.color = getColor("clr-brand-color", d.brand.color || "#A8238B");
 
-      // Legal
       if (!d.legal) d.legal = {};
       d.legal.fontFamily = getVal("sel-legal-font", d.legal.fontFamily || "inherit");
       d.legal.size = getNum("num-legal-size", 12);
       d.legal.color = getColor("clr-legal-color", d.legal.color || "#1E293B");
 
-      // Customer
       if (!d.customer) d.customer = {};
       d.customer.fontFamily = getVal("sel-custname-font", d.customer.fontFamily || "inherit");
       d.customer.size = getNum("num-custname-size", 12);
       d.customer.color = getColor("clr-custname-color", d.customer.color || "#0F172A");
 
-      // Grand Total
       if (!d.total) d.total = {};
       d.total.fontFamily = getVal("sel-total-font", d.total.fontFamily || "inherit");
       d.total.size = getNum("num-total-size", 13);
@@ -1438,7 +1406,6 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       d.total.bg = getColor("clr-total-bg", d.total.bg || "#FEF08A");
       d.total.text = getColor("clr-total-text", d.total.text || "#0F172A");
 
-      // Greeting
       if (!d.greeting) d.greeting = {};
       d.greeting.show = getBool("chk-greeting-on", true);
       d.greeting.text = getVal("inp-greeting-text", d.greeting.text);
@@ -1447,15 +1414,13 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       d.greeting.color = getColor("clr-greeting-text", d.greeting.color || "#A8238B");
       d.greeting.bg = getColor("clr-greeting-bg", d.greeting.bg || "#F5F3FF");
 
-      // Trigger standard appearance & preview updates
       applyAppearance();
       refreshOpenPreview();
       saveState();
     }
 
     // ==================================================
-    // CRITICAL FUNCTION 3: refreshOpenPreview()
-    // Purpose: Refresh the open A4 Live Preview using the existing invoice renderer
+    // 3. refreshOpenPreview()
     // ==================================================
     function refreshOpenPreview() {
       const container = document.getElementById("previewA4Container");
@@ -1486,7 +1451,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
     }
 
     function fitZoomToScreen() {
-      const stage = document.getElementById("preview-stage-container");
+      const stage = document.getElementById("tab-preview");
       if (!stage) return;
       const availableWidth = stage.clientWidth - 16;
       const scale = Math.min(1.15, Math.max(0.32, availableWidth / 794));
@@ -1534,7 +1499,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       try {
         localStorage.setItem(STORAGE_KEY_STATE, JSON.stringify(state.settings));
       } catch (e) {
-        console.warn("Save state warning", e);
+        console.warn("Save state error", e);
       }
     }
 
@@ -1624,6 +1589,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
 
       renderSettings();
       refreshOpenPreview();
+      // Switch to Editor on load
       document.querySelector('[data-tab="tab-editor"]').click();
       alert(`Loaded invoice ${invNum}.`);
     };
@@ -1750,37 +1716,42 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
     };
 
     function setupEventListeners() {
-      // SETTINGS DRAWER CONTROLS
-      const drawer = document.getElementById("settings-drawer");
-      document.getElementById("btn-open-settings")?.addEventListener("click", () => {
-        renderSettings();
-        drawer.classList.add("open");
-      });
-      document.getElementById("btn-close-settings")?.addEventListener("click", () => drawer.classList.remove("open"));
-      document.getElementById("btn-done-settings")?.addEventListener("click", () => drawer.classList.remove("open"));
-
-      // DRAWER TABS
-      document.querySelectorAll(".drawer-tab-btn").forEach(btn => {
+      // TAB CONTROLLER
+      document.querySelectorAll(".nav-tab-btn").forEach(btn => {
         btn.addEventListener("click", () => {
-          document.querySelectorAll(".drawer-tab-btn").forEach(b => b.classList.remove("active"));
+          document.querySelectorAll(".nav-tab-btn").forEach(b => b.classList.remove("active"));
           document.querySelectorAll(".panel-view").forEach(p => p.classList.remove("active"));
+
           btn.classList.add("active");
-          const target = document.getElementById(btn.getAttribute("data-tab"));
-          if (target) target.classList.add("active");
-          if (btn.getAttribute("data-tab") === "tab-history") renderHistoryTable();
+          const targetId = btn.getAttribute("data-tab");
+          const targetPanel = document.getElementById(targetId);
+          if (targetPanel) targetPanel.classList.add("active");
+
+          if (targetId === "tab-preview") {
+            refreshOpenPreview();
+            setTimeout(fitZoomToScreen, 50);
+          } else if (targetId === "tab-history") {
+            renderHistoryTable();
+          }
         });
       });
 
-      // CLEAN INVOICE BUTTON
+      // BUTTON AT BOTTOM OF EDITOR TO GO TO PREVIEW
+      document.getElementById("btn-goto-preview")?.addEventListener("click", () => {
+        document.querySelector('[data-tab="tab-preview"]').click();
+      });
+
+      // CLEAN NEW INVOICE
       document.getElementById("btn-new-invoice")?.addEventListener("click", () => {
         if (confirm("Create new clean invoice?")) {
           state.invoice = createCleanInvoice();
           renderSettings();
           refreshOpenPreview();
+          document.querySelector('[data-tab="tab-editor"]').click();
         }
       });
 
-      // EDITOR EVENT LISTENERS -> STATE -> LIVE PREVIEW
+      // EDITOR EVENT LISTENERS
       document.getElementById("inp-inv-num")?.addEventListener("input", e => { state.invoice.invoiceNumber = e.target.value; refreshOpenPreview(); });
       document.getElementById("inp-inv-date")?.addEventListener("change", e => { state.invoice.date = e.target.value; refreshOpenPreview(); });
       document.getElementById("inp-cust-name")?.addEventListener("input", e => { if (!state.invoice.customer) state.invoice.customer = {}; state.invoice.customer.name = e.target.value; refreshOpenPreview(); });
@@ -1815,7 +1786,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
         refreshOpenPreview();
       });
 
-      // ITEM DELEGATION
+      // ITEM ROWS DELEGATION
       const itemContainer = document.getElementById("items-list-container");
       itemContainer?.addEventListener("input", e => {
         const idx = e.target.getAttribute("data-index");
@@ -1837,7 +1808,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
         }
       });
 
-      // DESIGNER INPUTS -> SYNC TO STATE
+      // DESIGNER INPUTS
       const designerInputs = [
         "sel-active-font", "clr-primary", "clr-gold",
         "sel-brand-font", "num-brand-size", "clr-brand-color",
@@ -1865,7 +1836,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       document.getElementById("inp-comp-website")?.addEventListener("input", e => { state.settings.website = e.target.value; saveState(); refreshOpenPreview(); });
       document.getElementById("chk-show-website")?.addEventListener("change", e => { state.settings.showWebsite = e.target.checked; saveState(); refreshOpenPreview(); });
 
-      // BANK
+      // BANK DETAILS
       document.getElementById("chk-bank-on")?.addEventListener("change", e => { if (!state.settings.bank) state.settings.bank = {}; state.settings.bank.show = e.target.checked; saveState(); refreshOpenPreview(); });
       document.getElementById("inp-bank-name")?.addEventListener("input", e => { state.settings.bank.bankName = e.target.value; saveState(); refreshOpenPreview(); });
       document.getElementById("inp-bank-accname")?.addEventListener("input", e => { state.settings.bank.accountName = e.target.value; saveState(); refreshOpenPreview(); });
@@ -1909,7 +1880,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
     }
 
     function initTouchInteractions() {
-      const container = document.getElementById("preview-stage-container");
+      const container = document.getElementById("tab-preview");
       const indicator = document.getElementById("pull-refresh-indicator");
       let startY = 0, currentY = 0, isPulling = false, initialDist = 0, baseZoom = 1;
 
@@ -1990,11 +1961,14 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       renderSettings();
       applyAppearance();
       refreshOpenPreview();
-      fitZoomToScreen();
       initPWA();
     });
 
-    window.addEventListener("resize", fitZoomToScreen);
+    window.addEventListener("resize", () => {
+      if (document.getElementById("tab-preview")?.classList.contains("active")) {
+        fitZoomToScreen();
+      }
+    });
   </script>
 </body>
 </html>
