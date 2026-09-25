@@ -141,7 +141,8 @@
 
     .header-actions {
       display: flex;
-      gap: 8px;
+      gap: 6px;
+      flex-wrap: wrap;
     }
 
     .btn {
@@ -169,6 +170,8 @@
     .btn-secondary:hover { background: #CBD5E1; }
     .btn-wa { background: #25D366; color: white; }
     .btn-wa:hover { background: #1EBE5D; }
+    .btn-preview { background: #0284C7; color: white; }
+    .btn-preview:hover { background: #0369A1; }
 
     /* WORKSPACE SPLIT */
     main.workspace {
@@ -178,16 +181,30 @@
       overflow: hidden;
     }
 
+    /* MOBILE & TABLET: EDITOR AT TOP, PREVIEW AT BOTTOM */
     @media (max-width: 900px) {
+      body {
+        overflow: auto;
+        height: auto;
+      }
       main.workspace {
-        flex-direction: column-reverse;
+        flex-direction: column !important; /* Editor on top, Preview at bottom */
+        height: auto !important;
+        overflow: visible !important;
       }
       section.controls-panel {
         width: 100% !important;
-        height: 50% !important;
+        height: auto !important;
+        border-right: none !important;
+        border-bottom: 2px solid var(--border-color);
+        overflow-y: visible !important;
       }
       section.preview-stage {
-        height: 50% !important;
+        width: 100% !important;
+        min-height: 100vh !important;
+        height: auto !important;
+        overflow: visible !important;
+        padding-bottom: 50px;
       }
     }
 
@@ -705,6 +722,8 @@
     </nav>
 
     <div class="header-actions">
+      <button class="btn btn-white" id="btn-new-invoice" title="Create New Clean Invoice">+ New</button>
+      <button class="btn btn-preview" id="btn-header-preview" title="View Invoice Below">👁️ Preview</button>
       <button class="btn btn-wa" id="btn-share-whatsapp" title="Share via Customer WhatsApp">WhatsApp</button>
       <button class="btn btn-gold" id="btn-save-invoice">Save</button>
       <button class="btn btn-white" id="btn-print-invoice">Print/PDF</button>
@@ -713,7 +732,7 @@
 
   <!-- WORKSPACE -->
   <main class="workspace">
-    <!-- LEFT CONTROLS -->
+    <!-- LEFT/TOP CONTROLS -->
     <section class="controls-panel">
       
       <!-- 1. TAB: EDITOR -->
@@ -739,7 +758,7 @@
           <div class="card-title">Customer Information</div>
           <div class="form-group">
             <label>Customer Name / M/s</label>
-            <input type="text" id="inp-cust-name" placeholder="VAHIDA" />
+            <input type="text" id="inp-cust-name" placeholder="Enter Customer / Company Name" />
           </div>
           <div class="form-row">
             <div class="form-group">
@@ -753,7 +772,7 @@
           </div>
           <div class="form-group">
             <label>Customer Address</label>
-            <textarea id="inp-cust-address" rows="2" placeholder="Commercial Project"></textarea>
+            <textarea id="inp-cust-address" rows="2" placeholder="Site, Street, Location"></textarea>
           </div>
         </div>
 
@@ -799,9 +818,14 @@
           <textarea id="inp-invoice-notes" rows="2" placeholder="Terms and conditions"></textarea>
         </div>
 
+        <!-- Bottom Preview Action Button -->
+        <button class="btn btn-preview" id="btn-bottom-preview" style="width: 100%; padding: 12px; font-size: 0.95rem; font-weight: 700; justify-content: center; margin-bottom: 10px;">
+          👁️ View Invoice Preview (താഴെ കാണുക)
+        </button>
+
       </div>
 
-      <!-- 2. TAB: DESIGNER (GRANULAR STYLING CONTROLS) -->
+      <!-- 2. TAB: DESIGNER -->
       <div class="panel-view" id="tab-designer">
         
         <div class="card">
@@ -1092,7 +1116,7 @@ Malappuram, Kerala</textarea>
       <!-- 5. TAB: HISTORY -->
       <div class="panel-view" id="tab-history">
         <div class="card">
-          <div class="card-title">Saved Invoices</div>
+          <div class="card-title">Saved Invoices (ക്ലിക്ക് ചെയ്ത് Edit ചെയ്യാം)</div>
           <div style="overflow-x: auto;">
             <table class="history-table">
               <thead>
@@ -1112,7 +1136,7 @@ Malappuram, Kerala</textarea>
 
     </section>
 
-    <!-- RIGHT A4 PREVIEW STAGE -->
+    <!-- RIGHT/BOTTOM A4 PREVIEW STAGE -->
     <section class="preview-stage" id="preview-stage-container">
       <div class="zoom-toolbar">
         <button class="zoom-btn" id="btn-zoom-out">-</button>
@@ -1136,9 +1160,7 @@ Malappuram, Kerala</textarea>
     const STORAGE_KEY_HISTORY = "h4_app_history_v1";
     const STORAGE_KEY_SEQ = "h4_invoice_seq_v1";
 
-    // ----------------------------------------------------
-    // INDEXEDDB ENGINE FOR UNLIMITED CUSTOM FONTS
-    // ----------------------------------------------------
+    // INDEXEDDB ENGINE FOR UNLIMITED FONTS
     const DB_NAME = "H4FontsDB";
     const DB_VERSION = 1;
     const STORE_NAME = "fonts";
@@ -1190,33 +1212,34 @@ Malappuram, Kerala</textarea>
       });
     }
 
-    // ----------------------------------------------------
-    // APPLICATION STATE
-    // ----------------------------------------------------
-    let currentInvoice = {
-      invoiceNumber: "",
-      date: new Date().toISOString().substring(0, 10),
-      customer: {
-        name: "VAHIDA",
-        phone: "+91 62358 38382",
-        whatsapp: "916235838382",
-        address: "Commercial Project"
-      },
-      items: [
-        { description: "TILE ADHESIVE", qty: 1, unit: "BAG", rate: 350 },
-        { description: "Product Item", qty: "", unit: "BAG", rate: "" }
-      ],
-      discount: {
-        enabled: true,
-        type: "FLAT",
-        value: 10
-      },
-      gst: {
-        enabled: true,
-        rate: 18
-      },
-      notes: "1. Goods once sold will not be taken back without prior approval.\n2. 100% genuine H4 Construction Solutions quality assurance."
-    };
+    // FUNCTION TO CREATE CLEAN BLANK INVOICE (NO PREVIOUS DATA ON START)
+    function createCleanInvoice() {
+      return {
+        invoiceNumber: getNextInvoiceNumber().number,
+        date: new Date().toISOString().substring(0, 10),
+        customer: {
+          name: "",
+          phone: "",
+          whatsapp: "",
+          address: ""
+        },
+        items: [
+          { description: "", qty: "", unit: "BAG", rate: "" }
+        ],
+        discount: {
+          enabled: false,
+          type: "FLAT",
+          value: 0
+        },
+        gst: {
+          enabled: true,
+          rate: 18
+        },
+        notes: "1. Goods once sold will not be taken back without prior approval.\n2. 100% genuine H4 Construction Solutions quality assurance."
+      };
+    }
+
+    let currentInvoice = createCleanInvoice();
 
     let companySettings = {
       legalName: "AV CHEMTIRUR TRADING LLP",
@@ -1246,29 +1269,10 @@ Malappuram, Kerala</textarea>
       fontFamily: "system-ui, sans-serif",
       primaryColor: "#A8238B",
       goldColor: "#D4AF37",
-      // Granular Typography Settings
-      brand: {
-        fontFamily: "inherit",
-        size: 20,
-        color: "#A8238B"
-      },
-      legal: {
-        fontFamily: "inherit",
-        size: 13,
-        color: "#1E293B"
-      },
-      customer: {
-        fontFamily: "inherit",
-        size: 13,
-        color: "#0F172A"
-      },
-      total: {
-        fontFamily: "inherit",
-        size: 14,
-        text: "#0F172A",
-        bg: "#FEF08A",
-        pad: 6
-      },
+      brand: { fontFamily: "inherit", size: 20, color: "#A8238B" },
+      legal: { fontFamily: "inherit", size: 13, color: "#1E293B" },
+      customer: { fontFamily: "inherit", size: 13, color: "#0F172A" },
+      total: { fontFamily: "inherit", size: 14, text: "#0F172A", bg: "#FEF08A", pad: 6 },
       greeting: {
         show: true,
         text: "Thank You for Choosing H4 Construction Solutions.",
@@ -1288,12 +1292,12 @@ Malappuram, Kerala</textarea>
     let currentZoom = 1.0;
 
     function getNextInvoiceNumber() {
-      let seq = parseInt(localStorage.getItem(STORAGE_KEY_SEQ) || "102", 10);
+      let seq = parseInt(localStorage.getItem(STORAGE_KEY_SEQ) || "101", 10);
       return { number: "H4-INV-" + String(seq).padStart(4, "0"), seq: seq };
     }
 
     function incrementInvoiceNumber() {
-      let seq = parseInt(localStorage.getItem(STORAGE_KEY_SEQ) || "102", 10);
+      let seq = parseInt(localStorage.getItem(STORAGE_KEY_SEQ) || "101", 10);
       localStorage.setItem(STORAGE_KEY_SEQ, (seq + 1).toString());
     }
 
@@ -1392,7 +1396,7 @@ Malappuram, Kerala</textarea>
         <tr>
           <td style="text-align: center; width: 35px;">${idx + 1}</td>
           <td style="width: ${designer.colWidthProduct}%;">
-            <strong>${escapeHTML(it.description || "Product Item")}</strong>
+            <strong>${escapeHTML(it.description || "-")}</strong>
           </td>
           <td style="text-align: right; width: ${designer.colWidthQty}%;">
             ${it.qtyDisplay}
@@ -1658,6 +1662,13 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       });
     }
 
+    function scrollToPreview() {
+      const previewEl = document.getElementById("preview-stage-container");
+      if (previewEl) {
+        previewEl.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+
     function setupEventListeners() {
       document.querySelectorAll(".nav-tab-btn").forEach(btn => {
         btn.addEventListener("click", () => {
@@ -1670,14 +1681,31 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
         });
       });
 
+      // NEW CLEAN INVOICE BUTTON
+      document.getElementById("btn-new-invoice").addEventListener("click", () => {
+        if (confirm("Create new blank invoice? (പുതിയ ഇൻവോയ്സ് ആരംഭിക്കണോ?)")) {
+          currentInvoice = createCleanInvoice();
+          bindEditorInputs();
+          updateLivePreview();
+          document.querySelector('[data-tab="tab-editor"]').click();
+        }
+      });
+
+      // PREVIEW BUTTONS (HEADER & BOTTOM)
+      document.getElementById("btn-header-preview").addEventListener("click", scrollToPreview);
+      document.getElementById("btn-bottom-preview").addEventListener("click", scrollToPreview);
+
+      // Meta Inputs
       document.getElementById("inp-inv-num").addEventListener("input", e => { currentInvoice.invoiceNumber = e.target.value; updateLivePreview(); });
       document.getElementById("inp-inv-date").addEventListener("change", e => { currentInvoice.date = e.target.value; updateLivePreview(); });
 
+      // Customer Inputs
       document.getElementById("inp-cust-name").addEventListener("input", e => { currentInvoice.customer.name = e.target.value; updateLivePreview(); });
       document.getElementById("inp-cust-phone").addEventListener("input", e => { currentInvoice.customer.phone = e.target.value; updateLivePreview(); });
       document.getElementById("inp-cust-whatsapp").addEventListener("input", e => { currentInvoice.customer.whatsapp = e.target.value; });
       document.getElementById("inp-cust-address").addEventListener("input", e => { currentInvoice.customer.address = e.target.value; updateLivePreview(); });
 
+      // Discount & GST
       document.getElementById("chk-discount-on").addEventListener("change", e => {
         currentInvoice.discount.enabled = e.target.checked;
         document.getElementById("sel-discount-type").disabled = !e.target.checked;
@@ -1789,12 +1817,12 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       document.getElementById("num-brand-size").addEventListener("input", e => { designerSettings.brand.size = parseInt(e.target.value, 10) || 20; saveDesignerToStorage(); updateLivePreview(); });
       document.getElementById("clr-brand-color").addEventListener("input", e => { designerSettings.brand.color = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
 
-      // Designer Customization: Legal Name
+      // Designer Customization: Legal
       document.getElementById("sel-legal-font").addEventListener("change", e => { designerSettings.legal.fontFamily = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
       document.getElementById("num-legal-size").addEventListener("input", e => { designerSettings.legal.size = parseInt(e.target.value, 10) || 13; saveDesignerToStorage(); updateLivePreview(); });
       document.getElementById("clr-legal-color").addEventListener("input", e => { designerSettings.legal.color = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
 
-      // Designer Customization: Customer Name
+      // Designer Customization: Customer
       document.getElementById("sel-custname-font").addEventListener("change", e => { designerSettings.customer.fontFamily = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
       document.getElementById("num-custname-size").addEventListener("input", e => { designerSettings.customer.size = parseInt(e.target.value, 10) || 13; saveDesignerToStorage(); updateLivePreview(); });
       document.getElementById("clr-custname-color").addEventListener("input", e => { designerSettings.customer.color = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
@@ -1833,13 +1861,10 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       initTouchInteractions();
     }
 
-    // ----------------------------------------------------
     // MOBILE AUTO-FIT & TOUCH PINCH-TO-ZOOM / PULL TO REFRESH
-    // ----------------------------------------------------
     function fitZoomToScreen() {
       const stage = document.getElementById("preview-stage-container");
       const availableWidth = stage.clientWidth - 20;
-      // 210mm in pixels at 96 DPI is approx 794px
       const scale = Math.min(1.2, Math.max(0.35, availableWidth / 794));
       applyZoom(scale);
     }
@@ -1910,9 +1935,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       });
     }
 
-    // ----------------------------------------------------
-    // INVOICE HISTORY
-    // ----------------------------------------------------
+    // INVOICE HISTORY ENGINE
     function saveCurrentInvoice() {
       const calc = calculateInvoiceTotals(currentInvoice);
       const existingIdx = invoiceHistory.findIndex(h => h.invoiceNumber === currentInvoice.invoiceNumber);
@@ -1954,7 +1977,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
         tr.innerHTML = `
           <td><strong>${escapeHTML(item.invoiceNumber)}</strong></td>
           <td>${escapeHTML(item.date)}</td>
-          <td>${escapeHTML(item.customerName)}</td>
+          <td>${escapeHTML(item.customerName || "-")}</td>
           <td>${formatINR(item.grandTotal)}</td>
           <td style="display:flex; gap:4px;">
             <button class="btn btn-secondary" style="padding: 2px 6px; font-size:0.75rem;" onclick="loadInvoice('${item.invoiceNumber}', false)">Edit</button>
@@ -1966,6 +1989,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       });
     }
 
+    // PREVIOUS INVOICE IS ONLY LOADED WHEN EDIT IS EXPLICITLY CLICKED HERE
     window.loadInvoice = function(invNum, isDuplicate) {
       const record = invoiceHistory.find(h => h.invoiceNumber === invNum);
       if (!record) return;
@@ -1981,6 +2005,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       document.querySelector('[data-tab="tab-editor"]').click();
       bindEditorInputs();
       updateLivePreview();
+      alert(`Loaded invoice ${invNum} for editing.`);
     };
 
     window.deleteInvoice = function(invNum) {
@@ -2000,14 +2025,12 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       }
 
       const calc = calculateInvoiceTotals(currentInvoice);
-      const message = `Hello *${currentInvoice.customer.name}*,\n\nHere is your invoice *${currentInvoice.invoiceNumber}* from *${companySettings.brandName}*.\n\n*Invoice Date:* ${currentInvoice.date}\n*Total Amount:* ₹${calc.grandTotal.toLocaleString("en-IN")}\n\nThank you for choosing H4 Construction Solutions!`;
+      const message = `Hello *${currentInvoice.customer.name || "Customer"}*,\n\nHere is your invoice *${currentInvoice.invoiceNumber}* from *${companySettings.brandName}*.\n\n*Invoice Date:* ${currentInvoice.date}\n*Total Amount:* ₹${calc.grandTotal.toLocaleString("en-IN")}\n\nThank you for choosing H4 Construction Solutions!`;
 
       window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`, "_blank");
     }
 
-    // ----------------------------------------------------
     // UNLIMITED FONT ENGINE (INDEXEDDB)
-    // ----------------------------------------------------
     async function handleFontUpload() {
       const nameInput = document.getElementById("inp-font-name");
       const fileInput = document.getElementById("inp-font-file");
@@ -2069,7 +2092,6 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
         if (currentVal) select.value = currentVal;
       });
 
-      // Synchronize with active state
       document.getElementById("sel-active-font").value = designerSettings.fontFamily || "system-ui, sans-serif";
       document.getElementById("sel-brand-font").value = designerSettings.brand.fontFamily || "inherit";
       document.getElementById("sel-legal-font").value = designerSettings.legal.fontFamily || "inherit";
@@ -2145,10 +2167,6 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
         try { invoiceHistory = JSON.parse(savedHistory); } catch (e) {}
       }
 
-      if (!currentInvoice.invoiceNumber) {
-        currentInvoice.invoiceNumber = getNextInvoiceNumber().number;
-      }
-
       syncCompanyUI();
       syncDesignerUI();
     }
@@ -2181,32 +2199,26 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       document.getElementById("clr-primary").value = designerSettings.primaryColor;
       document.getElementById("clr-gold").value = designerSettings.goldColor;
 
-      // Brand
       document.getElementById("num-brand-size").value = designerSettings.brand.size;
       document.getElementById("clr-brand-color").value = designerSettings.brand.color;
 
-      // Legal
       document.getElementById("num-legal-size").value = designerSettings.legal.size;
       document.getElementById("clr-legal-color").value = designerSettings.legal.color;
 
-      // Customer
       document.getElementById("num-custname-size").value = designerSettings.customer.size;
       document.getElementById("clr-custname-color").value = designerSettings.customer.color;
 
-      // Total
       document.getElementById("clr-total-bg").value = designerSettings.total.bg;
       document.getElementById("clr-total-text").value = designerSettings.total.text;
       document.getElementById("num-total-size").value = designerSettings.total.size;
       document.getElementById("num-total-pad").value = designerSettings.total.pad;
 
-      // Greeting
       document.getElementById("chk-greeting-on").checked = designerSettings.greeting.show;
       document.getElementById("inp-greeting-text").value = designerSettings.greeting.text;
       document.getElementById("num-greeting-size").value = designerSettings.greeting.size;
       document.getElementById("clr-greeting-bg").value = designerSettings.greeting.bg;
       document.getElementById("clr-greeting-text").value = designerSettings.greeting.color;
 
-      // Columns
       document.getElementById("col-toggle-unit").checked = designerSettings.colUnitShow;
       document.getElementById("col-toggle-taxable").checked = designerSettings.colTaxableShow;
       document.getElementById("col-width-product").value = designerSettings.colWidthProduct;
