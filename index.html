@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <title>H4 Direct Invoice</title>
   <meta name="theme-color" content="#A8238B">
   
@@ -84,46 +84,52 @@
     header.app-header {
       background-color: var(--primary-h4);
       color: white;
-      padding: 10px 20px;
+      padding: 10px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       box-shadow: 0 2px 5px rgba(0,0,0,0.15);
       z-index: 100;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
     .brand-title {
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       font-weight: 700;
       letter-spacing: 0.5px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .brand-badge {
       background: var(--gold-h4);
       color: #000;
-      font-size: 0.75rem;
-      padding: 2px 8px;
+      font-size: 0.7rem;
+      padding: 2px 6px;
       border-radius: 4px;
       font-weight: 800;
     }
 
     nav.nav-tabs {
       display: flex;
-      gap: 8px;
+      gap: 6px;
+      overflow-x: auto;
+      max-width: 100%;
+      padding-bottom: 2px;
     }
 
     .nav-tab-btn {
       background: rgba(255, 255, 255, 0.15);
       border: 1px solid rgba(255, 255, 255, 0.3);
       color: white;
-      padding: 6px 14px;
+      padding: 6px 12px;
       border-radius: 6px;
       cursor: pointer;
-      font-size: 0.875rem;
+      font-size: 0.8rem;
       font-weight: 600;
+      white-space: nowrap;
       transition: all 0.2s;
     }
 
@@ -135,55 +141,33 @@
 
     .header-actions {
       display: flex;
-      gap: 10px;
+      gap: 8px;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 6px 14px;
+      padding: 6px 12px;
       border-radius: 6px;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
       border: none;
       transition: background 0.2s, transform 0.1s;
+      white-space: nowrap;
     }
 
-    .btn:active {
-      transform: scale(0.97);
-    }
-
-    .btn-gold {
-      background: var(--gold-h4);
-      color: #000;
-    }
+    .btn:active { transform: scale(0.97); }
+    .btn-gold { background: var(--gold-h4); color: #000; }
     .btn-gold:hover { background: #b89628; }
-
-    .btn-white {
-      background: #FFFFFF;
-      color: var(--primary-h4);
-    }
+    .btn-white { background: #FFFFFF; color: var(--primary-h4); }
     .btn-white:hover { background: #E2E8F0; }
-
-    .btn-danger {
-      background: var(--danger-red);
-      color: white;
-    }
+    .btn-danger { background: var(--danger-red); color: white; }
     .btn-danger:hover { background: #B91C1C; }
-
-    .btn-secondary {
-      background: #E2E8F0;
-      color: #1E293B;
-      border: 1px solid #CBD5E1;
-    }
+    .btn-secondary { background: #E2E8F0; color: #1E293B; border: 1px solid #CBD5E1; }
     .btn-secondary:hover { background: #CBD5E1; }
-
-    .btn-wa {
-      background: #25D366;
-      color: white;
-    }
+    .btn-wa { background: #25D366; color: white; }
     .btn-wa:hover { background: #1EBE5D; }
 
     /* WORKSPACE SPLIT */
@@ -194,16 +178,29 @@
       overflow: hidden;
     }
 
+    @media (max-width: 900px) {
+      main.workspace {
+        flex-direction: column-reverse;
+      }
+      section.controls-panel {
+        width: 100% !important;
+        height: 50% !important;
+      }
+      section.preview-stage {
+        height: 50% !important;
+      }
+    }
+
     /* LEFT CONTROLS PANEL */
     section.controls-panel {
       width: 480px;
       background: #FFFFFF;
       border-right: 1px solid var(--border-color);
       overflow-y: auto;
-      padding: 20px;
+      padding: 16px;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 16px;
     }
 
     .panel-view {
@@ -225,12 +222,12 @@
     }
 
     .card-title {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 700;
       color: var(--primary-h4);
       border-bottom: 1px solid #E2E8F0;
-      padding-bottom: 8px;
-      margin-bottom: 12px;
+      padding-bottom: 6px;
+      margin-bottom: 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -240,12 +237,12 @@
       display: flex;
       flex-direction: column;
       gap: 4px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .form-row {
       display: flex;
-      gap: 10px;
+      gap: 8px;
     }
 
     .form-row .form-group {
@@ -253,17 +250,17 @@
     }
 
     label {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 600;
       color: #475569;
       text-transform: uppercase;
     }
 
     input, select, textarea {
-      padding: 8px 10px;
+      padding: 7px 10px;
       border: 1px solid var(--border-color);
       border-radius: 5px;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       outline: none;
       transition: border 0.2s;
       width: 100%;
@@ -278,7 +275,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 600;
       cursor: pointer;
       text-transform: none;
@@ -297,14 +294,13 @@
       border: 1px solid #E2E8F0;
       border-radius: 6px;
       padding: 10px;
-      margin-bottom: 12px;
-      position: relative;
+      margin-bottom: 10px;
     }
 
     .item-row-header {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .item-row-num {
@@ -313,7 +309,7 @@
       color: #64748B;
     }
 
-    /* RIGHT PREVIEW STAGE */
+    /* RIGHT PREVIEW STAGE (MOBILE AUTO FIT & ZOOM) */
     section.preview-stage {
       flex: 1;
       background: #475569;
@@ -321,25 +317,26 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 24px;
+      padding: 16px 8px;
       position: relative;
-      touch-action: pan-y;
+      touch-action: pan-x pan-y;
       -webkit-overflow-scrolling: touch;
+      user-select: none;
     }
 
     .zoom-toolbar {
       position: sticky;
       top: 0;
-      background: rgba(15, 23, 42, 0.85);
+      background: rgba(15, 23, 42, 0.9);
       backdrop-filter: blur(4px);
-      padding: 6px 14px;
+      padding: 5px 12px;
       border-radius: 20px;
       display: flex;
-      gap: 8px;
+      gap: 6px;
       align-items: center;
       color: white;
       z-index: 10;
-      margin-bottom: 20px;
+      margin-bottom: 14px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
 
@@ -347,16 +344,13 @@
       background: transparent;
       border: 1px solid rgba(255,255,255,0.4);
       color: white;
-      padding: 2px 8px;
+      padding: 2px 7px;
       border-radius: 4px;
       cursor: pointer;
       font-size: 0.75rem;
     }
 
-    .zoom-btn:hover {
-      background: white;
-      color: black;
-    }
+    .zoom-btn:hover { background: white; color: black; }
 
     .zoom-level-text {
       font-size: 0.75rem;
@@ -368,7 +362,7 @@
     /* A4 INVOICE SHEET ARCHITECTURE */
     .invoice-container-wrapper {
       transform-origin: top center;
-      transition: transform 0.15s ease-out;
+      transition: transform 0.08s ease-out;
     }
 
     .invoice-sheet {
@@ -406,16 +400,11 @@
     }
 
     .inv-brand-name {
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--primary-h4);
       line-height: 1.1;
+      margin-bottom: 2px;
     }
 
     .inv-legal-name {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--navy-h4);
       margin-bottom: 4px;
     }
 
@@ -476,12 +465,6 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
       margin-bottom: 3px;
-    }
-
-    .inv-customer-name {
-      font-size: 13px;
-      font-weight: 800;
-      color: #0F172A;
     }
 
     .inv-customer-details {
@@ -558,7 +541,6 @@
     .inv-greeting-box {
       margin-top: 8px;
       padding: 6px 10px;
-      font-weight: 700;
       border-radius: 4px;
       line-height: 1.4;
     }
@@ -587,10 +569,6 @@
 
     .inv-discount-val {
       color: var(--success-green) !important;
-    }
-
-    .inv-grand-total-box {
-      font-weight: 900 !important;
     }
 
     /* BANK & SIGNATURE */
@@ -719,19 +697,17 @@
     </div>
 
     <nav class="nav-tabs">
-      <button class="nav-tab-btn active" data-tab="tab-editor">Invoice Editor</button>
+      <button class="nav-tab-btn active" data-tab="tab-editor">Editor</button>
       <button class="nav-tab-btn" data-tab="tab-designer">Designer</button>
-      <button class="nav-tab-btn" data-tab="tab-company">Company & Bank</button>
+      <button class="nav-tab-btn" data-tab="tab-company">Company</button>
       <button class="nav-tab-btn" data-tab="tab-fonts">Fonts</button>
       <button class="nav-tab-btn" data-tab="tab-history">History</button>
     </nav>
 
     <div class="header-actions">
-      <button class="btn btn-wa" id="btn-share-whatsapp" title="Share via Customer WhatsApp">
-        Share WhatsApp
-      </button>
+      <button class="btn btn-wa" id="btn-share-whatsapp" title="Share via Customer WhatsApp">WhatsApp</button>
       <button class="btn btn-gold" id="btn-save-invoice">Save</button>
-      <button class="btn btn-white" id="btn-print-invoice">Print / PDF</button>
+      <button class="btn btn-white" id="btn-print-invoice">Print/PDF</button>
     </div>
   </header>
 
@@ -825,24 +801,18 @@
 
       </div>
 
-      <!-- 2. TAB: DESIGNER -->
+      <!-- 2. TAB: DESIGNER (GRANULAR STYLING CONTROLS) -->
       <div class="panel-view" id="tab-designer">
         
         <div class="card">
           <div class="card-title">
-            Document Typography
+            Global Layout & Colors
             <button class="btn btn-secondary" id="btn-reset-designer">Reset</button>
           </div>
-          
           <div class="form-group">
-            <label>General Document Font</label>
-            <select id="sel-active-font" class="font-selector-sync">
-              <option value="system-ui, sans-serif">Standard System Sans</option>
-              <option value="Georgia, serif">Georgia Editorial</option>
-              <option value="'Courier New', monospace">Monospace Classic</option>
-            </select>
+            <label>Document General Font</label>
+            <select id="sel-active-font" class="font-dropdown-target"></select>
           </div>
-
           <div class="form-row">
             <div class="form-group">
               <label>H4 Primary Color</label>
@@ -855,9 +825,70 @@
           </div>
         </div>
 
-        <!-- Grand Total Visual Customizer -->
+        <!-- 1. BRAND NAME TYPOGRAPHY -->
+        <div class="card">
+          <div class="card-title">Brand Name Typography</div>
+          <div class="form-group">
+            <label>Brand Font Family</label>
+            <select id="sel-brand-font" class="font-dropdown-target"></select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Font Size (px)</label>
+              <input type="number" id="num-brand-size" value="20" min="12" max="36">
+            </div>
+            <div class="form-group">
+              <label>Font Color</label>
+              <input type="color" id="clr-brand-color" value="#A8238B">
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. COMPANY LEGAL NAME TYPOGRAPHY -->
+        <div class="card">
+          <div class="card-title">Company Legal Name Typography</div>
+          <div class="form-group">
+            <label>Legal Name Font Family</label>
+            <select id="sel-legal-font" class="font-dropdown-target"></select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Font Size (px)</label>
+              <input type="number" id="num-legal-size" value="13" min="9" max="24">
+            </div>
+            <div class="form-group">
+              <label>Font Color</label>
+              <input type="color" id="clr-legal-color" value="#1E293B">
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. CUSTOMER NAME TYPOGRAPHY -->
+        <div class="card">
+          <div class="card-title">Customer Name Typography</div>
+          <div class="form-group">
+            <label>Customer Name Font</label>
+            <select id="sel-custname-font" class="font-dropdown-target"></select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Font Size (px)</label>
+              <input type="number" id="num-custname-size" value="13" min="10" max="26">
+            </div>
+            <div class="form-group">
+              <label>Font Color</label>
+              <input type="color" id="clr-custname-color" value="#0F172A">
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. GRAND TOTAL STYLING -->
         <div class="card">
           <div class="card-title">Grand Total Styling</div>
+          <div class="form-group">
+            <label>Grand Total Font</label>
+            <select id="sel-total-font" class="font-dropdown-target"></select>
+          </div>
           <div class="form-row">
             <div class="form-group">
               <label>Background Color</label>
@@ -871,7 +902,7 @@
           <div class="form-row">
             <div class="form-group">
               <label>Font Size (px)</label>
-              <input type="number" id="num-total-size" value="14" min="10" max="24">
+              <input type="number" id="num-total-size" value="14" min="10" max="26">
             </div>
             <div class="form-group">
               <label>Padding (px)</label>
@@ -880,7 +911,7 @@
           </div>
         </div>
 
-        <!-- CUSTOM GREETING DESIGNER CONTROLS -->
+        <!-- 5. GREETING WORD & BANNER DESIGNER -->
         <div class="card">
           <div class="card-title">Greeting Word & Banner Designer</div>
           <label class="switch-label" style="margin-bottom: 8px;">
@@ -892,12 +923,7 @@
           </div>
           <div class="form-group">
             <label>Greeting Font Family</label>
-            <select id="sel-greeting-font" class="font-selector-sync">
-              <option value="inherit">Same as Document Font</option>
-              <option value="system-ui, sans-serif">Standard System Sans</option>
-              <option value="Georgia, serif">Georgia Editorial</option>
-              <option value="'Courier New', monospace">Monospace Classic</option>
-            </select>
+            <select id="sel-greeting-font" class="font-dropdown-target"></select>
           </div>
           <div class="form-row">
             <div class="form-group">
@@ -909,7 +935,7 @@
               <input type="color" id="clr-greeting-text" value="#A8238B">
             </div>
             <div class="form-group">
-              <label>Background Color</label>
+              <label>Background</label>
               <input type="color" id="clr-greeting-bg" value="#F5F3FF">
             </div>
           </div>
@@ -918,7 +944,6 @@
         <!-- Column Visibility & Widths -->
         <div class="card">
           <div class="card-title">Item Table Columns</div>
-          
           <div class="form-row" style="margin-bottom: 6px;">
             <label class="switch-label" style="flex:1;">
               <input type="checkbox" id="col-toggle-unit" checked> Show Unit
@@ -927,30 +952,14 @@
               <input type="checkbox" id="col-toggle-taxable" checked> Show Taxable
             </label>
           </div>
-
           <div class="form-row">
             <div class="form-group">
-              <label>Product Col Width (%)</label>
+              <label>Product Width (%)</label>
               <input type="number" id="col-width-product" value="45" min="20" max="70">
             </div>
             <div class="form-group">
-              <label>Qty Col Width (%)</label>
+              <label>Qty Width (%)</label>
               <input type="number" id="col-width-qty" value="12" min="5" max="30">
-            </div>
-          </div>
-        </div>
-
-        <!-- Spacing & Heights -->
-        <div class="card">
-          <div class="card-title">Spacing & Layout Margins</div>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Table Cell Padding (px)</label>
-              <input type="number" id="num-cell-padding" value="6" min="2" max="15">
-            </div>
-            <div class="form-group">
-              <label>Section Gap (px)</label>
-              <input type="number" id="num-section-gap" value="12" min="4" max="30">
             </div>
           </div>
         </div>
@@ -959,7 +968,6 @@
 
       <!-- 3. TAB: COMPANY & BANK -->
       <div class="panel-view" id="tab-company">
-        
         <div class="card">
           <div class="card-title">Company Profile</div>
           <div class="form-group">
@@ -996,7 +1004,6 @@ Malappuram, Kerala</textarea>
               <input type="text" id="inp-comp-gstin" value="32AAACH0000A1Z5">
             </div>
           </div>
-          
           <div class="form-row" style="align-items: center; margin-top: 6px;">
             <label class="switch-label" style="flex:1;">
               <input type="checkbox" id="chk-show-website" checked> Display Website
@@ -1007,7 +1014,6 @@ Malappuram, Kerala</textarea>
           </div>
         </div>
 
-        <!-- Logo Module -->
         <div class="card">
           <div class="card-title">Company Logo</div>
           <label class="switch-label" style="margin-bottom: 8px;">
@@ -1022,11 +1028,10 @@ Malappuram, Kerala</textarea>
               <label>Max Height (px)</label>
               <input type="number" id="num-logo-height" value="65" min="30" max="120">
             </div>
-            <button class="btn btn-danger" id="btn-remove-logo" style="margin-top: 14px;">Remove Logo</button>
+            <button class="btn btn-danger" id="btn-remove-logo" style="margin-top: 14px;">Remove</button>
           </div>
         </div>
 
-        <!-- Bank Details -->
         <div class="card">
           <div class="card-title">Bank Details</div>
           <label class="switch-label" style="margin-bottom: 8px;">
@@ -1061,29 +1066,26 @@ Malappuram, Kerala</textarea>
             </div>
           </div>
         </div>
-
       </div>
 
-      <!-- 4. TAB: CUSTOM FONTS -->
+      <!-- 4. TAB: UNLIMITED CUSTOM FONTS -->
       <div class="panel-view" id="tab-fonts">
         <div class="card">
-          <div class="card-title">Add Custom Offline Font</div>
+          <div class="card-title">Add Unlimited Offline Fonts</div>
           <div class="form-group">
-            <label>Font Name</label>
-            <input type="text" id="inp-font-name" placeholder="e.g. ElegantKerala">
+            <label>Font Display Name</label>
+            <input type="text" id="inp-font-name" placeholder="e.g. RoyalKerala, ElegantScript">
           </div>
           <div class="form-group">
             <label>Font File (.ttf, .otf, .woff, .woff2)</label>
             <input type="file" id="inp-font-file" accept=".ttf,.otf,.woff,.woff2">
           </div>
-          <button class="btn btn-gold" id="btn-upload-font">Install Font Offline</button>
+          <button class="btn btn-gold" id="btn-upload-font">Install Font Offline (IndexedDB)</button>
         </div>
 
         <div class="card">
-          <div class="card-title">Installed Custom Fonts</div>
-          <div id="installed-fonts-list">
-            <p style="font-size:0.8rem; color:#64748B;">No custom fonts installed.</p>
-          </div>
+          <div class="card-title">Installed Fonts List</div>
+          <div id="installed-fonts-list"></div>
         </div>
       </div>
 
@@ -1114,12 +1116,10 @@ Malappuram, Kerala</textarea>
     <section class="preview-stage" id="preview-stage-container">
       <div class="zoom-toolbar">
         <button class="zoom-btn" id="btn-zoom-out">-</button>
+        <button class="zoom-btn" data-zoom="50">50%</button>
         <button class="zoom-btn" data-zoom="75">75%</button>
-        <button class="zoom-btn" data-zoom="85">85%</button>
         <button class="zoom-btn" data-zoom="100">100%</button>
-        <button class="zoom-btn" data-zoom="110">110%</button>
-        <button class="zoom-btn" data-zoom="125">125%</button>
-        <button class="zoom-btn" id="btn-zoom-fit">Fit</button>
+        <button class="zoom-btn" id="btn-zoom-fit">Auto Fit</button>
         <button class="zoom-btn" id="btn-zoom-in">+</button>
         <span class="zoom-level-text" id="lbl-zoom-val">100%</span>
       </div>
@@ -1132,11 +1132,67 @@ Malappuram, Kerala</textarea>
 
   <script>
     const STORAGE_KEY_SETTINGS = "h4_app_settings_v1";
-    const STORAGE_KEY_DESIGNER = "h4_app_designer_v1";
+    const STORAGE_KEY_DESIGNER = "h4_app_designer_v2";
     const STORAGE_KEY_HISTORY = "h4_app_history_v1";
-    const STORAGE_KEY_FONTS = "h4_app_fonts_v1";
     const STORAGE_KEY_SEQ = "h4_invoice_seq_v1";
 
+    // ----------------------------------------------------
+    // INDEXEDDB ENGINE FOR UNLIMITED CUSTOM FONTS
+    // ----------------------------------------------------
+    const DB_NAME = "H4FontsDB";
+    const DB_VERSION = 1;
+    const STORE_NAME = "fonts";
+
+    function openFontsDB() {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, DB_VERSION);
+        request.onupgradeneeded = e => {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains(STORE_NAME)) {
+            db.createObjectStore(STORE_NAME, { keyPath: "name" });
+          }
+        };
+        request.onsuccess = e => resolve(e.target.result);
+        request.onerror = e => reject(e.target.error);
+      });
+    }
+
+    async function saveFontToDB(fontObj) {
+      const db = await openFontsDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, "readwrite");
+        const store = tx.objectStore(STORE_NAME);
+        store.put(fontObj);
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => reject(tx.error);
+      });
+    }
+
+    async function getAllFontsFromDB() {
+      const db = await openFontsDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, "readonly");
+        const store = tx.objectStore(STORE_NAME);
+        const req = store.getAll();
+        req.onsuccess = () => resolve(req.result || []);
+        req.onerror = () => reject(req.error);
+      });
+    }
+
+    async function deleteFontFromDB(fontName) {
+      const db = await openFontsDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, "readwrite");
+        const store = tx.objectStore(STORE_NAME);
+        store.delete(fontName);
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => reject(tx.error);
+      });
+    }
+
+    // ----------------------------------------------------
+    // APPLICATION STATE
+    // ----------------------------------------------------
     let currentInvoice = {
       invoiceNumber: "",
       date: new Date().toISOString().substring(0, 10),
@@ -1190,24 +1246,41 @@ Malappuram, Kerala</textarea>
       fontFamily: "system-ui, sans-serif",
       primaryColor: "#A8238B",
       goldColor: "#D4AF37",
-      totalBg: "#FEF08A",
-      totalText: "#0F172A",
-      totalSize: 14,
-      totalPad: 6,
-      colUnitShow: true,
-      colTaxableShow: true,
-      colWidthProduct: 45,
-      colWidthQty: 12,
-      cellPadding: 6,
-      sectionGap: 12,
+      // Granular Typography Settings
+      brand: {
+        fontFamily: "inherit",
+        size: 20,
+        color: "#A8238B"
+      },
+      legal: {
+        fontFamily: "inherit",
+        size: 13,
+        color: "#1E293B"
+      },
+      customer: {
+        fontFamily: "inherit",
+        size: 13,
+        color: "#0F172A"
+      },
+      total: {
+        fontFamily: "inherit",
+        size: 14,
+        text: "#0F172A",
+        bg: "#FEF08A",
+        pad: 6
+      },
       greeting: {
         show: true,
         text: "Thank You for Choosing H4 Construction Solutions.",
         fontFamily: "inherit",
         size: 11,
-        bg: "#F5F3FF",
-        color: "#A8238B"
-      }
+        color: "#A8238B",
+        bg: "#F5F3FF"
+      },
+      colUnitShow: true,
+      colTaxableShow: true,
+      colWidthProduct: 45,
+      colWidthQty: 12
     };
 
     let invoiceHistory = [];
@@ -1270,7 +1343,6 @@ Malappuram, Kerala</textarea>
       };
     }
 
-    // AMOUNT IN WORDS: 'RUPEES' BEFORE 'ONLY'
     function convertNumberToIndianWords(amount) {
       const num = Math.floor(amount);
       if (num === 0) return "Zero Rupees Only";
@@ -1298,7 +1370,6 @@ Malappuram, Kerala</textarea>
       if (thousand > 0) words += inWords(thousand) + " Thousand ";
       if (remainder > 0) words += inWords(remainder);
 
-      // 'Rupees' comes immediately before 'Only'
       return words.trim() + " Rupees Only";
     }
 
@@ -1309,43 +1380,57 @@ Malappuram, Kerala</textarea>
       });
     }
 
+    function resolveFont(fontVal, defaultFont) {
+      return (fontVal && fontVal !== "inherit") ? fontVal : defaultFont;
+    }
+
     function renderInvoiceHTML(inv, company, designer) {
       const calc = calculateInvoiceTotals(inv);
       const words = convertNumberToIndianWords(calc.grandTotal);
 
-      const rowsHTML = calc.items.map((it, idx) => {
-        return `
-          <tr>
-            <td style="text-align: center; width: 35px;">${idx + 1}</td>
-            <td style="width: ${designer.colWidthProduct}%;">
-              <strong>${escapeHTML(it.description || "Product Item")}</strong>
-            </td>
-            <td style="text-align: right; width: ${designer.colWidthQty}%;">
-              ${it.qtyDisplay}
-            </td>
-            ${designer.colUnitShow ? `<td style="text-align: center; width: 50px;">${escapeHTML(it.unit || "BAG")}</td>` : ""}
-            <td style="text-align: right;">${it.rateDisplay !== '-' ? formatINR(it.rateDisplay) : '-'}</td>
-            ${designer.colTaxableShow ? `<td style="text-align: right;">${formatINR(it.amount)}</td>` : ""}
-            <td style="text-align: right; font-weight: 700;">${formatINR(it.amount)}</td>
-          </tr>
-        `;
-      }).join("");
+      const rowsHTML = calc.items.map((it, idx) => `
+        <tr>
+          <td style="text-align: center; width: 35px;">${idx + 1}</td>
+          <td style="width: ${designer.colWidthProduct}%;">
+            <strong>${escapeHTML(it.description || "Product Item")}</strong>
+          </td>
+          <td style="text-align: right; width: ${designer.colWidthQty}%;">
+            ${it.qtyDisplay}
+          </td>
+          ${designer.colUnitShow ? `<td style="text-align: center; width: 50px;">${escapeHTML(it.unit || "BAG")}</td>` : ""}
+          <td style="text-align: right;">${it.rateDisplay !== '-' ? formatINR(it.rateDisplay) : '-'}</td>
+          ${designer.colTaxableShow ? `<td style="text-align: right;">${formatINR(it.amount)}</td>` : ""}
+          <td style="text-align: right; font-weight: 700;">${formatINR(it.amount)}</td>
+        </tr>
+      `).join("");
 
-      // Specific Greeting styling
-      const greetingFontFamily = (designer.greeting && designer.greeting.fontFamily && designer.greeting.fontFamily !== "inherit")
-        ? designer.greeting.fontFamily
-        : designer.fontFamily;
-      const greetingFontSize = (designer.greeting && designer.greeting.size) ? designer.greeting.size : 11;
+      const brandFont = resolveFont(designer.brand.fontFamily, designer.fontFamily);
+      const legalFont = resolveFont(designer.legal.fontFamily, designer.fontFamily);
+      const custFont = resolveFont(designer.customer.fontFamily, designer.fontFamily);
+      const totalFont = resolveFont(designer.total.fontFamily, designer.fontFamily);
+      const greetingFont = resolveFont(designer.greeting.fontFamily, designer.fontFamily);
 
       return `
         <div style="font-family: ${designer.fontFamily}; display: flex; flex-direction: column; height: 100%; justify-content: space-between;">
           <div>
             <!-- INVOICE HEADER -->
-            <div class="inv-header" style="border-bottom-color: ${designer.primaryColor}; margin-bottom:${designer.sectionGap}px;">
+            <div class="inv-header" style="border-bottom-color: ${designer.primaryColor};">
               <div class="inv-company-block">
                 ${company.showLogo && company.logo ? `<img src="${company.logo}" class="inv-logo-img" style="max-height: ${company.logoHeight}px;" alt="Logo" />` : ""}
-                <div class="inv-brand-name" style="color: ${designer.primaryColor};">${escapeHTML(company.brandName)}</div>
-                <div class="inv-legal-name">${escapeHTML(company.legalName)}</div>
+                <div class="inv-brand-name" style="
+                  font-family: ${brandFont};
+                  font-size: ${designer.brand.size}px;
+                  color: ${designer.brand.color};
+                  font-weight: 800;">
+                  ${escapeHTML(company.brandName)}
+                </div>
+                <div class="inv-legal-name" style="
+                  font-family: ${legalFont};
+                  font-size: ${designer.legal.size}px;
+                  color: ${designer.legal.color};
+                  font-weight: 700;">
+                  ${escapeHTML(company.legalName)}
+                </div>
                 <div class="inv-company-details">
 ${escapeHTML(company.address)}
 Phone: ${escapeHTML(company.phone)} \vert{} WhatsApp:${escapeHTML(company.whatsapp)}
@@ -1370,9 +1455,15 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
             </div>
 
             <!-- CUSTOMER DETAILS -->
-            <div class="inv-customer-card" style="border-left-color: ${designer.primaryColor}; margin-bottom:${designer.sectionGap}px;">
+            <div class="inv-customer-card" style="border-left-color: ${designer.primaryColor};">
               <div class="inv-customer-title" style="color: ${designer.primaryColor};">Billed To</div>
-              <div class="inv-customer-name">${escapeHTML(inv.customer.name || "Customer")}</div>
+              <div class="inv-customer-name" style="
+                font-family: ${custFont};
+                font-size: ${designer.customer.size}px;
+                color: ${designer.customer.color};
+                font-weight: 800;">
+                ${escapeHTML(inv.customer.name || "Customer")}
+              </div>
               <div class="inv-customer-details">
                 ${escapeHTML(inv.customer.address || "")}<br/>
                 ${inv.customer.phone ? `Contact: ${escapeHTML(inv.customer.phone)}` : ""}
@@ -1380,7 +1471,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
             </div>
 
             <!-- ITEMS TABLE -->
-            <table class="inv-items-table" style="margin-bottom: ${designer.sectionGap}px;">
+            <table class="inv-items-table">
               <thead>
                 <tr style="background: ${designer.primaryColor};">
                   <th style="width: 35px; text-align: center;">#</th>
@@ -1398,18 +1489,16 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
             </table>
 
             <!-- TOTALS & SUMMARY SECTION -->
-            <div class="inv-summary-row" style="margin-bottom: ${designer.sectionGap}px;">
+            <div class="inv-summary-row">
               <div class="inv-words-block">
                 <span class="inv-words-title">Amount in Words:</span>
-                <span class="inv-words-text">${words}</span>
-                
-                <!-- GREETING MESSAGE: LOCATED AFTER AMOUNT IN WORDS WITH CUSTOM FONT/SIZE/COLOR -->
-                ${designer.greeting.show ? `
+                <span class="inv-words-text">${words}</span>${designer.greeting.show ? `
                   <div class="inv-greeting-box" style="
-                    font-family: ${greetingFontFamily};
-                    font-size: ${greetingFontSize}px;
+                    font-family: ${greetingFont};
+                    font-size: ${designer.greeting.size}px;
                     background: ${designer.greeting.bg};
                     color: ${designer.greeting.color};
+                    font-weight: 700;
                     border-left: 3px solid ${designer.primaryColor};">
                     ${escapeHTML(designer.greeting.text)}
                   </div>
@@ -1447,11 +1536,21 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
                 ` : ""}
 
                 <tr style="border-top: 2px solid #CBD5E1;">
-                  <td class="label-col" style="font-size: ${designer.totalSize}px; padding:${designer.totalPad}px 8px; color: #000; font-weight:800;">
+                  <td class="label-col" style="
+                    font-family: ${totalFont};
+                    font-size: ${designer.total.size}px;
+                    padding: ${designer.total.pad}px 8px;
+                    color: #000;
+                    font-weight:800;">
                     Grand Total:
                   </td>
-                  <td class="val-col inv-grand-total-box" 
-                      style="font-size: ${designer.totalSize}px; padding:${designer.totalPad}px 8px; background: ${designer.totalBg}; color:${designer.totalText}; font-weight:900;">
+                  <td class="val-col" style="
+                    font-family: ${totalFont};
+                    font-size: ${designer.total.size}px;
+                    padding: ${designer.total.pad}px 8px;
+                    background: ${designer.total.bg};
+                    color: ${designer.total.text};
+                    font-weight: 900;">
                     ${formatINR(calc.grandTotal)}
                   </td>
                 </tr>
@@ -1564,11 +1663,9 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
         btn.addEventListener("click", () => {
           document.querySelectorAll(".nav-tab-btn").forEach(b => b.classList.remove("active"));
           document.querySelectorAll(".panel-view").forEach(pv => pv.classList.remove("active"));
-          
           btn.classList.add("active");
           const targetTab = btn.getAttribute("data-tab");
           document.getElementById(targetTab).classList.add("active");
-
           if (targetTab === "tab-history") renderHistoryTable();
         });
       });
@@ -1636,8 +1733,8 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       document.querySelectorAll(".zoom-btn[data-zoom]").forEach(btn => {
         btn.addEventListener("click", () => applyZoom(parseInt(btn.getAttribute("data-zoom"), 10) / 100));
       });
-      document.getElementById("btn-zoom-in").addEventListener("click", () => applyZoom(currentZoom + 0.1));
-      document.getElementById("btn-zoom-out").addEventListener("click", () => applyZoom(Math.max(0.4, currentZoom - 0.1)));
+      document.getElementById("btn-zoom-in").addEventListener("click", () => applyZoom(currentZoom + 0.15));
+      document.getElementById("btn-zoom-out").addEventListener("click", () => applyZoom(Math.max(0.3, currentZoom - 0.15)));
       document.getElementById("btn-zoom-fit").addEventListener("click", fitZoomToScreen);
 
       // Company Settings
@@ -1682,30 +1779,46 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
         updateLivePreview();
       });
 
-      // Designer Customization
+      // Designer Customization: Global
       document.getElementById("sel-active-font").addEventListener("change", e => { designerSettings.fontFamily = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
       document.getElementById("clr-primary").addEventListener("input", e => { designerSettings.primaryColor = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
       document.getElementById("clr-gold").addEventListener("input", e => { designerSettings.goldColor = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
-      document.getElementById("clr-total-bg").addEventListener("input", e => { designerSettings.totalBg = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
-      document.getElementById("clr-total-text").addEventListener("input", e => { designerSettings.totalText = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
-      document.getElementById("num-total-size").addEventListener("input", e => { designerSettings.totalSize = parseInt(e.target.value, 10); saveDesignerToStorage(); updateLivePreview(); });
-      document.getElementById("num-total-pad").addEventListener("input", e => { designerSettings.totalPad = parseInt(e.target.value, 10); saveDesignerToStorage(); updateLivePreview(); });
 
-      document.getElementById("col-toggle-unit").addEventListener("change", e => { designerSettings.colUnitShow = e.target.checked; saveDesignerToStorage(); updateLivePreview(); });
-      document.getElementById("col-toggle-taxable").addEventListener("change", e => { designerSettings.colTaxableShow = e.target.checked; saveDesignerToStorage(); updateLivePreview(); });
-      document.getElementById("col-width-product").addEventListener("input", e => { designerSettings.colWidthProduct = parseInt(e.target.value, 10); saveDesignerToStorage(); updateLivePreview(); });
-      document.getElementById("col-width-qty").addEventListener("input", e => { designerSettings.colWidthQty = parseInt(e.target.value, 10); saveDesignerToStorage(); updateLivePreview(); });
+      // Designer Customization: Brand
+      document.getElementById("sel-brand-font").addEventListener("change", e => { designerSettings.brand.fontFamily = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
+      document.getElementById("num-brand-size").addEventListener("input", e => { designerSettings.brand.size = parseInt(e.target.value, 10) || 20; saveDesignerToStorage(); updateLivePreview(); });
+      document.getElementById("clr-brand-color").addEventListener("input", e => { designerSettings.brand.color = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
 
-      document.getElementById("num-cell-padding").addEventListener("input", e => { designerSettings.cellPadding = parseInt(e.target.value, 10); saveDesignerToStorage(); updateLivePreview(); });
-      document.getElementById("num-section-gap").addEventListener("input", e => { designerSettings.sectionGap = parseInt(e.target.value, 10); saveDesignerToStorage(); updateLivePreview(); });
+      // Designer Customization: Legal Name
+      document.getElementById("sel-legal-font").addEventListener("change", e => { designerSettings.legal.fontFamily = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
+      document.getElementById("num-legal-size").addEventListener("input", e => { designerSettings.legal.size = parseInt(e.target.value, 10) || 13; saveDesignerToStorage(); updateLivePreview(); });
+      document.getElementById("clr-legal-color").addEventListener("input", e => { designerSettings.legal.color = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
 
-      // Greeting Specific Designer Events
+      // Designer Customization: Customer Name
+      document.getElementById("sel-custname-font").addEventListener("change", e => { designerSettings.customer.fontFamily = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
+      document.getElementById("num-custname-size").addEventListener("input", e => { designerSettings.customer.size = parseInt(e.target.value, 10) || 13; saveDesignerToStorage(); updateLivePreview(); });
+      document.getElementById("clr-custname-color").addEventListener("input", e => { designerSettings.customer.color = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
+
+      // Designer Customization: Total
+      document.getElementById("sel-total-font").addEventListener("change", e => { designerSettings.total.fontFamily = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
+      document.getElementById("clr-total-bg").addEventListener("input", e => { designerSettings.total.bg = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
+      document.getElementById("clr-total-text").addEventListener("input", e => { designerSettings.total.text = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
+      document.getElementById("num-total-size").addEventListener("input", e => { designerSettings.total.size = parseInt(e.target.value, 10) || 14; saveDesignerToStorage(); updateLivePreview(); });
+      document.getElementById("num-total-pad").addEventListener("input", e => { designerSettings.total.pad = parseInt(e.target.value, 10) || 6; saveDesignerToStorage(); updateLivePreview(); });
+
+      // Designer Customization: Greeting
       document.getElementById("chk-greeting-on").addEventListener("change", e => { designerSettings.greeting.show = e.target.checked; saveDesignerToStorage(); updateLivePreview(); });
       document.getElementById("inp-greeting-text").addEventListener("input", e => { designerSettings.greeting.text = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
       document.getElementById("sel-greeting-font").addEventListener("change", e => { designerSettings.greeting.fontFamily = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
       document.getElementById("num-greeting-size").addEventListener("input", e => { designerSettings.greeting.size = parseInt(e.target.value, 10) || 11; saveDesignerToStorage(); updateLivePreview(); });
       document.getElementById("clr-greeting-bg").addEventListener("input", e => { designerSettings.greeting.bg = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
       document.getElementById("clr-greeting-text").addEventListener("input", e => { designerSettings.greeting.color = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
+
+      // Columns
+      document.getElementById("col-toggle-unit").addEventListener("change", e => { designerSettings.colUnitShow = e.target.checked; saveDesignerToStorage(); updateLivePreview(); });
+      document.getElementById("col-toggle-taxable").addEventListener("change", e => { designerSettings.colTaxableShow = e.target.checked; saveDesignerToStorage(); updateLivePreview(); });
+      document.getElementById("col-width-product").addEventListener("input", e => { designerSettings.colWidthProduct = parseInt(e.target.value, 10); saveDesignerToStorage(); updateLivePreview(); });
+      document.getElementById("col-width-qty").addEventListener("input", e => { designerSettings.colWidthQty = parseInt(e.target.value, 10); saveDesignerToStorage(); updateLivePreview(); });
 
       document.getElementById("btn-reset-designer").addEventListener("click", () => {
         localStorage.removeItem(STORAGE_KEY_DESIGNER);
@@ -1717,51 +1830,18 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       document.getElementById("btn-share-whatsapp").addEventListener("click", shareInvoiceWhatsApp);
       document.getElementById("btn-upload-font").addEventListener("click", handleFontUpload);
 
-      // PULL TO REFRESH TOUCH LOGIC
-      initPullToRefresh();
+      initTouchInteractions();
     }
 
-    // PULL TO REFRESH IMPLEMENTATION
-    function initPullToRefresh() {
-      const container = document.getElementById("preview-stage-container");
-      const indicator = document.getElementById("pull-refresh-indicator");
-      let startY = 0;
-      let currentY = 0;
-      let isPulling = false;
-
-      container.addEventListener("touchstart", e => {
-        if (container.scrollTop === 0) {
-          startY = e.touches[0].pageY;
-          isPulling = true;
-        }
-      }, { passive: true });
-
-      container.addEventListener("touchmove", e => {
-        if (!isPulling) return;
-        currentY = e.touches[0].pageY;
-        const diff = currentY - startY;
-
-        if (diff > 40 && container.scrollTop === 0) {
-          indicator.classList.add("visible");
-        } else {
-          indicator.classList.remove("visible");
-        }
-      }, { passive: true });
-
-      container.addEventListener("touchend", e => {
-        if (!isPulling) return;
-        const diff = currentY - startY;
-        isPulling = false;
-
-        if (diff > 80 && container.scrollTop === 0) {
-          indicator.classList.add("visible");
-          setTimeout(() => {
-            window.location.reload();
-          }, 450);
-        } else {
-          indicator.classList.remove("visible");
-        }
-      });
+    // ----------------------------------------------------
+    // MOBILE AUTO-FIT & TOUCH PINCH-TO-ZOOM / PULL TO REFRESH
+    // ----------------------------------------------------
+    function fitZoomToScreen() {
+      const stage = document.getElementById("preview-stage-container");
+      const availableWidth = stage.clientWidth - 20;
+      // 210mm in pixels at 96 DPI is approx 794px
+      const scale = Math.min(1.2, Math.max(0.35, availableWidth / 794));
+      applyZoom(scale);
     }
 
     function applyZoom(val) {
@@ -1770,13 +1850,69 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       document.getElementById("lbl-zoom-val").innerText = Math.round(currentZoom * 100) + "%";
     }
 
-    function fitZoomToScreen() {
-      const stage = document.querySelector(".preview-stage");
-      const availableWidth = stage.clientWidth - 48;
-      const fitRatio = availableWidth / 794;
-      applyZoom(Math.min(1.0, Math.max(0.4, fitRatio)));
+    function initTouchInteractions() {
+      const container = document.getElementById("preview-stage-container");
+      const indicator = document.getElementById("pull-refresh-indicator");
+      
+      let startY = 0;
+      let currentY = 0;
+      let isPulling = false;
+      let initialDist = 0;
+      let baseZoom = 1;
+
+      // Pinch to Zoom
+      container.addEventListener("touchstart", e => {
+        if (e.touches.length === 2) {
+          initialDist = Math.hypot(
+            e.touches[0].pageX - e.touches[1].pageX,
+            e.touches[0].pageY - e.touches[1].pageY
+          );
+          baseZoom = currentZoom;
+        } else if (e.touches.length === 1 && container.scrollTop === 0) {
+          startY = e.touches[0].pageY;
+          isPulling = true;
+        }
+      }, { passive: true });
+
+      container.addEventListener("touchmove", e => {
+        if (e.touches.length === 2 && initialDist > 0) {
+          const dist = Math.hypot(
+            e.touches[0].pageX - e.touches[1].pageX,
+            e.touches[0].pageY - e.touches[1].pageY
+          );
+          const factor = dist / initialDist;
+          applyZoom(Math.min(2.5, Math.max(0.3, baseZoom * factor)));
+        } else if (e.touches.length === 1 && isPulling) {
+          currentY = e.touches[0].pageY;
+          const diff = currentY - startY;
+          if (diff > 40 && container.scrollTop === 0) {
+            indicator.classList.add("visible");
+          } else {
+            indicator.classList.remove("visible");
+          }
+        }
+      }, { passive: true });
+
+      container.addEventListener("touchend", e => {
+        if (isPulling) {
+          const diff = currentY - startY;
+          isPulling = false;
+          if (diff > 80 && container.scrollTop === 0) {
+            indicator.classList.add("visible");
+            setTimeout(() => window.location.reload(), 400);
+          } else {
+            indicator.classList.remove("visible");
+          }
+        }
+        if (e.touches.length < 2) {
+          initialDist = 0;
+        }
+      });
     }
 
+    // ----------------------------------------------------
+    // INVOICE HISTORY
+    // ----------------------------------------------------
     function saveCurrentInvoice() {
       const calc = calculateInvoiceTotals(currentInvoice);
       const existingIdx = invoiceHistory.findIndex(h => h.invoiceNumber === currentInvoice.invoiceNumber);
@@ -1869,11 +2005,14 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`, "_blank");
     }
 
-    function handleFontUpload() {
+    // ----------------------------------------------------
+    // UNLIMITED FONT ENGINE (INDEXEDDB)
+    // ----------------------------------------------------
+    async function handleFontUpload() {
       const nameInput = document.getElementById("inp-font-name");
       const fileInput = document.getElementById("inp-font-file");
 
-      const fontName = nameInput.value.trim();
+      const fontName = nameInput.value.trim().replace(/['"]/g, "");
       const file = fileInput.files[0];
 
       if (!fontName || !file) {
@@ -1882,15 +2021,20 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       }
 
       const reader = new FileReader();
-      reader.onload = e => {
-        customFonts.push({ name: fontName, data: e.target.result });
-        localStorage.setItem(STORAGE_KEY_FONTS, JSON.stringify(customFonts));
-        applyCustomFontsToDOM();
-        refreshAllFontDropdowns();
-        renderCustomFontsList();
-        nameInput.value = "";
-        fileInput.value = "";
-        alert(`Font '${fontName}' installed successfully.`);
+      reader.onload = async e => {
+        const fontObj = { name: fontName, data: e.target.result };
+        try {
+          await saveFontToDB(fontObj);
+          customFonts = await getAllFontsFromDB();
+          applyCustomFontsToDOM();
+          refreshAllFontDropdowns();
+          renderCustomFontsList();
+          nameInput.value = "";
+          fileInput.value = "";
+          alert(`Font '${fontName}' installed offline via IndexedDB.`);
+        } catch (err) {
+          alert("Error saving font: " + err.message);
+        }
       };
       reader.readAsDataURL(file);
     }
@@ -1904,27 +2048,34 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
     }
 
     function refreshAllFontDropdowns() {
-      const docSelect = document.getElementById("sel-active-font");
-      const greetSelect = document.getElementById("sel-greeting-font");
+      const dropdowns = document.querySelectorAll(".font-dropdown-target");
 
-      const generateOptions = (includeInherit = false) => {
-        let opts = includeInherit ? `<option value="inherit">Same as Document Font</option>` : ``;
-        opts += `
+      dropdowns.forEach(select => {
+        const currentVal = select.value;
+        const isNotGlobal = select.id !== "sel-active-font";
+
+        let html = isNotGlobal ? `<option value="inherit">Inherit Document Font</option>` : ``;
+        html += `
           <option value="system-ui, sans-serif">Standard System Sans</option>
           <option value="Georgia, serif">Georgia Editorial</option>
           <option value="'Courier New', monospace">Monospace Classic</option>
         `;
+
         customFonts.forEach(f => {
-          opts += `<option value="'${f.name}', sans-serif">${f.name} (Custom)</option>`;
+          html += `<option value="'${f.name}', sans-serif">${f.name} (Custom)</option>`;
         });
-        return opts;
-      };
 
-      docSelect.innerHTML = generateOptions(false);
-      greetSelect.innerHTML = generateOptions(true);
+        select.innerHTML = html;
+        if (currentVal) select.value = currentVal;
+      });
 
-      docSelect.value = designerSettings.fontFamily || "system-ui, sans-serif";
-      greetSelect.value = designerSettings.greeting.fontFamily || "inherit";
+      // Synchronize with active state
+      document.getElementById("sel-active-font").value = designerSettings.fontFamily || "system-ui, sans-serif";
+      document.getElementById("sel-brand-font").value = designerSettings.brand.fontFamily || "inherit";
+      document.getElementById("sel-legal-font").value = designerSettings.legal.fontFamily || "inherit";
+      document.getElementById("sel-custname-font").value = designerSettings.customer.fontFamily || "inherit";
+      document.getElementById("sel-total-font").value = designerSettings.total.fontFamily || "inherit";
+      document.getElementById("sel-greeting-font").value = designerSettings.greeting.fontFamily || "inherit";
     }
 
     function renderCustomFontsList() {
@@ -1935,20 +2086,20 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       }
 
       container.innerHTML = "";
-      customFonts.forEach((f, idx) => {
+      customFonts.forEach(f => {
         const row = document.createElement("div");
         row.style.cssText = "display:flex; justify-content:space-between; align-items:center; padding: 6px; border-bottom: 1px solid #E2E8F0;";
         row.innerHTML = `
           <span style="font-family: '${f.name}', sans-serif; font-size: 0.9rem;">${f.name}</span>
-          <button class="btn btn-danger" style="padding: 2px 6px; font-size: 0.75rem;" onclick="removeCustomFont(${idx})">Remove</button>
+          <button class="btn btn-danger" style="padding: 2px 6px; font-size: 0.75rem;" onclick="removeCustomFont('${f.name}')">Remove</button>
         `;
         container.appendChild(row);
       });
     }
 
-    window.removeCustomFont = function(index) {
-      customFonts.splice(index, 1);
-      localStorage.setItem(STORAGE_KEY_FONTS, JSON.stringify(customFonts));
+    window.removeCustomFont = async function(fontName) {
+      await deleteFontFromDB(fontName);
+      customFonts = await getAllFontsFromDB();
       applyCustomFontsToDOM();
       refreshAllFontDropdowns();
       renderCustomFontsList();
@@ -1963,7 +2114,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       localStorage.setItem(STORAGE_KEY_DESIGNER, JSON.stringify(designerSettings));
     }
 
-    function loadPersistedData() {
+    async function loadPersistedData() {
       const savedSettings = localStorage.getItem(STORAGE_KEY_SETTINGS);
       if (savedSettings) {
         try { companySettings = Object.assign(companySettings, JSON.parse(savedSettings)); } catch (e) {}
@@ -1971,21 +2122,22 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
 
       const savedDesigner = localStorage.getItem(STORAGE_KEY_DESIGNER);
       if (savedDesigner) {
-        try { 
+        try {
           const parsed = JSON.parse(savedDesigner);
           designerSettings = Object.assign(designerSettings, parsed);
-          if (parsed.greeting) {
-            designerSettings.greeting = Object.assign(designerSettings.greeting, parsed.greeting);
-          }
+          if (parsed.brand) designerSettings.brand = Object.assign(designerSettings.brand, parsed.brand);
+          if (parsed.legal) designerSettings.legal = Object.assign(designerSettings.legal, parsed.legal);
+          if (parsed.customer) designerSettings.customer = Object.assign(designerSettings.customer, parsed.customer);
+          if (parsed.total) designerSettings.total = Object.assign(designerSettings.total, parsed.total);
+          if (parsed.greeting) designerSettings.greeting = Object.assign(designerSettings.greeting, parsed.greeting);
         } catch (e) {}
       }
 
-      const savedFonts = localStorage.getItem(STORAGE_KEY_FONTS);
-      if (savedFonts) {
-        try {
-          customFonts = JSON.parse(savedFonts);
-          applyCustomFontsToDOM();
-        } catch (e) {}
+      try {
+        customFonts = await getAllFontsFromDB();
+        applyCustomFontsToDOM();
+      } catch (e) {
+        console.warn("Fonts DB load failed", e);
       }
 
       const savedHistory = localStorage.getItem(STORAGE_KEY_HISTORY);
@@ -2028,24 +2180,37 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
     function syncDesignerUI() {
       document.getElementById("clr-primary").value = designerSettings.primaryColor;
       document.getElementById("clr-gold").value = designerSettings.goldColor;
-      document.getElementById("clr-total-bg").value = designerSettings.totalBg;
-      document.getElementById("clr-total-text").value = designerSettings.totalText;
-      document.getElementById("num-total-size").value = designerSettings.totalSize;
-      document.getElementById("num-total-pad").value = designerSettings.totalPad;
+
+      // Brand
+      document.getElementById("num-brand-size").value = designerSettings.brand.size;
+      document.getElementById("clr-brand-color").value = designerSettings.brand.color;
+
+      // Legal
+      document.getElementById("num-legal-size").value = designerSettings.legal.size;
+      document.getElementById("clr-legal-color").value = designerSettings.legal.color;
+
+      // Customer
+      document.getElementById("num-custname-size").value = designerSettings.customer.size;
+      document.getElementById("clr-custname-color").value = designerSettings.customer.color;
+
+      // Total
+      document.getElementById("clr-total-bg").value = designerSettings.total.bg;
+      document.getElementById("clr-total-text").value = designerSettings.total.text;
+      document.getElementById("num-total-size").value = designerSettings.total.size;
+      document.getElementById("num-total-pad").value = designerSettings.total.pad;
+
+      // Greeting
+      document.getElementById("chk-greeting-on").checked = designerSettings.greeting.show;
+      document.getElementById("inp-greeting-text").value = designerSettings.greeting.text;
+      document.getElementById("num-greeting-size").value = designerSettings.greeting.size;
+      document.getElementById("clr-greeting-bg").value = designerSettings.greeting.bg;
+      document.getElementById("clr-greeting-text").value = designerSettings.greeting.color;
+
+      // Columns
       document.getElementById("col-toggle-unit").checked = designerSettings.colUnitShow;
       document.getElementById("col-toggle-taxable").checked = designerSettings.colTaxableShow;
       document.getElementById("col-width-product").value = designerSettings.colWidthProduct;
       document.getElementById("col-width-qty").value = designerSettings.colWidthQty;
-      document.getElementById("num-cell-padding").value = designerSettings.cellPadding;
-      document.getElementById("num-section-gap").value = designerSettings.sectionGap;
-
-      if (designerSettings.greeting) {
-        document.getElementById("chk-greeting-on").checked = designerSettings.greeting.show;
-        document.getElementById("inp-greeting-text").value = designerSettings.greeting.text;
-        document.getElementById("num-greeting-size").value = designerSettings.greeting.size || 11;
-        document.getElementById("clr-greeting-bg").value = designerSettings.greeting.bg;
-        document.getElementById("clr-greeting-text").value = designerSettings.greeting.color;
-      }
 
       refreshAllFontDropdowns();
       renderCustomFontsList();
@@ -2080,8 +2245,8 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       }
     }
 
-    window.addEventListener("DOMContentLoaded", () => {
-      loadPersistedData();
+    window.addEventListener("DOMContentLoaded", async () => {
+      await loadPersistedData();
       bindEditorInputs();
       setupEventListeners();
       updateLivePreview();
