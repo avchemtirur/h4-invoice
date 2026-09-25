@@ -257,7 +257,7 @@
       border: 1px solid #E2E8F0;
       border-radius: 6px;
       padding: 10px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       position: relative;
     }
 
@@ -589,7 +589,7 @@
       margin-bottom: 4px;
     }
 
-    /* HISTORY MODAL / VIEW */
+    /* HISTORY VIEW */
     .history-table {
       width: 100%;
       border-collapse: collapse;
@@ -607,7 +607,7 @@
       font-weight: 700;
     }
 
-    /* PRINT SPECIFIC STYLES - A4 STRICT */
+    /* PRINT SPECIFIC STYLES - STRICT A4 */
     @media print {
       @page {
         size: A4 portrait;
@@ -729,15 +729,17 @@
           </div>
         </div>
 
-        <!-- Item Rows -->
+        <!-- Item Rows Section -->
         <div class="card">
-          <div class="card-title">
-            Product Items
-            <button class="btn btn-gold" id="btn-add-item">+ Add Item</button>
-          </div>
-          <div id="items-list-container">
-            <!-- Dynamic item lines -->
-          </div>
+          <div class="card-title">Product Items</div>
+          
+          <!-- Dynamic Items Container -->
+          <div id="items-list-container"></div>
+
+          <!-- Add Item Button Placed BELOW the items and rates -->
+          <button class="btn btn-gold" id="btn-add-item" style="width: 100%; margin-top: 10px; justify-content: center; padding: 10px; font-weight: 700;">
+            + Add Item
+          </button>
         </div>
 
         <!-- Discount & Taxes -->
@@ -1040,9 +1042,7 @@
                   <th>Actions</th>
                 </tr>
               </thead>
-              <tbody id="history-table-body">
-                <!-- Dynamically rendered -->
-              </tbody>
+              <tbody id="history-table-body"></tbody>
             </table>
           </div>
         </div>
@@ -1068,9 +1068,7 @@
 
       <!-- A4 CONTAINER -->
       <div class="invoice-container-wrapper" id="invoice-wrapper">
-        <div class="invoice-sheet" id="invoice-sheet-target">
-          <!-- Rendered live by renderInvoiceHTML() -->
-        </div>
+        <div class="invoice-sheet" id="invoice-sheet-target"></div>
       </div>
 
     </section>
@@ -1078,22 +1076,12 @@
 
   <!-- JAVASCRIPT APPLICATION CORE -->
   <script>
-    /**
-     * H4 DIRECT INVOICE - SINGLE SOURCE OF TRUTH ENGINE
-     */
-    
-    // ----------------------------------------------------
-    // CONSTANTS & INITIAL STORAGE KEYS
-    // ----------------------------------------------------
     const STORAGE_KEY_SETTINGS = "h4_app_settings_v1";
     const STORAGE_KEY_DESIGNER = "h4_app_designer_v1";
     const STORAGE_KEY_HISTORY = "h4_app_history_v1";
     const STORAGE_KEY_FONTS = "h4_app_fonts_v1";
     const STORAGE_KEY_SEQ = "h4_invoice_seq_v1";
 
-    // ----------------------------------------------------
-    // APPLICATION STATE
-    // ----------------------------------------------------
     let currentInvoice = {
       invoiceNumber: "",
       date: new Date().toISOString().substring(0, 10),
@@ -1104,14 +1092,13 @@
         address: "Commercial Project Site 4, City Center, Calicut"
       },
       items: [
-        { description: "H4 Tile Adhesive Standard Gray (20kg)", qty: 25, unit: "BAG", rate: 450 },
-        { description: "H4 High Polymer Waterproofing Slurry (10L)", qty: 10, unit: "BUCKET", rate: 1250 },
-        { description: "H4 Epoxy Grout Sparkle Gold (1kg kit)", qty: 15, unit: "SET", rate: 580 }
+        { description: "H4 Tile Adhesive Standard Gray (20kg)", qty: "", unit: "BAG", rate: "" },
+        { description: "H4 High Polymer Waterproofing Slurry (10L)", qty: "", unit: "BUCKET", rate: "" }
       ],
       discount: {
-        enabled: true,
-        type: "PERCENT", // or 'FLAT'
-        value: 5
+        enabled: false,
+        type: "PERCENT",
+        value: 0
       },
       gst: {
         enabled: true,
@@ -1170,13 +1157,9 @@
     let customFonts = [];
     let currentZoom = 1.0;
 
-    // ----------------------------------------------------
-    // INVOICE NUMBER ENGINE
-    // ----------------------------------------------------
     function getNextInvoiceNumber() {
       let seq = parseInt(localStorage.getItem(STORAGE_KEY_SEQ) || "101", 10);
-      const formatted = "H4-INV-" + String(seq).padStart(4, "0");
-      return { number: formatted, seq: seq };
+      return { number: "H4-INV-" + String(seq).padStart(4, "0"), seq: seq };
     }
 
     function incrementInvoiceNumber() {
@@ -1184,42 +1167,34 @@
       localStorage.setItem(STORAGE_KEY_SEQ, (seq + 1).toString());
     }
 
-    // ----------------------------------------------------
-    // SINGLE SOURCE OF TRUTH: CALCULATION ENGINE
-    // ----------------------------------------------------
+    // CALCULATION ENGINE
     function calculateInvoiceTotals(inv) {
       let subtotal = 0;
       const calculatedItems = (inv.items || []).map(item => {
-        const q = parseFloat(item.qty) || 0;
-        const r = parseFloat(item.rate) || 0;
+        const q = (item.qty === "" || isNaN(parseFloat(item.qty))) ? 0 : parseFloat(item.qty);
+        const r = (item.rate === "" || isNaN(parseFloat(item.rate))) ? 0 : parseFloat(item.rate);
         const lineAmount = Math.round((q * r) * 100) / 100;
         subtotal += lineAmount;
         return {
           ...item,
-          qty: q,
-          rate: r,
+          qtyDisplay: item.qty !== "" ? item.qty : "",
+          rateDisplay: item.rate !== "" ? item.rate : "",
           amount: lineAmount
         };
       });
 
       subtotal = Math.round(subtotal * 100) / 100;
 
-      // Discount
       let discountAmount = 0;
       if (inv.discount && inv.discount.enabled) {
         const discVal = parseFloat(inv.discount.value) || 0;
-        if (inv.discount.type === "PERCENT") {
-          discountAmount = (subtotal * discVal) / 100;
-        } else {
-          discountAmount = discVal;
-        }
+        discountAmount = inv.discount.type === "PERCENT" ? (subtotal * discVal) / 100 : discVal;
         discountAmount = Math.min(discountAmount, subtotal);
       }
       discountAmount = Math.round(discountAmount * 100) / 100;
 
       const taxableAmount = Math.max(0, Math.round((subtotal - discountAmount) * 100) / 100);
 
-      // Tax (GST)
       let gstAmount = 0;
       const gstRate = (inv.gst && inv.gst.enabled) ? (parseFloat(inv.gst.rate) || 0) : 0;
       if (gstRate > 0) {
@@ -1239,18 +1214,13 @@
       };
     }
 
-    // ----------------------------------------------------
-    // AMOUNT IN WORDS (INDIAN NUMBERING SYSTEM)
-    // ----------------------------------------------------
     function convertNumberToIndianWords(amount) {
       const num = Math.floor(amount);
       if (num === 0) return "Zero Rupees Only";
 
-      const a = [
-        "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
+      const a = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
         "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen",
-        "Seventeen", "Eighteen", "Nineteen"
-      ];
+        "Seventeen", "Eighteen", "Nineteen"];
       const b = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
 
       function inWords(n) {
@@ -1274,7 +1244,6 @@
       return "Rupees " + words.trim() + " Only";
     }
 
-    // Format Indian Currency Display
     function formatINR(val) {
       return "₹" + Number(val || 0).toLocaleString("en-IN", {
         minimumFractionDigits: 2,
@@ -1282,15 +1251,10 @@
       });
     }
 
-    // ----------------------------------------------------
-    // CORE RENDERER: invoiceHTML()
-    // Identical HTML representation used by Preview & Print
-    // ----------------------------------------------------
     function renderInvoiceHTML(inv, company, designer) {
       const calc = calculateInvoiceTotals(inv);
       const words = convertNumberToIndianWords(calc.grandTotal);
 
-      // Dynamic Item Rows
       const rowsHTML = calc.items.map((it, idx) => {
         return `
           <tr>
@@ -1298,9 +1262,11 @@
             <td style="width: ${designer.colWidthProduct}%;">
               <strong>${escapeHTML(it.description || "Product Item")}</strong>
             </td>
-            <td style="text-align: right; width: ${designer.colWidthQty}%;">${it.qty}</td>
+            <td style="text-align: right; width: ${designer.colWidthQty}%;">
+              ${it.qtyDisplay !== "" ? it.qtyDisplay : "-"}
+            </td>
             ${designer.colUnitShow ? `<td style="text-align: center; width: 50px;">${escapeHTML(it.unit || "NOS")}</td>` : ""}
-            <td style="text-align: right;">${formatINR(it.rate)}</td>
+            <td style="text-align: right;">${it.rateDisplay !== "" ? formatINR(it.rateDisplay) : "-"}</td>
             ${designer.colTaxableShow ? `<td style="text-align: right;">${formatINR(it.amount)}</td>` : ""}
             <td style="text-align: right; font-weight: 700;">${formatINR(it.amount)}</td>
           </tr>
@@ -1309,7 +1275,6 @@
 
       return `
         <div style="font-family: ${designer.fontFamily}; display: flex; flex-direction: column; height: 100%; justify-content: space-between;">
-          
           <div>
             <!-- INVOICE HEADER -->
             <div class="inv-header" style="border-bottom-color: ${designer.primaryColor}; margin-bottom: ${designer.sectionGap}px;">
@@ -1420,10 +1385,10 @@
 
           </div>
 
-          <!-- BOTTOM SECTION: BANK & GREETING -->
+          <!-- BOTTOM SECTION -->
           <div>
             ${designer.greeting.show ? `
-              <div class="inv-greeting-box" style="background: ${designer.greeting.bg}; color: ${designer.greeting.color}; font-size: 11px;">
+              <div class="inv-greeting-box" style="background: ${designer.greeting.bg}; color:${designer.greeting.color}; font-size: 11px;">
                 ${escapeHTML(designer.greeting.text)}
               </div>
             ` : ""}
@@ -1435,7 +1400,7 @@
                   Bank: <strong>${escapeHTML(company.bank.bankName)}</strong><br/>
                   A/C Name: ${escapeHTML(company.bank.accountName)}<br/>
                   A/C No: <strong>${escapeHTML(company.bank.accountNumber)}</strong><br/>
-                  IFSC: <strong>${escapeHTML(company.bank.ifsc)}</strong> | Branch: ${escapeHTML(company.bank.branch)}<br/>
+                  IFSC: <strong>${escapeHTML(company.bank.ifsc)}</strong> \vert{} Branch:${escapeHTML(company.bank.branch)}<br/>
                   UPI ID: <strong>${escapeHTML(company.bank.upi)}</strong>
                 </div>
               ` : `<div></div>`}
@@ -1462,29 +1427,20 @@
         .replace(/'/g, "&#039;");
     }
 
-    // ----------------------------------------------------
-    // SYNCHRONIZE & RENDER LIVE PREVIEW
-    // ----------------------------------------------------
     function updateLivePreview() {
       const container = document.getElementById("invoice-sheet-target");
       container.innerHTML = renderInvoiceHTML(currentInvoice, companySettings, designerSettings);
     }
 
-    // ----------------------------------------------------
-    // EDITOR FORM BINDING & ITEM SYSTEM
-    // ----------------------------------------------------
+    // EDITOR RENDERING WITH EMPTY/PLACEHOLDER QUANTITY
     function bindEditorInputs() {
-      // Invoice Meta
       document.getElementById("inp-inv-num").value = currentInvoice.invoiceNumber;
       document.getElementById("inp-inv-date").value = currentInvoice.date;
-      
-      // Customer
       document.getElementById("inp-cust-name").value = currentInvoice.customer.name;
       document.getElementById("inp-cust-phone").value = currentInvoice.customer.phone;
       document.getElementById("inp-cust-whatsapp").value = currentInvoice.customer.whatsapp;
       document.getElementById("inp-cust-address").value = currentInvoice.customer.address;
 
-      // Discount & GST
       document.getElementById("chk-discount-on").checked = currentInvoice.discount.enabled;
       document.getElementById("sel-discount-type").value = currentInvoice.discount.type;
       document.getElementById("inp-discount-val").value = currentInvoice.discount.value;
@@ -1495,7 +1451,6 @@
       document.getElementById("sel-gst-rate").value = currentInvoice.gst.rate;
       document.getElementById("sel-gst-rate").disabled = !currentInvoice.gst.enabled;
 
-      // Notes
       document.getElementById("inp-invoice-notes").value = currentInvoice.notes;
 
       renderItemInputs();
@@ -1511,24 +1466,24 @@
         div.innerHTML = `
           <div class="item-row-header">
             <span class="item-row-num">ITEM #${index + 1}</span>
-            <button class="btn btn-danger" style="padding: 2px 6px; font-size: 0.75rem;" data-index="${index}">Delete</button>
+            <button class="btn btn-danger" style="padding: 2px 8px; font-size: 0.75rem;" data-index="${index}">Delete</button>
           </div>
           <div class="form-group">
-            <label>Description</label>
-            <input type="text" class="item-desc" data-index="${index}" value="${escapeHTML(item.description)}" />
+            <label>Product Description</label>
+            <input type="text" class="item-desc" data-index="${index}" value="${escapeHTML(item.description)}" placeholder="e.g. H4 Tile Adhesive" />
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label>Qty</label>
-              <input type="number" class="item-qty" data-index="${index}" value="${item.qty}" min="0" step="any" />
+              <label>QNTY</label>
+              <input type="number" class="item-qty" data-index="${index}" value="${item.qty !== '' ? item.qty : ''}" placeholder="0" min="0" step="any" />
             </div>
             <div class="form-group">
               <label>Unit</label>
-              <input type="text" class="item-unit" data-index="${index}" value="${escapeHTML(item.unit)}" />
+              <input type="text" class="item-unit" data-index="${index}" value="${escapeHTML(item.unit || 'BAG')}" placeholder="BAG / NOS" />
             </div>
             <div class="form-group">
               <label>Rate (₹)</label>
-              <input type="number" class="item-rate" data-index="${index}" value="${item.rate}" min="0" step="any" />
+              <input type="number" class="item-rate" data-index="${index}" value="${item.rate !== '' ? item.rate : ''}" placeholder="0.00" min="0" step="any" />
             </div>
           </div>
         `;
@@ -1536,11 +1491,7 @@
       });
     }
 
-    // ----------------------------------------------------
-    // ATTACH REALTIME EVENT LISTENERS
-    // ----------------------------------------------------
     function setupEventListeners() {
-      // Tab Switching
       document.querySelectorAll(".nav-tab-btn").forEach(btn => {
         btn.addEventListener("click", () => {
           document.querySelectorAll(".nav-tab-btn").forEach(b => b.classList.remove("active"));
@@ -1550,13 +1501,10 @@
           const targetTab = btn.getAttribute("data-tab");
           document.getElementById(targetTab).classList.add("active");
 
-          if (targetTab === "tab-history") {
-            renderHistoryTable();
-          }
+          if (targetTab === "tab-history") renderHistoryTable();
         });
       });
 
-      // Invoice Meta Inputs
       document.getElementById("inp-inv-num").addEventListener("input", e => {
         currentInvoice.invoiceNumber = e.target.value;
         updateLivePreview();
@@ -1566,7 +1514,6 @@
         updateLivePreview();
       });
 
-      // Customer
       document.getElementById("inp-cust-name").addEventListener("input", e => {
         currentInvoice.customer.name = e.target.value;
         updateLivePreview();
@@ -1583,7 +1530,6 @@
         updateLivePreview();
       });
 
-      // Discount Controls
       document.getElementById("chk-discount-on").addEventListener("change", e => {
         currentInvoice.discount.enabled = e.target.checked;
         document.getElementById("sel-discount-type").disabled = !e.target.checked;
@@ -1599,7 +1545,6 @@
         updateLivePreview();
       });
 
-      // GST Controls
       document.getElementById("chk-gst-on").addEventListener("change", e => {
         currentInvoice.gst.enabled = e.target.checked;
         document.getElementById("sel-gst-rate").disabled = !e.target.checked;
@@ -1610,25 +1555,24 @@
         updateLivePreview();
       });
 
-      // Notes
       document.getElementById("inp-invoice-notes").addEventListener("input", e => {
         currentInvoice.notes = e.target.value;
         updateLivePreview();
       });
 
-      // Add Item Action
+      // ADD ITEM BUTTON (Now located below rate/item lines)
       document.getElementById("btn-add-item").addEventListener("click", () => {
         currentInvoice.items.push({
-          description: "New Construction Product",
-          qty: 1,
-          unit: "NOS",
-          rate: 100
+          description: "",
+          qty: "",
+          unit: "BAG",
+          rate: ""
         });
         renderItemInputs();
         updateLivePreview();
       });
 
-      // Item Row Actions (Event Delegation)
+      // Realtime item editing
       const itemContainer = document.getElementById("items-list-container");
       itemContainer.addEventListener("input", e => {
         const idx = e.target.getAttribute("data-index");
@@ -1638,11 +1582,12 @@
         if (e.target.classList.contains("item-desc")) {
           currentInvoice.items[index].description = e.target.value;
         } else if (e.target.classList.contains("item-qty")) {
-          currentInvoice.items[index].qty = parseFloat(e.target.value) || 0;
+          // Leave as empty string when user clears it
+          currentInvoice.items[index].qty = e.target.value.trim() === "" ? "" : parseFloat(e.target.value);
         } else if (e.target.classList.contains("item-unit")) {
           currentInvoice.items[index].unit = e.target.value;
         } else if (e.target.classList.contains("item-rate")) {
-          currentInvoice.items[index].rate = parseFloat(e.target.value) || 0;
+          currentInvoice.items[index].rate = e.target.value.trim() === "" ? "" : parseFloat(e.target.value);
         }
         updateLivePreview();
       });
@@ -1658,15 +1603,13 @@
 
       // Zoom Controls
       document.querySelectorAll(".zoom-btn[data-zoom]").forEach(btn => {
-        btn.addEventListener("click", () => {
-          applyZoom(parseInt(btn.getAttribute("data-zoom"), 10) / 100);
-        });
+        btn.addEventListener("click", () => applyZoom(parseInt(btn.getAttribute("data-zoom"), 10) / 100));
       });
       document.getElementById("btn-zoom-in").addEventListener("click", () => applyZoom(currentZoom + 0.1));
       document.getElementById("btn-zoom-out").addEventListener("click", () => applyZoom(Math.max(0.4, currentZoom - 0.1)));
       document.getElementById("btn-zoom-fit").addEventListener("click", fitZoomToScreen);
 
-      // Company Settings Inputs
+      // Company Settings
       document.getElementById("inp-comp-legal").addEventListener("input", e => { companySettings.legalName = e.target.value; saveSettingsToStorage(); updateLivePreview(); });
       document.getElementById("inp-comp-brand").addEventListener("input", e => { companySettings.brandName = e.target.value; saveSettingsToStorage(); updateLivePreview(); });
       document.getElementById("inp-comp-address").addEventListener("input", e => { companySettings.address = e.target.value; saveSettingsToStorage(); updateLivePreview(); });
@@ -1677,7 +1620,7 @@
       document.getElementById("inp-comp-website").addEventListener("input", e => { companySettings.website = e.target.value; saveSettingsToStorage(); updateLivePreview(); });
       document.getElementById("chk-show-website").addEventListener("change", e => { companySettings.showWebsite = e.target.checked; saveSettingsToStorage(); updateLivePreview(); });
 
-      // Bank Details Inputs
+      // Bank Details
       document.getElementById("chk-bank-on").addEventListener("change", e => { companySettings.bank.show = e.target.checked; saveSettingsToStorage(); updateLivePreview(); });
       document.getElementById("inp-bank-name").addEventListener("input", e => { companySettings.bank.bankName = e.target.value; saveSettingsToStorage(); updateLivePreview(); });
       document.getElementById("inp-bank-accname").addEventListener("input", e => { companySettings.bank.accountName = e.target.value; saveSettingsToStorage(); updateLivePreview(); });
@@ -1686,7 +1629,7 @@
       document.getElementById("inp-bank-branch").addEventListener("input", e => { companySettings.bank.branch = e.target.value; saveSettingsToStorage(); updateLivePreview(); });
       document.getElementById("inp-bank-upi").addEventListener("input", e => { companySettings.bank.upi = e.target.value; saveSettingsToStorage(); updateLivePreview(); });
 
-      // Logo File Upload (Base64 offline storage)
+      // Logo
       document.getElementById("inp-logo-file").addEventListener("change", e => {
         const file = e.target.files[0];
         if (file) {
@@ -1708,11 +1651,10 @@
         updateLivePreview();
       });
 
-      // Designer Customization Listeners
+      // Designer Customization
       document.getElementById("sel-active-font").addEventListener("change", e => { designerSettings.fontFamily = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
       document.getElementById("clr-primary").addEventListener("input", e => { designerSettings.primaryColor = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
       document.getElementById("clr-gold").addEventListener("input", e => { designerSettings.goldColor = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
-      
       document.getElementById("clr-total-bg").addEventListener("input", e => { designerSettings.totalBg = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
       document.getElementById("clr-total-text").addEventListener("input", e => { designerSettings.totalText = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
       document.getElementById("num-total-size").addEventListener("input", e => { designerSettings.totalSize = parseInt(e.target.value, 10); saveDesignerToStorage(); updateLivePreview(); });
@@ -1736,24 +1678,12 @@
         location.reload();
       });
 
-      // Print / PDF Button
-      document.getElementById("btn-print-invoice").addEventListener("click", () => {
-        window.print();
-      });
-
-      // Save Invoice to History
+      document.getElementById("btn-print-invoice").addEventListener("click", () => window.print());
       document.getElementById("btn-save-invoice").addEventListener("click", saveCurrentInvoice);
-
-      // Customer WhatsApp Share Action
       document.getElementById("btn-share-whatsapp").addEventListener("click", shareInvoiceWhatsApp);
-
-      // Custom Font Upload
       document.getElementById("btn-upload-font").addEventListener("click", handleFontUpload);
     }
 
-    // ----------------------------------------------------
-    // ZOOM ENGINE FOR A4 PREVIEW
-    // ----------------------------------------------------
     function applyZoom(val) {
       currentZoom = Math.round(val * 100) / 100;
       document.getElementById("invoice-wrapper").style.transform = `scale(${currentZoom})`;
@@ -1762,19 +1692,13 @@
 
     function fitZoomToScreen() {
       const stage = document.querySelector(".preview-stage");
-      const availableWidth = stage.clientWidth - 48; // padding
-      const a4WidthPx = 794; // approx 210mm in standard 96dpi
-      const fitRatio = availableWidth / a4WidthPx;
+      const availableWidth = stage.clientWidth - 48;
+      const fitRatio = availableWidth / 794;
       applyZoom(Math.min(1.0, Math.max(0.4, fitRatio)));
     }
 
-    // ----------------------------------------------------
-    // INVOICE HISTORY ENGINE
-    // ----------------------------------------------------
     function saveCurrentInvoice() {
       const calc = calculateInvoiceTotals(currentInvoice);
-      
-      // Check if existing
       const existingIdx = invoiceHistory.findIndex(h => h.invoiceNumber === currentInvoice.invoiceNumber);
 
       const snapshot = {
@@ -1789,11 +1713,11 @@
 
       if (existingIdx >= 0) {
         invoiceHistory[existingIdx] = snapshot;
-        alert(`Invoice ${currentInvoice.invoiceNumber} updated successfully.`);
+        alert(`Invoice ${currentInvoice.invoiceNumber} updated.`);
       } else {
         invoiceHistory.unshift(snapshot);
         incrementInvoiceNumber();
-        alert(`Invoice ${currentInvoice.invoiceNumber} saved to history.`);
+        alert(`Invoice ${currentInvoice.invoiceNumber} saved.`);
       }
 
       localStorage.setItem(STORAGE_KEY_HISTORY, JSON.stringify(invoiceHistory));
@@ -1836,47 +1760,35 @@
         const next = getNextInvoiceNumber();
         currentInvoice.invoiceNumber = next.number;
         currentInvoice.date = new Date().toISOString().substring(0, 10);
-        alert(`Created duplicate invoice with new number ${currentInvoice.invoiceNumber}`);
-      } else {
-        alert(`Loaded invoice ${currentInvoice.invoiceNumber} for editing.`);
       }
 
-      // Switch to editor
       document.querySelector('[data-tab="tab-editor"]').click();
       bindEditorInputs();
       updateLivePreview();
     };
 
     window.deleteInvoice = function(invNum) {
-      if (!confirm(`Are you sure you want to delete invoice ${invNum}?`)) return;
+      if (!confirm(`Delete invoice ${invNum}?`)) return;
       invoiceHistory = invoiceHistory.filter(h => h.invoiceNumber !== invNum);
       localStorage.setItem(STORAGE_KEY_HISTORY, JSON.stringify(invoiceHistory));
       renderHistoryTable();
     };
 
-    // ----------------------------------------------------
-    // CUSTOMER WHATSAPP SHARING
-    // ----------------------------------------------------
     function shareInvoiceWhatsApp() {
       const rawWa = currentInvoice.customer.whatsapp || currentInvoice.customer.phone || "";
       const cleanPhone = rawWa.replace(/[^0-9]/g, "");
 
       if (!cleanPhone) {
-        alert("Please enter a valid Customer WhatsApp number in the Customer section.");
+        alert("Please enter a valid Customer WhatsApp number.");
         return;
       }
 
       const calc = calculateInvoiceTotals(currentInvoice);
       const message = `Hello *${currentInvoice.customer.name}*,\n\nHere is your invoice *${currentInvoice.invoiceNumber}* from *${companySettings.brandName}*.\n\n*Invoice Date:* ${currentInvoice.date}\n*Total Amount:* ₹${calc.grandTotal.toLocaleString("en-IN")}\n\nThank you for choosing H4 Construction Solutions!`;
 
-      const encodedMsg = encodeURIComponent(message);
-      const url = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
-      window.open(url, "_blank");
+      window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`, "_blank");
     }
 
-    // ----------------------------------------------------
-    // CUSTOM FONT ENGINE (OFFLINE LOCALSTORAGE)
-    // ----------------------------------------------------
     function handleFontUpload() {
       const nameInput = document.getElementById("inp-font-name");
       const fileInput = document.getElementById("inp-font-file");
@@ -1891,42 +1803,28 @@
 
       const reader = new FileReader();
       reader.onload = e => {
-        const base64Data = e.target.result;
-        customFonts.push({ name: fontName, data: base64Data });
+        customFonts.push({ name: fontName, data: e.target.result });
         localStorage.setItem(STORAGE_KEY_FONTS, JSON.stringify(customFonts));
-        
         applyCustomFontsToDOM();
         refreshFontSelectDropdown();
         renderCustomFontsList();
-
         nameInput.value = "";
         fileInput.value = "";
-        alert(`Font '${fontName}' installed successfully for offline use.`);
+        alert(`Font '${fontName}' installed.`);
       };
       reader.readAsDataURL(file);
     }
 
     function applyCustomFontsToDOM() {
-      const styleEl = document.getElementById("dynamic-custom-fonts");
       let cssRules = "";
-
       customFonts.forEach(f => {
-        cssRules += `
-          @font-face {
-            font-family: '${f.name}';
-            src: url('${f.data}') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-          }
-        `;
+        cssRules += `@font-face { font-family: '${f.name}'; src: url('${f.data}') format('truetype'); font-weight: normal; font-style: normal; }\n`;
       });
-
-      styleEl.innerHTML = cssRules;
+      document.getElementById("dynamic-custom-fonts").innerHTML = cssRules;
     }
 
     function refreshFontSelectDropdown() {
       const select = document.getElementById("sel-active-font");
-      // keep 3 standard options
       select.innerHTML = `
         <option value="system-ui, sans-serif">Standard System Sans</option>
         <option value="Georgia, serif">Georgia Editorial</option>
@@ -1971,9 +1869,6 @@
       updateLivePreview();
     };
 
-    // ----------------------------------------------------
-    // STORAGE LOAD & SAVE SYSTEM
-    // ----------------------------------------------------
     function saveSettingsToStorage() {
       localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(companySettings));
     }
@@ -1983,45 +1878,33 @@
     }
 
     function loadPersistedData() {
-      // 1. Settings
       const savedSettings = localStorage.getItem(STORAGE_KEY_SETTINGS);
       if (savedSettings) {
-        try {
-          companySettings = Object.assign(companySettings, JSON.parse(savedSettings));
-        } catch (e) { console.error("Error loading settings", e); }
+        try { companySettings = Object.assign(companySettings, JSON.parse(savedSettings)); } catch (e) {}
       }
 
-      // 2. Designer
       const savedDesigner = localStorage.getItem(STORAGE_KEY_DESIGNER);
       if (savedDesigner) {
-        try {
-          designerSettings = Object.assign(designerSettings, JSON.parse(savedDesigner));
-        } catch (e) { console.error("Error loading designer", e); }
+        try { designerSettings = Object.assign(designerSettings, JSON.parse(savedDesigner)); } catch (e) {}
       }
 
-      // 3. Fonts
       const savedFonts = localStorage.getItem(STORAGE_KEY_FONTS);
       if (savedFonts) {
         try {
           customFonts = JSON.parse(savedFonts);
           applyCustomFontsToDOM();
-        } catch (e) { console.error("Error loading fonts", e); }
+        } catch (e) {}
       }
 
-      // 4. History
       const savedHistory = localStorage.getItem(STORAGE_KEY_HISTORY);
       if (savedHistory) {
-        try {
-          invoiceHistory = JSON.parse(savedHistory);
-        } catch (e) { console.error("Error loading history", e); }
+        try { invoiceHistory = JSON.parse(savedHistory); } catch (e) {}
       }
 
-      // Initialize invoice numbering if not set
       if (!currentInvoice.invoiceNumber) {
         currentInvoice.invoiceNumber = getNextInvoiceNumber().number;
       }
 
-      // Sync form fields to states
       syncCompanyUI();
       syncDesignerUI();
     }
@@ -2075,11 +1958,7 @@
       renderCustomFontsList();
     }
 
-    // ----------------------------------------------------
-    // PWA SERVICE WORKER & MANIFEST INITIALIZATION
-    // ----------------------------------------------------
     function initPWA() {
-      // 1. Generate Manifest
       const manifest = {
         name: "H4 Direct Invoice",
         short_name: "H4 Invoice",
@@ -2087,45 +1966,27 @@
         display: "standalone",
         background_color: "#FFFFFF",
         theme_color: "#A8238B",
-        icons: [
-          {
-            src: "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23A8238B'/><text x='50%' y='65%' font-size='48' font-weight='bold' fill='%23FFFFFF' text-anchor='middle'>H4</text></svg>",
-            sizes: "192x192 512x512",
-            type: "image/svg+xml"
-          }
-        ]
+        icons: [{
+          src: "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23A8238B'/><text x='50%' y='65%' font-size='48' font-weight='bold' fill='%23FFFFFF' text-anchor='middle'>H4</text></svg>",
+          sizes: "192x192 512x512",
+          type: "image/svg+xml"
+        }]
       };
 
       const manifestBlob = new Blob([JSON.stringify(manifest)], { type: "application/json" });
       document.getElementById("pwa-manifest").setAttribute("href", URL.createObjectURL(manifestBlob));
 
-      // 2. Register Service Worker using Inline Worker
       if ("serviceWorker" in navigator) {
         const swScript = `
-          const CACHE_NAME = 'h4-invoice-shell-v1';
-          self.addEventListener('install', event => {
-            self.skipWaiting();
-          });
-          self.addEventListener('activate', event => {
-            event.waitUntil(clients.claim());
-          });
-          self.addEventListener('fetch', event => {
-            event.respondWith(
-              fetch(event.request).catch(() => caches.match(event.request))
-            );
-          });
+          self.addEventListener('install', e => self.skipWaiting());
+          self.addEventListener('activate', e => event.waitUntil(clients.claim()));
+          self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => caches.match(e.request))));
         `;
         const swBlob = new Blob([swScript], { type: "application/javascript" });
-        const swUrl = URL.createObjectURL(swBlob);
-        navigator.serviceWorker.register(swUrl).catch(err => {
-          console.warn("SW Registration ignored:", err);
-        });
+        navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(() => {});
       }
     }
 
-    // ----------------------------------------------------
-    // APP INITIALIZATION
-    // ----------------------------------------------------
     window.addEventListener("DOMContentLoaded", () => {
       loadPersistedData();
       bindEditorInputs();
