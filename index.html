@@ -5,15 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>H4 Direct Invoice — AV CHEM Chemical &amp; Manufacturing</title>
   
-  <!-- Web & Offline-Safe Fonts -->
+  <!-- Web Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&family=Roboto:wght@400;500;700;900&family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* ==========================================================================
-       H4 DIRECT INVOICE — DESIGN SYSTEM & TOKENS (MATERIAL DESIGN 3)
-       ========================================================================== */
     :root {
       --h4-primary: #A8238B;
       --h4-primary-dark: #82186b;
@@ -42,7 +39,6 @@
       --h4-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
-      /* Mobile First Ergonomics */
       --input-height: 48px;
       --input-font-size: 15.5px;
       --label-font-size: 13.5px;
@@ -70,7 +66,6 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Top App Bar */
     .app-header {
       background-color: var(--h4-navy);
       color: #FFFFFF;
@@ -185,7 +180,6 @@
       text-align: center;
     }
 
-    /* Main Container & Cards */
     .app-main {
       max-width: 1200px;
       margin: 18px auto 100px;
@@ -269,7 +263,6 @@
       }
     }
 
-    /* Form Controls */
     .form-group {
       display: flex;
       flex-direction: column;
@@ -410,7 +403,6 @@
       transform: translateX(22px);
     }
 
-    /* Buttons */
     .btn {
       min-height: var(--input-height);
       padding: 0 18px;
@@ -743,7 +735,6 @@
       }
     }
 
-    /* Summary Grid */
     .summary-grid {
       display: grid;
       grid-template-columns: 1.2fr 0.8fr;
@@ -818,7 +809,6 @@
       margin-bottom: 3px;
     }
 
-    /* Sticky Actions Bar */
     .sticky-actions-bar {
       position: sticky;
       bottom: 0;
@@ -867,7 +857,7 @@
       }
     }
 
-    /* Material Design Accordion */
+    /* Template Designer Layout */
     .designer-layout-grid {
       display: grid;
       grid-template-columns: 1.15fr 0.85fr;
@@ -935,7 +925,6 @@
       display: block;
     }
 
-    /* Column Sorter */
     .col-order-list {
       display: flex;
       flex-direction: column;
@@ -963,7 +952,6 @@
       gap: 4px;
     }
 
-    /* Designer Preview Sticky Canvas */
     .designer-preview-sticky {
       position: sticky;
       top: 84px;
@@ -1202,6 +1190,7 @@
       font-size: 8pt;
     }
 
+    /* Print & PDF Strict Exact Styling */
     .inv-grand-total-row,
     .inv-grand-total-row td {
       -webkit-print-color-adjust: exact !important;
@@ -1333,13 +1322,13 @@
       }
 
       .inv-table th {
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
 
       .inv-header {
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
     }
 
@@ -1371,7 +1360,7 @@
 </head>
 <body>
 
-  <!-- Top Navigation Header -->
+  <!-- Top App Navigation -->
   <header class="app-header no-print">
     <div class="header-container">
       <div class="brand-section">
@@ -1403,14 +1392,13 @@
     </div>
   </header>
 
-  <!-- Main Work Area -->
+  <!-- Main View Area -->
   <main class="app-main no-print">
 
-    <!-- View 1: Invoice Editor -->
+    <!-- View 1: Editor -->
     <section id="viewEditor" class="view-panel active">
       <form id="invoiceForm" onsubmit="event.preventDefault();" autocomplete="on">
         
-        <!-- Invoice Identifiers -->
         <div class="card">
           <div class="card-header">
             <h2 class="card-title">📄 Invoice Information</h2>
@@ -1440,7 +1428,6 @@
           </div>
         </div>
 
-        <!-- Bill To -->
         <div class="card">
           <div class="card-header">
             <h2 class="card-title">👤 Bill To (Customer Details)</h2>
@@ -1468,7 +1455,6 @@
             </div>
           </div>
 
-          <!-- C/O Section -->
           <div id="custCoSection" style="display: none; background:#F8FAFC; border:1px dashed var(--h4-border); border-radius:var(--h4-radius); padding:12px 14px; margin-bottom:14px;">
             <div style="font-size:0.85rem; font-weight:700; color:var(--h4-primary); margin-bottom:8px;">C/O / Contact Person (Site Contact, Agent, Field Worker)</div>
             <div class="grid-2">
@@ -1514,7 +1500,6 @@
           </div>
         </div>
 
-        <!-- Line Items Section (Responsive Stacked Cards on Mobile / Table on Desktop) -->
         <div class="card">
           <div class="card-header">
             <h2 class="card-title">📦 Invoice Line Items</h2>
@@ -1536,14 +1521,11 @@
                   <th class="td-action"></th>
                 </tr>
               </thead>
-              <tbody id="itemsTableBody">
-                <!-- Populated via addLineItemRow() -->
-              </tbody>
+              <tbody id="itemsTableBody"></tbody>
             </table>
           </div>
         </div>
 
-        <!-- Discount & GST Configuration -->
         <div class="card">
           <div class="card-header">
             <h2 class="card-title">⚖️ Discount &amp; GST Configuration</h2>
@@ -1603,7 +1585,6 @@
           </div>
         </div>
 
-        <!-- Totals Summary -->
         <div class="card">
           <div class="card-header">
             <h2 class="card-title">📊 Calculation Summary</h2>
@@ -1634,9 +1615,7 @@
                 <span id="sumTaxable">₹0.00</span>
               </div>
               
-              <div id="gstRowsContainer">
-                <!-- CGST + SGST Rows -->
-              </div>
+              <div id="gstRowsContainer"></div>
 
               <div class="totals-row grand-total" id="sumGrandTotalRow">
                 <span>Grand Total:</span>
@@ -1649,7 +1628,7 @@
       </form>
     </section>
 
-    <!-- View 2: Invoice History -->
+    <!-- View 2: History -->
     <section id="viewHistory" class="view-panel">
       <div class="card">
         <div class="card-header">
@@ -1674,48 +1653,41 @@
                 <th style="text-align: center;">Actions</th>
               </tr>
             </thead>
-            <tbody id="historyTableBody">
-              <!-- Rendered via renderHistory() -->
-            </tbody>
+            <tbody id="historyTableBody"></tbody>
           </table>
         </div>
       </div>
     </section>
 
-    <!-- View 3: Settings & Invoice Template Designer -->
+    <!-- View 3: Settings & Template Designer -->
     <section id="viewSettings" class="view-panel">
-      
-      <!-- Top Workspace: Split into Controls Accordion + Live A4 Preview -->
       <div class="designer-layout-grid">
         
-        <!-- Left Column: Settings & Designer Accordion Controls -->
+        <!-- Controls Column -->
         <div>
           <form id="settingsForm" onsubmit="event.preventDefault();">
             
-            <!-- Company Profile & Logo -->
             <div class="card">
               <div class="card-header">
                 <h2 class="card-title">🏢 Company Details (Seller Profile)</h2>
                 <button type="button" class="btn btn-sm btn-accent" id="btnSaveSettingsTop">Save Settings</button>
               </div>
 
-              <!-- Logo Management -->
+              <!-- Logo Manager -->
               <div class="form-group" style="background:#F8FAFC; padding:16px; border-radius:var(--h4-radius); border:1px solid var(--h4-border); margin-bottom:18px;">
                 <label style="font-size:0.95rem; font-weight:700; color:var(--h4-navy); margin-bottom:8px;">
                   Company Logo Management
                   <span class="sub-label">(PNG, JPG, JPEG, WebP, SVG)</span>
                 </label>
                 <div style="display:flex; align-items:center; gap:18px; margin-top:8px; flex-wrap:wrap;">
-                  <div id="settingsLogoPreviewBox" style="width:78px; height:78px; border:2px solid #CBD5E1; border-radius:8px; display:flex; align-items:center; justify-content:center; background:#FFF; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,0.08);">
-                    <!-- Logo Preview Container -->
-                  </div>
+                  <div id="settingsLogoPreviewBox" style="width:78px; height:78px; border:2px solid #CBD5E1; border-radius:8px; display:flex; align-items:center; justify-content:center; background:#FFF; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,0.08);"></div>
                   <div style="display:flex; flex-direction:column; gap:8px;">
                     <input type="file" id="logoFileInput" accept="image/png, image/jpeg, image/jpg, image/webp, image/svg+xml" style="display:none;">
                     <div style="display:flex; gap:8px; flex-wrap:wrap;">
                       <button type="button" class="btn btn-sm btn-outline" onclick="document.getElementById('logoFileInput').click();">📁 Upload / Change Logo</button>
                       <button type="button" class="btn btn-sm btn-danger" id="btnRemoveLogo">✕ Remove Custom Logo</button>
                     </div>
-                    <div style="font-size:0.75rem; color:var(--h4-muted);">Stored locally in browser; renders in Live Preview, Print, and PDF.</div>
+                    <div style="font-size:0.75rem; color:var(--h4-muted);">Stored locally in browser; renders across Live Preview, Print, and PDF.</div>
                   </div>
                 </div>
               </div>
@@ -1825,7 +1797,7 @@
               </div>
             </div>
 
-            <!-- Invoicing Defaults -->
+            <!-- Invoice Defaults -->
             <div class="card">
               <div class="card-header">
                 <h2 class="card-title">📝 Invoicing Defaults</h2>
@@ -1838,9 +1810,7 @@
               </div>
             </div>
 
-            <!-- ==========================================================================
-                 ACCORDION: 🎨 INVOICE TEMPLATE DESIGNER
-                 ========================================================================== -->
+            <!-- Accordion Designer -->
             <div class="card" id="invoiceDesignerModule">
               <div class="card-header">
                 <h2 class="card-title">🎨 Invoice Template Designer</h2>
@@ -2074,9 +2044,7 @@
                   </div>
                   <div class="accordion-content">
                     <p style="font-size:0.8rem; color:var(--h4-muted); margin-bottom:10px;">Reorder columns visually on the invoice without affecting calculations.</p>
-                    <div class="col-order-list" id="designerColOrderList">
-                      <!-- Populated dynamically via JS -->
-                    </div>
+                    <div class="col-order-list" id="designerColOrderList"></div>
                   </div>
                 </div>
 
@@ -2164,7 +2132,7 @@
                   </div>
                 </div>
 
-                <!-- J. Typography -->
+                <!-- J. Typography & Custom Font Upload -->
                 <div class="accordion-card">
                   <div class="accordion-header">
                     <span>J. 🔤 Base Fonts &amp; Upload</span>
@@ -2179,54 +2147,47 @@
                           <option value="Poppins, sans-serif">Poppins</option>
                           <option value="Roboto, sans-serif">Roboto</option>
                           <option value="Montserrat, sans-serif">Montserrat</option>
-                          <option value="Lato, sans-serif">Lato</option>
                           <option value="Open Sans, sans-serif">Open Sans</option>
-                          <option value="Nunito Sans, sans-serif">Nunito Sans</option>
                           <option value="Arial, sans-serif">Arial</option>
-                          <option value="Helvetica, sans-serif">Helvetica</option>
                           <option value="Georgia, serif">Georgia</option>
-                          <option value="Times New Roman, serif">Times New Roman</option>
                         </select>
                       </div>
                       <div class="form-group">
-                        <label>➕ Add Your Font (.woff2 recommended)</label>
+                        <label>➕ Upload Custom Font (.ttf, .otf, .woff, .woff2)</label>
                         <input type="file" id="dsCustomFontInput" accept=".ttf,.otf,.woff,.woff2" class="input-control" style="padding:6px;">
-                        <div id="dsCustomFontStatus" style="font-size:.72rem;color:var(--h4-muted);margin-top:5px;">No custom font loaded</div>
+                        <div id="dsCustomFontStatus" style="font-size:.75rem; color:var(--h4-muted); margin-top:4px;">No custom font uploaded</div>
+                        <button type="button" class="btn btn-sm btn-danger" id="btnRemoveCustomFont" style="display:none; width:fit-content; margin-top:6px;">Remove Custom Font</button>
                       </div>
                     </div>
-                  </div>
-                  <div class="grid-3" style="margin-top:10px;">
-                    <div class="form-group">
-                      <label>Base Body Size</label>
-                      <select id="dsBaseBodySize" class="input-control">
-                        <option value="8pt">8pt</option>
-                        <option value="8.5pt">8.5pt</option>
-                        <option value="9pt">9pt</option>
-                        <option value="9.5pt">9.5pt</option>
-                        <option value="10pt">10pt</option>
-                        <option value="10.5pt">10.5pt</option>
-                        <option value="11pt">11pt</option>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label>Line Height</label>
-                      <select id="dsBaseLineHeight" class="input-control">
-                        <option value="1.15">1.15 Compact</option>
-                        <option value="1.25">1.25</option>
-                        <option value="1.35">1.35 Standard</option>
-                        <option value="1.45">1.45</option>
-                        <option value="1.55">1.55 Airy</option>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label>Letter Spacing</label>
-                      <select id="dsLetterSpacing" class="input-control">
-                        <option value="-0.2px">-0.2px</option>
-                        <option value="0px">0px Normal</option>
-                        <option value="0.2px">0.2px</option>
-                        <option value="0.4px">0.4px</option>
-                        <option value="0.6px">0.6px</option>
-                      </select>
+                    <div class="grid-3" style="margin-top:10px;">
+                      <div class="form-group">
+                        <label>Base Body Size</label>
+                        <select id="dsBaseBodySize" class="input-control">
+                          <option value="8pt">8pt</option>
+                          <option value="8.5pt">8.5pt</option>
+                          <option value="9pt">9pt</option>
+                          <option value="9.5pt">9.5pt</option>
+                          <option value="10pt">10pt</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label>Line Height</label>
+                        <select id="dsBaseLineHeight" class="input-control">
+                          <option value="1.15">1.15 Compact</option>
+                          <option value="1.25">1.25</option>
+                          <option value="1.35">1.35 Standard</option>
+                          <option value="1.45">1.45</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label>Letter Spacing</label>
+                        <select id="dsLetterSpacing" class="input-control">
+                          <option value="-0.2px">-0.2px</option>
+                          <option value="0px">0px Normal</option>
+                          <option value="0.2px">0.2px</option>
+                          <option value="0.4px">0.4px</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -2294,7 +2255,7 @@
                           <button type="button" class="btn btn-sm btn-danger" id="btnDeleteTemplate">Delete</button>
                         </div>
                       </div>
-                      <div style="font-size:.75rem;color:var(--h4-muted);margin-top:6px;">Custom templates store visual designer settings only. Invoice data, calculations and history are never changed.</div>
+                      <div style="font-size:.75rem; color:var(--h4-muted); margin-top:6px;">Custom templates store visual designer settings only. Invoice data and calculations are never altered.</div>
                     </div>
                   </div>
                 </div>
@@ -2308,7 +2269,7 @@
           </form>
         </div>
 
-        <!-- Right Column: Live A4 Preview Canvas -->
+        <!-- Sticky Live Preview Column -->
         <div class="designer-preview-sticky" id="designerLivePreviewContainer">
           <div class="designer-preview-toolbar">
             <span style="font-weight:700; font-size:0.85rem;">Live A4 Sheet Preview</span>
@@ -2318,9 +2279,7 @@
               <button type="button" class="btn btn-sm btn-outline" id="btnZoomInDs" style="color:#FFF; border-color:rgba(255,255,255,0.4); padding:0 8px;">+</button>
             </div>
           </div>
-          <div id="designerA4Wrapper" style="transform: scale(0.85); transform-origin: top center; transition: transform 0.15s ease;">
-            <!-- Rendered live via invoiceHTML() -->
-          </div>
+          <div id="designerA4Wrapper" style="transform: scale(0.85); transform-origin: top center; transition: transform 0.15s ease;"></div>
         </div>
 
       </div>
@@ -2328,7 +2287,6 @@
 
   </main>
 
-  <!-- Sticky Actions Bar -->
   <footer class="sticky-actions-bar no-print" id="editorActionsBar">
     <div class="actions-wrapper">
       <button type="button" class="btn btn-outline" id="btnNewDraft">🔄 New Draft</button>
@@ -2339,7 +2297,7 @@
     </div>
   </footer>
 
-  <!-- Modal: Live Preview with Zoom Control -->
+  <!-- Modal Preview -->
   <div class="modal-overlay" id="previewModal">
     <div class="modal-window">
       <div class="modal-header">
@@ -2360,9 +2318,7 @@
       </div>
       <div class="modal-body">
         <div class="zoom-stage-wrapper" id="previewZoomWrapper">
-          <div id="previewA4Container">
-            <!-- Rendered Sheet -->
-          </div>
+          <div id="previewA4Container"></div>
         </div>
       </div>
       <div class="modal-footer">
@@ -2371,14 +2327,12 @@
     </div>
   </div>
 
-  <!-- Toast Notification -->
   <div class="toast-box" id="appToast">✓ Changes saved successfully</div>
 
-  <!-- JavaScript Engine -->
+  <!-- JAVASCRIPT CODE -->
   <script>
     'use strict';
 
-    /* Storage Key */
     const STORAGE_KEY = 'h4_direct_invoice_module_v1';
 
     const STANDARD_PRODUCTS = [
@@ -2403,7 +2357,6 @@
     let currentZoomIndex = 2;
     let designerZoom = 0.85;
 
-    /* XSS Protection */
     function escapeHTML(str) {
       if (str === null || str === undefined) return '';
       return String(str)
@@ -2414,7 +2367,6 @@
         .replace(/'/g, '&#039;');
     }
 
-    /* Template Designer Default Settings */
     function defaultDesignerSettings() {
       return {
         preset: "H4_PREMIUM",
@@ -2514,7 +2466,9 @@
           out[key] = mergeDesignerSettings(dv, sv);
         }
       }
-      if (!Array.isArray(src.columns) || !src.columns.length) out.columns = defaults.columns.map(c => ({...c}));
+      if (!Array.isArray(src.columns) || !src.columns.length) {
+        out.columns = defaults.columns.map(c => ({...c}));
+      }
       return out;
     }
 
@@ -2906,7 +2860,6 @@
       };
     }
 
-    /* Debounce helper for instant smooth preview updates */
     function debounce(func, wait = 120) {
       let timeout;
       return function(...args) {
@@ -2915,9 +2868,6 @@
       };
     }
 
-    /* ==========================================================================
-       A4 HTML Template — Fully Controlled by Invoice Designer Settings
-       ========================================================================== */
     function invoiceHTML(inv) {
       const computed = computeTotals(inv);
       const s = state.settings;
@@ -2925,7 +2875,6 @@
       const sellerWhatsapp = String(inv.sellerWhatsapp || s.whatsapp || '').trim();
       const sellerWebsite = String(inv.sellerWebsite || s.website || '').trim();
 
-      // Logo rendering
       let logoMarkup = DEFAULT_H4_LOGO_SVG;
       const logoToUse = String(inv.sellerLogoUrl || s.logoUrl || '').trim();
 
@@ -2933,7 +2882,7 @@
         logoMarkup = `
           <img
             src="${logoToUse}"
-            alt="H4 Construction Solutions Logo"
+            alt="H4 Logo"
             class="inv-seller-logo"
             style="
               display:block;
@@ -2966,7 +2915,6 @@
 
       const showDiscountCol = inv.discountEnabled && computed.discountTotal > 0;
 
-      // Table Header and Body Rendering Based on Designer Columns Order & Visibility
       const activeColumns = (ds.columns || []).filter(c => {
         if (c.id === 'disc' && !showDiscountCol) return false;
         if ((c.id === 'taxable' || c.id === 'tax') && !inv.gstEnabled) return false;
@@ -3012,7 +2960,6 @@
           color: ${ds.global.textColor};
         ">
           <div>
-            <!-- Header Section -->
             <div class="inv-header" style="border-bottom-color: ${ds.global.primaryColor};">
               <div class="inv-seller">
                 <div class="inv-seller-logo-row">
@@ -3072,7 +3019,6 @@
               </div>
             </div>
 
-            <!-- Customer Details Card -->
             <div class="inv-customer-card" style="
               background-color: ${ds.customer.bgColor};
               border-color: ${ds.customer.borderColor};
@@ -3100,7 +3046,6 @@
               </div>
             </div>
 
-            <!-- Item Table -->
             <table class="inv-table">
               <thead>
                 <tr>${thCells}</tr>
@@ -3110,7 +3055,6 @@
               </tbody>
             </table>
 
-            <!-- Summary & Totals -->
             <div class="inv-summary-section">
               <div class="inv-notes-column">
                 <div class="inv-words-block">
@@ -3136,7 +3080,6 @@
                   </div>
                 ` : ''}
 
-                <!-- Greeting Banner -->
                 <div class="inv-greeting-box" style="
                   font-size: ${ds.greeting.size};
                   color: ${ds.greeting.color};
@@ -3179,18 +3122,17 @@
                     color: ${ds.totals.color};
                     font-size: ${ds.totals.size};
                     font-weight: 800;
-                    -webkit-print-color-adjust: exact;
-                    print-color-adjust: exact;
+                    -webkit-print-color-adjust: exact !important;
+                    print-color-adjust: exact !important;
                   ">
-                    <td style="padding: 5px 6px; background-color:${ds.totals.bgColor}; -webkit-print-color-adjust:exact; print-color-adjust:exact;">Grand Total:</td>
-                    <td class="text-right" style="padding: 5px 6px; background-color:${ds.totals.bgColor}; -webkit-print-color-adjust:exact; print-color-adjust:exact;">${formatCurrency(computed.grand)}</td>
+                    <td style="padding: 5px 6px; background-color:${ds.totals.bgColor} !important; -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important;">Grand Total:</td>
+                    <td class="text-right" style="padding: 5px 6px; background-color:${ds.totals.bgColor} !important; -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important;">${formatCurrency(computed.grand)}</td>
                   </tr>
                 </table>
               </div>
             </div>
           </div>
 
-          <!-- Signatures -->
           <div class="inv-footer-signatures">
             <div style="font-size:7.2pt; color:#6B7280; max-width:55%;">
               <p>Certified that the particulars given above are true and correct.</p>
@@ -3361,33 +3303,33 @@
           </td>
         `;
 
-        tr.querySelector('.btn-act-view').addEventListener('click', () => {
+        tr.querySelector('.btn-act-view')?.addEventListener('click', () => {
           document.getElementById('previewA4Container').innerHTML = invoiceHTML(inv);
           applyPreviewZoom();
           document.getElementById('previewModal').classList.add('active');
         });
 
-        tr.querySelector('.btn-act-edit').addEventListener('click', () => {
+        tr.querySelector('.btn-act-edit')?.addEventListener('click', () => {
           state.currentInvoice = JSON.parse(JSON.stringify(inv));
           loadInvoiceIntoEditor(state.currentInvoice);
           switchTab('editor');
           showToast(`Editing invoice ${inv.invoiceNumber}`);
         });
 
-        tr.querySelector('.btn-act-dup').addEventListener('click', () => {
+        tr.querySelector('.btn-act-dup')?.addEventListener('click', () => {
           duplicateInvoice(inv);
         });
 
-        tr.querySelector('.btn-act-print').addEventListener('click', () => {
+        tr.querySelector('.btn-act-print')?.addEventListener('click', () => {
           document.getElementById('previewA4Container').innerHTML = invoiceHTML(inv);
           window.print();
         });
 
-        tr.querySelector('.btn-act-wa').addEventListener('click', () => {
+        tr.querySelector('.btn-act-wa')?.addEventListener('click', () => {
           shareInvoiceWhatsApp(inv);
         });
 
-        tr.querySelector('.btn-act-del').addEventListener('click', () => {
+        tr.querySelector('.btn-act-del')?.addEventListener('click', () => {
           if (confirm(`Delete invoice ${inv.invoiceNumber}? This action cannot be undone.`)) {
             state.invoices = state.invoices.filter(i => i.id !== inv.id);
             saveState();
@@ -3421,660 +3363,391 @@
       if (badge) badge.textContent = state.invoices.length;
     }
 
-    /* ==========================================================================
-       INITIALIZATION AND EVENT BINDINGS
-       ========================================================================== */
-    function initUI() {
-      loadState();
+    function renderSettings() {
+      const s = state.settings;
+      const ds = s.designer || defaultDesignerSettings();
 
-      state.currentInvoice = newDraft();
-      loadInvoiceIntoEditor(state.currentInvoice);
+      document.getElementById('setLegalName').value = s.legalName || '';
+      document.getElementById('setBrandName').value = s.brandName || '';
+      document.getElementById('setGstin').value = s.gstin || '';
+      document.getElementById('setAddress').value = s.address || '';
+      document.getElementById('setCity').value = s.city || '';
+      document.getElementById('setDistrict').value = s.district || '';
+      document.getElementById('setSellerState').value = s.state || 'Kerala';
+      document.getElementById('setSellerStateCode').value = s.stateCode || '32';
+      document.getElementById('setPin').value = s.pinCode || '';
 
-      renderHistory();
-      renderSettings();
-      bindEvents();
-      setupMobileNavigation();
-    }
+      document.getElementById('setMobile').value = s.mobile || '';
+      document.getElementById('setWhatsapp').value = s.whatsapp || '';
+      document.getElementById('setEmail').value = s.email || '';
+      document.getElementById('setWebsite').value = s.website || '';
 
-    function bindEvents() {
-      document.querySelectorAll('.nav-tab-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          switchTab(btn.getAttribute('data-tab'));
-        });
-      });
+      document.getElementById('setShowBankDetails').checked = Boolean(s.showBankDetails);
+      document.getElementById('setBankName').value = s.bankName || '';
+      document.getElementById('setAccountName').value = s.accountName || '';
+      document.getElementById('setAccountNumber').value = s.accountNumber || '';
+      document.getElementById('setIfscCode').value = s.ifscCode || '';
+      document.getElementById('setBranch').value = s.branch || '';
+      document.getElementById('setUpiId').value = s.upiId || '';
 
-      const custCoToggle = document.getElementById('custCoToggle');
-      custCoToggle?.addEventListener('change', (e) => {
-        const isChecked = e.target.checked;
-        document.getElementById('custCoSection').style.display = isChecked ? 'block' : 'none';
-        state.currentInvoice.coEnabled = isChecked;
-        if (!isChecked) {
-          state.currentInvoice.coName = '';
-          state.currentInvoice.coMobile = '';
-          document.getElementById('custCoName').value = '';
-          document.getElementById('custCoMobile').value = '';
-        }
-        triggerRecalculate();
-      });
+      document.getElementById('setInvoicePrefix').value = s.invoicePrefix || 'INV-';
 
-      const gstToggle = document.getElementById('gstToggle');
-      gstToggle?.addEventListener('change', (e) => {
-        const isChecked = e.target.checked;
-        document.getElementById('gstControls').style.display = isChecked ? 'grid' : 'none';
-        state.currentInvoice.gstEnabled = isChecked;
-        triggerRecalculate();
-      });
+      document.getElementById('dsGlobalPrimaryColor').value = ds.global.primaryColor;
+      document.getElementById('dsGlobalPrimaryColorTxt').value = ds.global.primaryColor;
+      document.getElementById('dsGlobalSecondaryColor').value = ds.global.secondaryColor;
+      document.getElementById('dsGlobalSecondaryColorTxt').value = ds.global.secondaryColor;
+      document.getElementById('dsGlobalNavyColor').value = ds.global.navyColor;
+      document.getElementById('dsGlobalNavyColorTxt').value = ds.global.navyColor;
+      document.getElementById('dsGlobalTextColor').value = ds.global.textColor;
+      document.getElementById('dsGlobalTextColorTxt').value = ds.global.textColor;
+      document.getElementById('dsGlobalMutedColor').value = ds.global.mutedColor;
+      document.getElementById('dsGlobalMutedColorTxt').value = ds.global.mutedColor;
+      document.getElementById('dsGlobalBorderColor').value = ds.global.borderColor;
+      document.getElementById('dsGlobalBorderColorTxt').value = ds.global.borderColor;
 
-      const gstRateSelect = document.getElementById('gstRateSelect');
-      gstRateSelect?.addEventListener('change', (e) => {
-        const val = e.target.value;
-        state.currentInvoice.gstRateType = val;
-        if (val === 'custom') {
-          document.getElementById('customGstGroup').style.display = 'flex';
-          state.currentInvoice.gstRate = Number(document.getElementById('customGstVal').value) || 0;
-        } else {
-          document.getElementById('customGstGroup').style.display = 'none';
-          state.currentInvoice.gstRate = Number(val);
-        }
-        triggerRecalculate();
-      });
+      document.getElementById('dsHeaderShowLogo').value = String(ds.header.showLogo);
+      document.getElementById('dsHeaderLogoSize').value = ds.header.logoSize;
+      document.getElementById('dsHeaderShowBrand').value = String(ds.header.showBrand);
+      document.getElementById('dsHeaderBrandSize').value = ds.header.brandSize;
+      document.getElementById('dsHeaderBrandWeight').value = ds.header.brandWeight;
+      document.getElementById('dsHeaderBrandColor').value = ds.header.brandColor;
+      document.getElementById('dsHeaderShowLegal').value = String(ds.header.showLegal);
+      document.getElementById('dsHeaderLegalSize').value = ds.header.legalSize;
+      document.getElementById('dsHeaderLegalColor').value = ds.header.legalColor;
+      document.getElementById('dsHeaderShowWhatsapp').value = String(ds.header.showWhatsapp !== false);
+      document.getElementById('dsHeaderShowWebsite').value = String(ds.header.showWebsite !== false);
 
-      const customGstVal = document.getElementById('customGstVal');
-      customGstVal?.addEventListener('input', (e) => {
-        let clean = e.target.value.replace(/[^0-9.]/g, '');
-        const parts = clean.split('.');
-        if (parts.length > 2) clean = parts[0] + '.' + parts.slice(1).join('');
-        e.target.value = clean;
+      document.getElementById('dsCustBgColor').value = ds.customer.bgColor;
+      document.getElementById('dsCustBorderColor').value = ds.customer.borderColor;
+      document.getElementById('dsCustPadding').value = ds.customer.padding;
+      document.getElementById('dsCustNameSize').value = ds.customer.nameSize;
+      document.getElementById('dsCustNameColor').value = ds.customer.nameColor;
+      document.getElementById('dsCustShowCo').value = String(ds.customer.showCo);
 
-        const num = parseFloat(clean);
-        if (!isNaN(num) && num >= 0 && num <= 100) {
-          state.currentInvoice.customGstRate = num;
-          state.currentInvoice.gstRate = num;
-        } else {
-          state.currentInvoice.customGstRate = '';
-        }
-        triggerRecalculate();
-      });
+      document.getElementById('dsMetaTitleSize').value = ds.invoiceMeta.titleSize;
+      document.getElementById('dsMetaTitleColor').value = ds.invoiceMeta.titleColor;
+      document.getElementById('dsMetaBadgeBg').value = ds.invoiceMeta.badgeBg;
 
-      const discountToggle = document.getElementById('discountToggle');
-      discountToggle?.addEventListener('change', (e) => {
-        const isChecked = e.target.checked;
-        document.getElementById('discountControls').style.display = isChecked ? 'grid' : 'none';
-        state.currentInvoice.discountEnabled = isChecked;
-        triggerRecalculate();
-      });
+      document.getElementById('dsTableHeaderBg').value = ds.table.headerBg;
+      document.getElementById('dsTableHeaderColor').value = ds.table.headerColor;
+      document.getElementById('dsTableCellPadding').value = ds.table.cellPadding;
 
-      document.getElementById('discountMode')?.addEventListener('change', (e) => {
-        state.currentInvoice.discountType = e.target.value;
-        triggerRecalculate();
-      });
+      document.getElementById('dsWordsSize').value = ds.amountWords.size;
+      document.getElementById('dsWordsWeight').value = ds.amountWords.weight;
+      document.getElementById('dsWordsColor').value = ds.amountWords.color;
 
-      document.getElementById('discountVal')?.addEventListener('input', (e) => {
-        let clean = e.target.value.replace(/[^0-9.]/g, '');
-        const parts = clean.split('.');
-        if (parts.length > 2) clean = parts[0] + '.' + parts.slice(1).join('');
-        e.target.value = clean;
-        state.currentInvoice.discountValue = parseFloat(clean) || 0;
-        triggerRecalculate();
-      });
+      document.getElementById('dsTotalSize').value = ds.totals.size;
+      document.getElementById('dsTotalColor').value = ds.totals.color;
+      document.getElementById('dsTotalBgColor').value = ds.totals.bgColor;
 
-      document.getElementById('btnAddLineItem')?.addEventListener('click', () => {
-        addLineItemRow({
-          id: 'item_' + Date.now(),
-          product: 'H4 Tile Adhesive',
-          customProduct: '',
-          qty: 1,
-          unit: 'Bag',
-          rate: 450
-        });
-        triggerRecalculate();
-      });
+      document.getElementById('dsGreetingText').value = ds.greeting.text;
+      document.getElementById('dsGreetingSize').value = ds.greeting.size;
+      document.getElementById('dsGreetingAlign').value = ds.greeting.align;
+      document.getElementById('dsGreetingColor').value = ds.greeting.color;
 
-      const syncInput = (id, key) => {
-        const el = document.getElementById(id);
-        if (el) {
-          el.addEventListener('input', (e) => {
-            state.currentInvoice[key] = e.target.value;
-            refreshOpenPreview();
-          });
-        }
-      };
-
-      syncInput('invDate', 'invoiceDate');
-      syncInput('invDueDate', 'dueDate');
-      syncInput('invPaymentStatus', 'paymentStatus');
-      syncInput('custName', 'customerName');
-      syncInput('custMobile', 'customerMobile');
-      syncInput('custAltMobile', 'customerAltMobile');
-      syncInput('custCoName', 'coName');
-      syncInput('custCoMobile', 'coMobile');
-      syncInput('custGstin', 'customerGstin');
-      syncInput('custAddress', 'customerAddress');
-      syncInput('custCity', 'customerCity');
-      syncInput('custDistrict', 'customerDistrict');
-      syncInput('custState', 'customerState');
-      syncInput('custPin', 'customerPinCode');
-      syncInput('invNotes', 'notes');
-
-      document.getElementById('btnSaveInvoice')?.addEventListener('click', saveCurrentInvoice);
-      document.getElementById('btnPreviewInvoice')?.addEventListener('click', openPreviewModal);
-      document.getElementById('btnShareWhatsApp')?.addEventListener('click', () => shareInvoiceWhatsApp(state.currentInvoice));
-      document.getElementById('btnPrintDirect')?.addEventListener('click', printCurrentInvoice);
-      document.getElementById('btnNewDraft')?.addEventListener('click', () => {
-        if (confirm("Reset editor to a brand new invoice draft?")) {
-          state.currentInvoice = newDraft();
-          loadInvoiceIntoEditor(state.currentInvoice);
-          showToast("New invoice draft ready");
-        }
-      });
-
-      document.getElementById('btnZoomOut')?.addEventListener('click', () => {
-        if (currentZoomIndex > 0) {
-          currentZoomIndex--;
-          applyPreviewZoom();
-        }
-      });
-
-      document.getElementById('btnZoomIn')?.addEventListener('click', () => {
-        if (currentZoomIndex < ZOOM_LEVELS.length - 1) {
-          currentZoomIndex++;
-          applyPreviewZoom();
-        }
-      });
-
-      document.getElementById('btnZoomReset')?.addEventListener('click', () => {
-        currentZoomIndex = 2;
-        applyPreviewZoom();
-      });
-
-      document.getElementById('modalBtnClose')?.addEventListener('click', closePreviewModal);
-      document.getElementById('modalBtnCloseBottom')?.addEventListener('click', closePreviewModal);
-      document.getElementById('modalBtnPrint')?.addEventListener('click', () => {
-        closePreviewModal();
-        printCurrentInvoice();
-      });
-      document.getElementById('modalBtnWhatsApp')?.addEventListener('click', () => {
-        shareInvoiceWhatsApp(state.currentInvoice);
-      });
-
-      document.getElementById('btnSaveSettingsTop')?.addEventListener('click', saveSettingsFromForm);
-      document.getElementById('btnSaveSettingsBottom')?.addEventListener('click', saveSettingsFromForm);
-
-      const logoFileInput = document.getElementById('logoFileInput');
-      logoFileInput?.addEventListener('change', handleLogoUpload);
-
-      document.getElementById('btnRemoveLogo')?.addEventListener('click', () => {
-        state.settings.logoUrl = "";
-        renderSettingsLogoPreview();
-        saveState();
-        refreshOpenPreview();
-        showToast("Reverted to H4 default logo");
-      });
-
-      document.getElementById('historySearchInput')?.addEventListener('input', (e) => {
-        renderHistory(e.target.value);
-      });
-
-      document.getElementById('btnNewInvoiceFromHistory')?.addEventListener('click', () => {
-        state.currentInvoice = newDraft();
-        loadInvoiceIntoEditor(state.currentInvoice);
-        switchTab('editor');
-      });
-    }
-
-    function setupMobileNavigation() {
-      document.getElementById('invoiceForm')?.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA' && e.target.type !== 'button') {
-          e.preventDefault();
-          const focusables = Array.from(document.querySelectorAll('#invoiceForm input:not([type="hidden"]):not([disabled]):not([readonly]), #invoiceForm select:not([disabled])'))
-            .filter(el => el.offsetParent !== null);
-          const idx = focusables.indexOf(e.target);
-          if (idx >= 0 && idx < focusables.length - 1) {
-            focusables[idx + 1].focus();
-            if (focusables[idx + 1].select) focusables[idx + 1].select();
-          } else {
-            e.target.blur();
-          }
-        }
-      });
-
-      window.addEventListener('focusin', (e) => {
-        if (['INPUT', 'SELECT', 'TEXTAREA'].includes(e.target.tagName)) {
-          setTimeout(() => {
-            e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }, 260);
-        }
-      });
-    }
-
-    function handleLogoUpload(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      if (file.type === 'image/svg+xml') {
-        const reader = new FileReader();
-        reader.onload = (evt) => {
-          state.settings.logoUrl = evt.target.result;
-          renderSettingsLogoPreview();
-          saveState();
-          refreshOpenPreview();
-          showToast("SVG Logo uploaded successfully");
-        };
-        reader.readAsDataURL(file);
-        return;
+      document.getElementById('dsBaseFontFamily').value = ds.fonts.base || 'Inter, sans-serif';
+      document.getElementById('dsBaseBodySize').value = ds.fonts.bodySize || '9pt';
+      document.getElementById('dsBaseLineHeight').value = ds.fonts.lineHeight || '1.35';
+      document.getElementById('dsLetterSpacing').value = ds.fonts.letterSpacing || '0px';
+      
+      const fontStatus = document.getElementById('dsCustomFontStatus');
+      const removeBtn = document.getElementById('btnRemoveCustomFont');
+      if (fontStatus) {
+        fontStatus.textContent = ds.fonts.customName ? `Active Font: ${ds.fonts.customName}` : 'No custom font uploaded';
+      }
+      if (removeBtn) {
+        removeBtn.style.display = ds.fonts.customData ? 'inline-block' : 'none';
       }
 
-      const reader = new FileReader();
-      reader.onload = (evt) => {
-        const img = new Image();
-        img.onload = () => {
-          const maxDim = 600;
-          let width = img.width;
-          let height = img.height;
+      document.getElementById('dsPresetSelect').value = ds.preset || 'H4_PREMIUM';
+      renderDesignerTemplateSelect();
 
-          if (width > maxDim || height > maxDim) {
-            if (width > height) {
-              height = Math.round((height * maxDim) / width);
-              width = maxDim;
-            } else {
-              width = Math.round((width * maxDim) / height);
-              height = maxDim;
-            }
-          }
+      document.getElementById('dsLayoutPaddingTop').value = ds.layout.paddingTop;
+      document.getElementById('dsLayoutPaddingHoriz').value = ds.layout.paddingHoriz;
+      document.getElementById('dsLayoutPaddingBottom').value = ds.layout.paddingBottom;
 
-          const canvas = document.createElement('canvas');
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, width, height);
-
-          state.settings.logoUrl = canvas.toDataURL('image/png', 0.88);
-          renderSettingsLogoPreview();
-          saveState();
-          refreshOpenPreview();
-          showToast("Logo optimized and saved!");
-        };
-        img.src = evt.target.result;
-      };
-      reader.readAsDataURL(file);
+      renderColumnOrderList();
+      renderSettingsLogoPreview();
+      debouncedLivePreview();
     }
 
-    function switchTab(tabId) {
-      state.activeTab = tabId;
-      document.querySelectorAll('.nav-tab-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.getAttribute('data-tab') === tabId);
-      });
-      document.querySelectorAll('.view-panel').forEach(panel => {
-        panel.classList.remove('active');
-      });
+    function renderColumnOrderList() {
+      const listEl = document.getElementById('designerColOrderList');
+      if (!listEl) return;
+      listEl.innerHTML = '';
+      const cols = state.settings.designer.columns || [];
 
-      const target = document.getElementById(tabId === 'editor' ? 'viewEditor' : (tabId === 'history' ? 'viewHistory' : 'viewSettings'));
-      if (target) target.classList.add('active');
-
-      const actionsBar = document.getElementById('editorActionsBar');
-      if (actionsBar) {
-        actionsBar.style.display = tabId === 'editor' ? 'flex' : 'none';
-      }
-
-      if (tabId === 'history') {
-        renderHistory();
-      } else if (tabId === 'settings') {
-        renderSettings();
-      }
-    }
-
-    function loadInvoiceIntoEditor(inv) {
-      document.getElementById('invNumber').value = inv.invoiceNumber || generateNextInvoiceNumber();
-      document.getElementById('invDate').value = inv.invoiceDate || '';
-      document.getElementById('invDueDate').value = inv.dueDate || '';
-      document.getElementById('invPaymentStatus').value = inv.paymentStatus || 'UNPAID';
-
-      document.getElementById('custName').value = inv.customerName || '';
-      document.getElementById('custMobile').value = inv.customerMobile || '';
-      document.getElementById('custAltMobile').value = inv.customerAltMobile || '';
-
-      const coEnabled = Boolean(inv.coEnabled);
-      document.getElementById('custCoToggle').checked = coEnabled;
-      document.getElementById('custCoSection').style.display = coEnabled ? 'block' : 'none';
-      document.getElementById('custCoName').value = inv.coName || '';
-      document.getElementById('custCoMobile').value = inv.coMobile || '';
-
-      document.getElementById('custGstin').value = inv.customerGstin || '';
-      document.getElementById('custAddress').value = inv.customerAddress || '';
-      document.getElementById('custCity').value = inv.customerCity || '';
-      document.getElementById('custDistrict').value = inv.customerDistrict || '';
-      document.getElementById('custState').value = inv.customerState || 'Kerala';
-      document.getElementById('custPin').value = inv.customerPinCode || '';
-
-      document.getElementById('gstToggle').checked = Boolean(inv.gstEnabled);
-      document.getElementById('gstControls').style.display = inv.gstEnabled ? 'grid' : 'none';
-      document.getElementById('gstRateSelect').value = inv.gstRateType || '18';
-
-      if (inv.gstRateType === 'custom') {
-        document.getElementById('customGstGroup').style.display = 'flex';
-        document.getElementById('customGstVal').value = inv.customGstRate || inv.gstRate || '';
-      } else {
-        document.getElementById('customGstGroup').style.display = 'none';
-      }
-
-      document.getElementById('discountToggle').checked = Boolean(inv.discountEnabled);
-      document.getElementById('discountControls').style.display = inv.discountEnabled ? 'grid' : 'none';
-      document.getElementById('discountMode').value = inv.discountType || 'percent';
-      document.getElementById('discountVal').value = inv.discountValue || 0;
-
-      document.getElementById('invNotes').value = inv.notes || '';
-
-      const tbody = document.getElementById('itemsTableBody');
-      tbody.innerHTML = '';
-      if (Array.isArray(inv.items) && inv.items.length > 0) {
-        inv.items.forEach(it => addLineItemRow(it));
-      } else {
-        addLineItemRow({ id: 'item_1', product: 'H4 Tile Adhesive', qty: 1, unit: 'Bag', rate: 450 });
-      }
-
-      triggerRecalculate();
-    }
-
-    function addLineItemRow(itemData) {
-      const tbody = document.getElementById('itemsTableBody');
-      const tr = document.createElement('tr');
-      tr.id = itemData.id || 'row_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
-
-      const isCustomProduct = !STANDARD_PRODUCTS.includes(itemData.product);
-
-      tr.innerHTML = `
-        <td class="td-num"></td>
-        <td class="td-action">
-          <button type="button" class="btn btn-sm btn-danger btn-item-del" title="Delete Line Item">✕</button>
-        </td>
-        <td class="td-product">
-          <select class="input-control item-product-select" style="margin-bottom: 4px;" enterkeyhint="next">
-            ${STANDARD_PRODUCTS.map(p => `<option value="${p}" ${itemData.product === p ? 'selected' : ''}>${p}</option>`).join('')}
-            <option value="CUSTOM" ${isCustomProduct ? 'selected' : ''}>-- Custom Product Name --</option>
-          </select>
-          <input type="text" class="input-control item-product-custom" placeholder="Type product description" value="${isCustomProduct ? escapeHTML(itemData.product || '') : ''}" style="display: ${isCustomProduct ? 'block' : 'none'};" enterkeyhint="next">
-        </td>
-        <td class="td-qty">
-          <input type="text" class="input-control item-qty" value="${itemData.qty}" inputmode="decimal" style="text-align: right;" enterkeyhint="next">
-        </td>
-        <td class="td-unit">
-          <select class="input-control item-unit" enterkeyhint="next">
-            ${STANDARD_UNITS.map(u => `<option value="${u}" ${itemData.unit === u ? 'selected' : ''}>${u}</option>`).join('')}
-          </select>
-        </td>
-        <td class="td-rate">
-          <input type="text" class="input-control item-rate" value="${itemData.rate}" inputmode="decimal" style="text-align: right;" enterkeyhint="next">
-        </td>
-        <td class="td-taxable item-cell-taxable">₹0.00</td>
-        <td class="td-tax item-cell-tax">₹0.00</td>
-        <td class="td-amount item-cell-amount">₹0.00</td>
-      `;
-
-      tbody.appendChild(tr);
-
-      const prodSelect = tr.querySelector('.item-product-select');
-      const prodCustomInput = tr.querySelector('.item-product-custom');
-      const qtyInput = tr.querySelector('.item-qty');
-      const rateInput = tr.querySelector('.item-rate');
-      const delBtn = tr.querySelector('.btn-item-del');
-
-      prodSelect.addEventListener('change', (e) => {
-        if (e.target.value === 'CUSTOM') {
-          prodCustomInput.style.display = 'block';
-          prodCustomInput.focus();
-        } else {
-          prodCustomInput.style.display = 'none';
-          if (e.target.value === 'H4 Tile Adhesive') rateInput.value = 450;
-          if (e.target.value === 'H4 Waterproofing') rateInput.value = 650;
-          if (e.target.value === 'H4 ShieldX Epoxy Flooring') rateInput.value = 900;
-        }
-        triggerRecalculate();
-      });
-
-      prodCustomInput.addEventListener('input', triggerRecalculate);
-
-      qtyInput.addEventListener('input', (e) => {
-        let clean = e.target.value.replace(/[^0-9.]/g, '');
-        const parts = clean.split('.');
-        if (parts.length > 2) clean = parts[0] + '.' + parts.slice(1).join('');
-        e.target.value = clean;
-        triggerRecalculate();
-      });
-
-      rateInput.addEventListener('input', (e) => {
-        let clean = e.target.value.replace(/[^0-9.]/g, '');
-        const parts = clean.split('.');
-        if (parts.length > 2) clean = parts[0] + '.' + parts.slice(1).join('');
-        e.target.value = clean;
-        triggerRecalculate();
-      });
-
-      delBtn.addEventListener('click', () => {
-        if (tbody.querySelectorAll('tr').length <= 1) {
-          alert("An invoice must contain at least one line item.");
-          return;
-        }
-        tr.remove();
-        triggerRecalculate();
-      });
-
-      updateRowNumbers();
-    }
-
-    function updateRowNumbers() {
-      const rows = document.querySelectorAll('#itemsTableBody tr');
-      rows.forEach((r, idx) => {
-        const numTd = r.querySelector('.td-num');
-        if (numTd) numTd.textContent = idx + 1;
-      });
-    }
-
-    function readItemsFromEditor() {
-      const rows = document.querySelectorAll('#itemsTableBody tr');
-      const items = [];
-
-      rows.forEach(tr => {
-        const prodSelect = tr.querySelector('.item-product-select');
-        const prodCustomInput = tr.querySelector('.item-product-custom');
-        const qtyInput = tr.querySelector('.item-qty');
-        const unitSelect = tr.querySelector('.item-unit');
-        const rateInput = tr.querySelector('.item-rate');
-
-        let productName = prodSelect.value;
-        if (productName === 'CUSTOM') {
-          productName = prodCustomInput.value.trim() || 'Custom Product';
-        }
-
-        const qty = parseFloat(qtyInput.value) || 0;
-        const rate = parseFloat(rateInput.value) || 0;
-        const unit = unitSelect.value || 'Nos';
-
-        items.push({
-          id: tr.id,
-          product: productName,
-          qty,
-          unit,
-          rate
-        });
-      });
-
-      return items;
-    }
-
-    function triggerRecalculate() {
-      updateRowNumbers();
-
-      state.currentInvoice.items = readItemsFromEditor();
-      state.currentInvoice.sellerState = state.settings.state || "Kerala";
-      state.currentInvoice.sellerStateCode = "32";
-
-      const totals = computeTotals(state.currentInvoice);
-
-      const rows = document.querySelectorAll('#itemsTableBody tr');
-      rows.forEach((tr, i) => {
-        const itemComputed = totals.items[i];
-        if (itemComputed) {
-          tr.querySelector('.item-cell-taxable').textContent = formatCurrency(itemComputed.taxable);
-          tr.querySelector('.item-cell-tax').textContent = formatCurrency(itemComputed.tax);
-          tr.querySelector('.item-cell-amount').textContent = formatCurrency(itemComputed.amount);
-        }
-      });
-
-      document.getElementById('sumSubtotal').textContent = formatCurrency(totals.subtotal);
-
-      const rowDiscount = document.getElementById('rowDiscount');
-      if (state.currentInvoice.discountEnabled && totals.discountTotal > 0) {
-        rowDiscount.style.display = 'flex';
-        document.getElementById('sumDiscount').textContent = '-' + formatCurrency(totals.discountTotal);
-      } else {
-        rowDiscount.style.display = 'none';
-      }
-
-      document.getElementById('sumTaxable').textContent = formatCurrency(totals.taxable);
-
-      const gstContainer = document.getElementById('gstRowsContainer');
-      gstContainer.innerHTML = '';
-      const tag = document.getElementById('editorGstClassificationTag');
-
-      if (!totals.gstEnabled || totals.gstRate <= 0) {
-        tag.textContent = "GST NOT APPLICABLE";
-        tag.className = "gst-tag none";
-      } else {
-        tag.textContent = `GST ${totals.gstRate}% (CGST ${totals.cgstRate}% + SGST ${totals.sgstRate}%)`;
-        tag.className = "gst-tag active";
-
-        gstContainer.innerHTML = `
-          <div class="totals-row">
-            <span>CGST (${totals.cgstRate}%):</span>
-            <span>${formatCurrency(totals.cgst)}</span>
+      cols.forEach((col, idx) => {
+        const item = document.createElement('div');
+        item.className = 'col-order-item';
+        item.style.cssText = 'display:grid; grid-template-columns:1fr auto; gap:8px; align-items:center;';
+        item.innerHTML = `
+          <div style="min-width:0;">
+            <div class="col-name" style="font-weight:700;">${escapeHTML(col.name)}</div>
+            <div style="display:flex; gap:6px; align-items:center; margin-top:5px; flex-wrap:wrap;">
+              <input type="text" class="input-control" data-action="width" value="${escapeHTML(col.width || 'auto')}" aria-label="${escapeHTML(col.name)} width" style="width:90px; height:34px;">
+              <select class="input-control" data-action="align" aria-label="${escapeHTML(col.name)} alignment" style="width:100px; height:34px;">
+                <option value="left" ${col.align === 'left' ? 'selected' : ''}>Left</option>
+                <option value="center" ${col.align === 'center' ? 'selected' : ''}>Center</option>
+                <option value="right" ${col.align === 'right' ? 'selected' : ''}>Right</option>
+              </select>
+              <label style="display:flex; align-items:center; gap:4px; font-size:.75rem;">
+                <input type="checkbox" ${col.show !== false ? 'checked' : ''} data-action="toggle"> Show
+              </label>
+            </div>
           </div>
-          <div class="totals-row">
-            <span>SGST (${totals.sgstRate}%):</span>
-            <span>${formatCurrency(totals.sgst)}</span>
+          <div class="col-order-btns" style="display:flex; gap:4px;">
+            <button type="button" class="btn btn-sm btn-outline" data-action="up" ${idx === 0 ? 'disabled' : ''}>▲</button>
+            <button type="button" class="btn btn-sm btn-outline" data-action="down" ${idx === cols.length - 1 ? 'disabled' : ''}>▼</button>
           </div>
         `;
+
+        item.querySelector('[data-action="up"]')?.addEventListener('click', () => {
+          if (idx > 0) { [cols[idx - 1], cols[idx]] = [cols[idx], cols[idx - 1]]; renderColumnOrderList(); refreshOpenPreview(); saveState(); }
+        });
+        item.querySelector('[data-action="down"]')?.addEventListener('click', () => {
+          if (idx < cols.length - 1) { [cols[idx + 1], cols[idx]] = [cols[idx], cols[idx + 1]]; renderColumnOrderList(); refreshOpenPreview(); saveState(); }
+        });
+        item.querySelector('[data-action="toggle"]')?.addEventListener('change', e => {
+          col.show = e.target.checked; refreshOpenPreview(); saveState();
+        });
+        item.querySelector('[data-action="width"]')?.addEventListener('input', e => {
+          const v = String(e.target.value || '').trim();
+          col.width = v || 'auto'; refreshOpenPreview(); saveState();
+        });
+        item.querySelector('[data-action="align"]')?.addEventListener('change', e => {
+          col.align = e.target.value; refreshOpenPreview(); saveState();
+        });
+        listEl.appendChild(item);
+      });
+    }
+
+    function renderSettingsLogoPreview() {
+      const previewBox = document.getElementById('settingsLogoPreviewBox');
+      const appBarBadge = document.getElementById('appBarLogoBadge');
+
+      if (state.settings.logoUrl && state.settings.logoUrl.trim()) {
+        const img = `<img src="${state.settings.logoUrl}" alt="Logo" style="width:100%; height:100%; object-fit:contain;">`;
+        if (previewBox) previewBox.innerHTML = img;
+        if (appBarBadge) appBarBadge.innerHTML = img;
+      } else {
+        if (previewBox) previewBox.innerHTML = DEFAULT_H4_LOGO_SVG;
+        if (appBarBadge) appBarBadge.innerHTML = DEFAULT_H4_LOGO_SVG;
       }
+    }
 
-      document.getElementById('sumGrandTotal').textContent = formatCurrency(totals.grand);
-      document.getElementById('editorAmountInWords').textContent = amountInWords(totals.grand);
+    function syncDesignerInputsToState() {
+      const ds = ensureDesignerSettings();
 
+      ds.global.primaryColor = document.getElementById('dsGlobalPrimaryColor').value;
+      ds.global.secondaryColor = document.getElementById('dsGlobalSecondaryColor').value;
+      ds.global.navyColor = document.getElementById('dsGlobalNavyColor').value;
+      ds.global.textColor = document.getElementById('dsGlobalTextColor').value;
+      ds.global.mutedColor = document.getElementById('dsGlobalMutedColor').value;
+      ds.global.borderColor = document.getElementById('dsGlobalBorderColor').value;
+
+      ds.header.showLogo = document.getElementById('dsHeaderShowLogo').value === 'true';
+      ds.header.logoSize = Number(document.getElementById('dsHeaderLogoSize').value) || 60;
+      ds.header.showBrand = document.getElementById('dsHeaderShowBrand').value === 'true';
+      ds.header.brandSize = document.getElementById('dsHeaderBrandSize').value;
+      ds.header.brandWeight = document.getElementById('dsHeaderBrandWeight').value;
+      ds.header.brandColor = document.getElementById('dsHeaderBrandColor').value;
+      ds.header.showLegal = document.getElementById('dsHeaderShowLegal').value === 'true';
+      ds.header.legalSize = document.getElementById('dsHeaderLegalSize').value;
+      ds.header.legalColor = document.getElementById('dsHeaderLegalColor').value;
+      ds.header.showWhatsapp = document.getElementById('dsHeaderShowWhatsapp').value === 'true';
+      ds.header.showWebsite = document.getElementById('dsHeaderShowWebsite').value === 'true';
+
+      ds.customer.bgColor = document.getElementById('dsCustBgColor').value;
+      ds.customer.borderColor = document.getElementById('dsCustBorderColor').value;
+      ds.customer.padding = Number(document.getElementById('dsCustPadding').value) || 10;
+      ds.customer.nameSize = document.getElementById('dsCustNameSize').value;
+      ds.customer.nameColor = document.getElementById('dsCustNameColor').value;
+      ds.customer.showCo = document.getElementById('dsCustShowCo').value === 'true';
+
+      ds.invoiceMeta.titleSize = document.getElementById('dsMetaTitleSize').value;
+      ds.invoiceMeta.titleColor = document.getElementById('dsMetaTitleColor').value;
+      ds.invoiceMeta.badgeBg = document.getElementById('dsMetaBadgeBg').value;
+
+      ds.table.headerBg = document.getElementById('dsTableHeaderBg').value;
+      ds.table.headerColor = document.getElementById('dsTableHeaderColor').value;
+      ds.table.cellPadding = Number(document.getElementById('dsTableCellPadding').value) || 5;
+
+      ds.amountWords.size = document.getElementById('dsWordsSize').value;
+      ds.amountWords.weight = document.getElementById('dsWordsWeight').value;
+      ds.amountWords.color = document.getElementById('dsWordsColor').value;
+
+      ds.totals.size = document.getElementById('dsTotalSize').value;
+      ds.totals.color = document.getElementById('dsTotalColor').value;
+      ds.totals.bgColor = document.getElementById('dsTotalBgColor').value;
+
+      ds.greeting.text = document.getElementById('dsGreetingText').value;
+      ds.greeting.size = document.getElementById('dsGreetingSize').value;
+      ds.greeting.align = document.getElementById('dsGreetingAlign').value;
+      ds.greeting.color = document.getElementById('dsGreetingColor').value;
+
+      ds.fonts.base = document.getElementById('dsBaseFontFamily').value;
+      ds.fonts.bodySize = document.getElementById('dsBaseBodySize').value || '9pt';
+      ds.fonts.lineHeight = document.getElementById('dsBaseLineHeight').value || '1.35';
+      ds.fonts.letterSpacing = document.getElementById('dsLetterSpacing').value || '0px';
+
+      ds.layout.paddingTop = Number(document.getElementById('dsLayoutPaddingTop').value) || 14;
+      ds.layout.paddingHoriz = Number(document.getElementById('dsLayoutPaddingHoriz').value) || 16;
+      ds.layout.paddingBottom = Number(document.getElementById('dsLayoutPaddingBottom').value) || 14;
+
+      applyAppearance();
       refreshOpenPreview();
     }
 
-    function validateInvoice(inv) {
-      if (!inv.customerName || !inv.customerName.trim()) {
-        alert("Please enter Customer / Company Name.");
-        document.getElementById('custName').focus();
-        return false;
-      }
-
-      if (!inv.customerMobile || !inv.customerMobile.trim()) {
-        alert("Please enter Customer Mobile number.");
-        document.getElementById('custMobile').focus();
-        return false;
-      }
-
-      if (!inv.items || inv.items.length === 0) {
-        alert("Please add at least one line item.");
-        return false;
-      }
-
-      for (let i = 0; i < inv.items.length; i++) {
-        const item = inv.items[i];
-        if (item.qty <= 0) {
-          alert(`Item #${i + 1} (${item.product}): Quantity must be greater than 0.`);
-          return false;
-        }
-        if (item.rate < 0) {
-          alert(`Item #${i + 1} (${item.product}): Rate cannot be negative.`);
-          return false;
-        }
-      }
-
-      if (inv.gstEnabled && inv.gstRateType === 'custom') {
-        const cGst = Number(inv.customGstRate);
-        if (isNaN(cGst) || cGst < 0 || cGst > 100) {
-          alert("Custom GST % must be a valid number between 0% and 100%.");
-          document.getElementById('customGstVal').focus();
-          return false;
-        }
-      }
-
-      return true;
+    function renderDesignerTemplateSelect() {
+      const sel = document.getElementById('dsTemplateSelect');
+      if (!sel) return;
+      const templates = (state.settings.designer && state.settings.designer.templates) || {};
+      const current = sel.value;
+      sel.innerHTML = '<option value="">Select saved template</option>';
+      Object.keys(templates).sort((a,b)=>a.localeCompare(b)).forEach(name => {
+        const opt = document.createElement('option'); opt.value = name; opt.textContent = name; sel.appendChild(opt);
+      });
+      if (templates[current]) sel.value = current;
     }
 
-    function buildInvoiceRecord() {
-      state.currentInvoice.invoiceNumber = document.getElementById('invNumber').value;
-      state.currentInvoice.invoiceDate = document.getElementById('invDate').value;
-      state.currentInvoice.dueDate = document.getElementById('invDueDate').value;
-      state.currentInvoice.paymentStatus = document.getElementById('invPaymentStatus').value;
-
-      state.currentInvoice.customerName = document.getElementById('custName').value.trim();
-      state.currentInvoice.customerMobile = document.getElementById('custMobile').value.trim();
-      state.currentInvoice.customerAltMobile = document.getElementById('custAltMobile').value.trim();
-
-      state.currentInvoice.coEnabled = document.getElementById('custCoToggle').checked;
-      state.currentInvoice.coName = document.getElementById('custCoName').value.trim();
-      state.currentInvoice.coMobile = document.getElementById('custCoMobile').value.trim();
-
-      state.currentInvoice.customerGstin = document.getElementById('custGstin').value.trim().toUpperCase();
-      state.currentInvoice.customerAddress = document.getElementById('custAddress').value.trim();
-      state.currentInvoice.customerCity = document.getElementById('custCity').value.trim();
-      state.currentInvoice.customerDistrict = document.getElementById('custDistrict').value.trim();
-      state.currentInvoice.customerState = document.getElementById('custState').value.trim() || 'Kerala';
-      state.currentInvoice.customerPinCode = document.getElementById('custPin').value.trim();
-
-      state.currentInvoice.items = readItemsFromEditor();
-      state.currentInvoice.notes = document.getElementById('invNotes').value.trim();
-
-      state.currentInvoice.sellerLegalName = state.settings.legalName;
-      state.currentInvoice.sellerBrandName = state.settings.brandName;
-      state.currentInvoice.sellerLogoUrl = state.settings.logoUrl;
-      state.currentInvoice.sellerAddress = state.settings.address;
-      state.currentInvoice.sellerCity = state.settings.city;
-      state.currentInvoice.sellerDistrict = state.settings.district;
-      state.currentInvoice.sellerState = state.settings.state || "Kerala";
-      state.currentInvoice.sellerStateCode = "32";
-      state.currentInvoice.sellerPinCode = state.settings.pinCode;
-      state.currentInvoice.sellerMobile = state.settings.mobile;
-      state.currentInvoice.sellerWhatsapp = state.settings.whatsapp;
-      state.currentInvoice.sellerEmail = state.settings.email;
-      state.currentInvoice.sellerWebsite = state.settings.website;
-      state.currentInvoice.sellerGstin = state.settings.gstin;
-
-      state.currentInvoice.showBankDetails = state.settings.showBankDetails;
-      state.currentInvoice.bankName = state.settings.bankName;
-      state.currentInvoice.accountName = state.settings.accountName;
-      state.currentInvoice.accountNumber = state.settings.accountNumber;
-      state.currentInvoice.ifscCode = state.settings.ifscCode;
-      state.currentInvoice.branch = state.settings.branch;
-      state.currentInvoice.upiId = state.settings.upiId;
-
-      return JSON.parse(JSON.stringify(state.currentInvoice));
+    function saveDesignerTemplate() {
+      const name = String(document.getElementById('dsTemplateName')?.value || '').trim();
+      if (!name) { alert('Enter a template name first.'); return; }
+      const ds = ensureDesignerSettings();
+      ds.templates = ds.templates || {};
+      const copy = JSON.parse(JSON.stringify(ds));
+      delete copy.templates;
+      ds.templates[name] = copy;
+      saveState();
+      renderDesignerTemplateSelect();
+      document.getElementById('dsTemplateSelect').value = name;
+      showToast(`Template saved: ${name}`);
     }
 
-    function saveCurrentInvoice() {
-      const record = buildInvoiceRecord();
-      if (!validateInvoice(record)) return;
+    function loadDesignerTemplate() {
+      const name = document.getElementById('dsTemplateSelect')?.value;
+      const ds = ensureDesignerSettings();
+      if (!name || !ds.templates?.[name]) { alert('Select a saved template.'); return; }
+      const templates = ds.templates;
+      const loaded = mergeDesignerSettings(defaultDesignerSettings(), templates[name]);
+      loaded.templates = templates;
+      state.settings.designer = loaded;
+      renderSettings();
+      saveState();
+      refreshOpenPreview();
+      showToast(`Template loaded: ${name}`);
+    }
 
-      const existingIdx = state.invoices.findIndex(inv => inv.id === record.id);
-      if (existingIdx >= 0) {
-        state.invoices[existingIdx] = record;
-        showToast(`Invoice ${record.invoiceNumber} updated!`);
-      } else {
-        let finalNum = record.invoiceNumber;
-        while (state.invoices.some(inv => inv.invoiceNumber === finalNum)) {
-          finalNum = generateNextInvoiceNumber();
-        }
-        record.invoiceNumber = finalNum;
-        document.getElementById('invNumber').value = finalNum;
+    function deleteDesignerTemplate() {
+      const name = document.getElementById('dsTemplateSelect')?.value;
+      const ds = ensureDesignerSettings();
+      if (!name || !ds.templates?.[name]) { alert('Select a saved template.'); return; }
+      if (!confirm(`Delete template “${name}”?`)) return;
+      delete ds.templates[name];
+      saveState();
+      renderDesignerTemplateSelect();
+      showToast(`Template deleted: ${name}`);
+    }
 
-        state.invoices.unshift(record);
-        showToast(`Invoice ${record.invoiceNumber} saved!`);
+    function saveSettingsFromForm() {
+      const legal = document.getElementById('setLegalName').value.trim();
+      const brand = document.getElementById('setBrandName').value.trim();
+
+      if (!legal || !brand) {
+        alert("Company Legal Name and Brand Name are required.");
+        return;
       }
+
+      const s = state.settings;
+      s.legalName = legal;
+      s.brandName = brand;
+      s.gstin = document.getElementById('setGstin').value.trim().toUpperCase();
+      s.address = document.getElementById('setAddress').value.trim();
+      s.city = document.getElementById('setCity').value.trim();
+      s.district = document.getElementById('setDistrict').value.trim();
+      s.state = document.getElementById('setSellerState').value.trim() || 'Kerala';
+      s.stateCode = "32";
+      s.pinCode = document.getElementById('setPin').value.trim();
+
+      s.mobile = document.getElementById('setMobile').value.trim();
+      s.whatsapp = document.getElementById('setWhatsapp').value.trim();
+      s.email = document.getElementById('setEmail').value.trim();
+      s.website = document.getElementById('setWebsite').value.trim();
+
+      s.showBankDetails = document.getElementById('setShowBankDetails').checked;
+      s.bankName = document.getElementById('setBankName').value.trim();
+      s.accountName = document.getElementById('setAccountName').value.trim();
+      s.accountNumber = document.getElementById('setAccountNumber').value.trim();
+      s.ifscCode = document.getElementById('setIfscCode').value.trim().toUpperCase();
+      s.branch = document.getElementById('setBranch').value.trim();
+      s.upiId = document.getElementById('setUpiId').value.trim();
+
+      s.invoicePrefix = document.getElementById('setInvoicePrefix').value.trim() || 'INV-';
+
+      syncDesignerInputsToState();
+      document.getElementById('appBarBrandSubtitle').textContent = legal;
 
       saveState();
-      renderHistory();
+      showToast("Company & Designer Settings saved successfully!");
+    }
+
+    function applyAppearance() {
+      const r = document.documentElement;
+      const ds = state.settings.designer || defaultDesignerSettings();
+      r.style.setProperty('--h4-primary', ds.global.primaryColor || '#A8238B');
+      r.style.setProperty('--h4-accent', ds.global.secondaryColor || '#F5BE00');
+      r.style.setProperty('--h4-navy', ds.global.navyColor || '#172554');
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('appToast');
+      toast.textContent = '✓ ' + message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2800);
+    }
+
+    function applyPreset(presetKey) {
+      const ds = state.settings.designer;
+      ds.preset = presetKey;
+
+      if (presetKey === "H4_PREMIUM") {
+        ds.global.primaryColor = "#A8238B";
+        ds.global.secondaryColor = "#F5BE00";
+        ds.global.navyColor = "#172554";
+        ds.table.headerBg = "#172554";
+        ds.totals.bgColor = "#FEF3C7";
+        ds.fonts.base = "Inter, sans-serif";
+      } else if (presetKey === "H4_CORPORATE") {
+        ds.global.primaryColor = "#0F766E";
+        ds.global.secondaryColor = "#0284C7";
+        ds.global.navyColor = "#0F172A";
+        ds.table.headerBg = "#0F172A";
+        ds.totals.bgColor = "#E0F2FE";
+        ds.fonts.base = "Roboto, sans-serif";
+      } else if (presetKey === "H4_MINIMAL") {
+        ds.global.primaryColor = "#334155";
+        ds.global.secondaryColor = "#64748B";
+        ds.global.navyColor = "#1E293B";
+        ds.table.headerBg = "#334155";
+        ds.totals.bgColor = "#F1F5F9";
+        ds.fonts.base = "Arial, sans-serif";
+      } else if (presetKey === "H4_COMPACT") {
+        ds.global.primaryColor = "#831843";
+        ds.global.secondaryColor = "#D97706";
+        ds.global.navyColor = "#500724";
+        ds.table.headerBg = "#500724";
+        ds.totals.bgColor = "#FDF2F8";
+        ds.layout.paddingTop = 10;
+        ds.layout.paddingHoriz = 12;
+        ds.layout.paddingBottom = 10;
+      }
+
+      renderSettings();
+      refreshOpenPreview();
+      showToast(`Applied preset: ${presetKey}`);
     }
 
     function setupAccordions() {
@@ -4131,19 +3804,21 @@
         }
       });
 
+      // Custom Font Upload & Local Storage Handler
       document.getElementById('dsCustomFontInput')?.addEventListener('change', (e) => {
         const file = e.target.files?.[0];
         if (!file) return;
-        if (file.size > 1024 * 1024) {
-          alert("Please use a font file up to 1 MB. WOFF2 is recommended.");
+        if (file.size > 2 * 1024 * 1024) {
+          alert("Font file is larger than 2MB. Please use a compressed .woff2 or .ttf font under 2MB.");
           e.target.value = "";
           return;
         }
         const reader = new FileReader();
         reader.onload = (evt) => {
           const fontData = String(evt.target.result || "");
-          const fontName = file.name.replace(/\.[^.]+$/, '').replace(/[^a-zA-Z0-9_-]/g, '') || 'H4CustomFont';
-          const safeName = `H4Custom_${fontName}`;
+          const fontName = file.name.replace(/\.[^.]+$/, '').replace(/[^a-zA-Z0-9_-]/g, '') || 'CustomUploadedFont';
+          const safeName = `H4_${fontName}`;
+          
           const styleId = 'h4-custom-font-style';
           document.getElementById(styleId)?.remove();
           const style = document.createElement('style');
@@ -4157,20 +3832,47 @@
           ds.fonts.base = `"${safeName}", sans-serif`;
 
           const sel = document.getElementById('dsBaseFontFamily');
-          if (sel && !Array.from(sel.options).some(o => o.value === ds.fonts.base)) {
-            const opt = document.createElement('option');
-            opt.value = ds.fonts.base;
-            opt.textContent = `${fontName} (Custom)`;
-            sel.appendChild(opt);
+          if (sel) {
+            let exists = Array.from(sel.options).some(o => o.value === ds.fonts.base);
+            if (!exists) {
+              const opt = document.createElement('option');
+              opt.value = ds.fonts.base;
+              opt.textContent = `${fontName} (Uploaded Custom)`;
+              sel.appendChild(opt);
+            }
+            sel.value = ds.fonts.base;
           }
-          if (sel) sel.value = ds.fonts.base;
+
           const status = document.getElementById('dsCustomFontStatus');
-          if (status) status.textContent = `Loaded: ${fontName}`;
+          if (status) status.textContent = `Active Font: ${fontName}`;
+          const removeBtn = document.getElementById('btnRemoveCustomFont');
+          if (removeBtn) removeBtn.style.display = 'inline-block';
+
           saveState();
           refreshOpenPreview();
-          showToast(`Custom font added: ${fontName}`);
+          showToast(`Custom Font Applied: ${fontName}`);
         };
         reader.readAsDataURL(file);
+      });
+
+      // Custom Font Remove Handler
+      document.getElementById('btnRemoveCustomFont')?.addEventListener('click', () => {
+        const ds = ensureDesignerSettings();
+        ds.fonts.customName = "";
+        ds.fonts.customData = "";
+        ds.fonts.base = "Inter, sans-serif";
+        document.getElementById('h4-custom-font-style')?.remove();
+        
+        const sel = document.getElementById('dsBaseFontFamily');
+        if (sel) sel.value = "Inter, sans-serif";
+        
+        const status = document.getElementById('dsCustomFontStatus');
+        if (status) status.textContent = "No custom font uploaded";
+        document.getElementById('btnRemoveCustomFont').style.display = 'none';
+
+        saveState();
+        refreshOpenPreview();
+        showToast("Custom font removed, reset to Inter");
       });
 
       document.getElementById('btnZoomInDs')?.addEventListener('click', () => {
@@ -4181,8 +3883,8 @@
       });
 
       document.getElementById('btnZoomOutDs')?.addEventListener('click', () => {
-        if (designerZoom > 0.75) {
-          designerZoom = Math.max(0.75, designerZoom - 0.05);
+        if (designerZoom > 0.6) {
+          designerZoom = Math.max(0.6, designerZoom - 0.05);
           applyDesignerZoom();
         }
       });
