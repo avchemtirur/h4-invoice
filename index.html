@@ -17,7 +17,7 @@
       --primary-dark: #7b1664;
       --gold-h4: #D4AF37;
       --navy-h4: #1E293B;
-      --bg-gray: #F1F5F9;
+      --bg-gray: #334155;
       --border-color: #CBD5E1;
       --text-main: #0F172A;
       --success-green: #15803D;
@@ -31,7 +31,6 @@
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
-    /* FULL VIEWPORT LOCK - NO BODY OVERFLOW SCROLL */
     html, body {
       width: 100%;
       height: 100%;
@@ -45,7 +44,7 @@
       flex-direction: column;
     }
 
-    /* PULL TO REFRESH INDICATOR */
+    /* PULL TO REFRESH */
     #pull-refresh-indicator {
       position: fixed;
       top: -60px;
@@ -81,11 +80,9 @@
       animation: spin 0.7s linear infinite;
     }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* TOP NAVIGATION */
+    /* TOP HEADER */
     header.app-header {
       background-color: var(--primary-h4);
       color: white;
@@ -95,19 +92,15 @@
       align-items: center;
       box-shadow: 0 2px 5px rgba(0,0,0,0.15);
       z-index: 100;
-      flex-wrap: nowrap;
-      gap: 8px;
-      min-height: 52px;
+      min-height: 50px;
     }
 
     .brand-title {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 700;
-      letter-spacing: 0.5px;
       display: flex;
       align-items: center;
       gap: 6px;
-      white-space: nowrap;
     }
 
     .brand-badge {
@@ -119,51 +112,9 @@
       font-weight: 800;
     }
 
-    nav.nav-tabs {
-      display: flex;
-      gap: 4px;
-      overflow-x: auto;
-      max-width: 100%;
-      scrollbar-width: none;
-    }
-
-    nav.nav-tabs::-webkit-scrollbar {
-      display: none;
-    }
-
-    .nav-tab-btn {
-      background: rgba(255, 255, 255, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      color: white;
-      padding: 5px 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.78rem;
-      font-weight: 600;
-      white-space: nowrap;
-      transition: all 0.2s;
-    }
-
-    .nav-tab-btn:hover, .nav-tab-btn.active {
-      background: white;
-      color: var(--primary-h4);
-      border-color: white;
-    }
-
-    .nav-tab-preview {
-      background: #0284C7 !important;
-      border-color: #38BDF8 !important;
-      color: white !important;
-    }
-
-    .nav-tab-preview.active {
-      background: white !important;
-      color: #0284C7 !important;
-    }
-
     .header-actions {
       display: flex;
-      gap: 5px;
+      gap: 6px;
       align-items: center;
     }
 
@@ -187,35 +138,20 @@
     .btn-white { background: #FFFFFF; color: var(--primary-h4); }
     .btn-white:hover { background: #E2E8F0; }
     .btn-danger { background: var(--danger-red); color: white; }
-    .btn-danger:hover { background: #B91C1C; }
     .btn-secondary { background: #E2E8F0; color: #1E293B; border: 1px solid #CBD5E1; }
-    .btn-secondary:hover { background: #CBD5E1; }
     .btn-wa { background: #25D366; color: white; }
-    .btn-wa:hover { background: #1EBE5D; }
+    .btn-settings { background: #0F172A; color: white; border: 1px solid #475569; }
 
-    /* WORKSPACE: STRICT 1-PAGE LAYOUT */
+    /* WORKSPACE */
     main.workspace {
       display: flex;
       flex: 1;
-      height: calc(100vh - 52px);
+      height: calc(100vh - 50px);
       overflow: hidden;
       position: relative;
     }
 
-    /* LEFT CONTROLS PANEL */
-    section.controls-panel {
-      width: 480px;
-      height: 100%;
-      background: #FFFFFF;
-      border-right: 1px solid var(--border-color);
-      overflow-y: auto;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    /* RIGHT PREVIEW STAGE */
+    /* A4 PREVIEW STAGE (ALWAYS ACTIVE AND VISIBLE) */
     section.preview-stage {
       flex: 1;
       height: 100%;
@@ -224,144 +160,13 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 14px 8px;
+      padding: 12px 6px;
       position: relative;
       touch-action: pan-x pan-y;
       -webkit-overflow-scrolling: touch;
       user-select: none;
     }
 
-    /* MOBILE DUAL-TAB TOGGLE: STRICT 1 PAGE VIEW */
-    @media (max-width: 900px) {
-      section.controls-panel {
-        width: 100% !important;
-        border-right: none;
-        display: none; /* Controlled by active tab */
-      }
-
-      section.preview-stage {
-        width: 100% !important;
-        display: none; /* Controlled by active tab */
-      }
-
-      /* When Editor or other settings tab is active */
-      body.view-editor section.controls-panel {
-        display: flex !important;
-      }
-
-      /* When Preview tab is active */
-      body.view-preview section.preview-stage {
-        display: flex !important;
-      }
-    }
-
-    .panel-view {
-      display: none;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .panel-view.active {
-      display: flex;
-    }
-
-    .card {
-      background: #FFFFFF;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 12px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-    }
-
-    .card-title {
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--primary-h4);
-      border-bottom: 1px solid #E2E8F0;
-      padding-bottom: 6px;
-      margin-bottom: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      margin-bottom: 8px;
-    }
-
-    .form-row {
-      display: flex;
-      gap: 8px;
-    }
-
-    .form-row .form-group {
-      flex: 1;
-    }
-
-    label {
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: #475569;
-      text-transform: uppercase;
-    }
-
-    input, select, textarea {
-      padding: 7px 10px;
-      border: 1px solid var(--border-color);
-      border-radius: 5px;
-      font-size: 0.82rem;
-      outline: none;
-      transition: border 0.2s;
-      width: 100%;
-    }
-
-    input:focus, select:focus, textarea:focus {
-      border-color: var(--primary-h4);
-      box-shadow: 0 0 0 2px rgba(168, 35, 139, 0.15);
-    }
-
-    .switch-label {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      cursor: pointer;
-      text-transform: none;
-      user-select: none;
-    }
-
-    .switch-label input[type="checkbox"] {
-      width: 15px;
-      height: 15px;
-      accent-color: var(--primary-h4);
-    }
-
-    /* ITEM ROWS */
-    .item-entry-row {
-      background: #F8FAFC;
-      border: 1px solid #E2E8F0;
-      border-radius: 6px;
-      padding: 9px;
-      margin-bottom: 8px;
-    }
-
-    .item-row-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 4px;
-    }
-
-    .item-row-num {
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: #64748B;
-    }
-
-    /* ZOOM TOOLBAR */
     .zoom-toolbar {
       position: sticky;
       top: 0;
@@ -374,7 +179,7 @@
       align-items: center;
       color: white;
       z-index: 10;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
 
@@ -397,7 +202,7 @@
       text-align: center;
     }
 
-    /* STRICT ONE PAGE A4 INVOICE SHEET ARCHITECTURE */
+    /* STRICT ONE PAGE A4 INVOICE SHEET */
     .invoice-container-wrapper {
       transform-origin: top center;
       transition: transform 0.08s ease-out;
@@ -405,7 +210,7 @@
 
     .invoice-sheet {
       width: 210mm;
-      height: 297mm; /* Strict fixed single page */
+      height: 297mm;
       max-height: 297mm;
       background: #FFFFFF;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
@@ -415,11 +220,11 @@
       justify-content: space-between;
       color: #0F172A;
       position: relative;
-      overflow: hidden; /* Never spill onto page 2 */
+      overflow: hidden;
       box-sizing: border-box;
     }
 
-    /* INVOICE CONTENT */
+    /* INVOICE DESIGN */
     .inv-header {
       display: flex;
       justify-content: space-between;
@@ -429,67 +234,19 @@
       padding-bottom: 8px;
     }
 
-    .inv-company-block {
-      max-width: 62%;
-    }
+    .inv-company-block { max-width: 62%; }
+    .inv-logo-img { max-height: 60px; object-fit: contain; margin-bottom: 4px; display: block; }
+    .inv-brand-name { line-height: 1.1; margin-bottom: 2px; }
+    .inv-legal-name { margin-bottom: 3px; }
+    .inv-company-details { font-size: 9.5px; color: #475569; line-height: 1.35; white-space: pre-line; }
 
-    .inv-logo-img {
-      max-height: 60px;
-      object-fit: contain;
-      margin-bottom: 4px;
-      display: block;
-    }
+    .inv-meta-block { text-align: right; }
+    .inv-main-title { font-size: 22px; font-weight: 900; color: var(--primary-h4); text-transform: uppercase; letter-spacing: 1px; }
+    .inv-meta-table { font-size: 10.5px; margin-top: 4px; border-collapse: collapse; margin-left: auto; }
+    .inv-meta-table td { padding: 2px 5px; }
+    .inv-meta-label { font-weight: 700; color: #475569; }
+    .inv-meta-val { font-weight: 800; color: var(--navy-h4); }
 
-    .inv-brand-name {
-      line-height: 1.1;
-      margin-bottom: 2px;
-    }
-
-    .inv-legal-name {
-      margin-bottom: 3px;
-    }
-
-    .inv-company-details {
-      font-size: 9.5px;
-      color: #475569;
-      line-height: 1.35;
-      white-space: pre-line;
-    }
-
-    .inv-meta-block {
-      text-align: right;
-    }
-
-    .inv-main-title {
-      font-size: 22px;
-      font-weight: 900;
-      color: var(--primary-h4);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .inv-meta-table {
-      font-size: 10.5px;
-      margin-top: 4px;
-      border-collapse: collapse;
-      margin-left: auto;
-    }
-
-    .inv-meta-table td {
-      padding: 2px 5px;
-    }
-
-    .inv-meta-label {
-      font-weight: 700;
-      color: #475569;
-    }
-
-    .inv-meta-val {
-      font-weight: 800;
-      color: var(--navy-h4);
-    }
-
-    /* CUSTOMER BLOCK */
     .inv-customer-card {
       background: #F8FAFC;
       border: 1px solid #E2E8F0;
@@ -499,214 +256,149 @@
       margin-bottom: 8px;
     }
 
-    .inv-customer-title {
-      font-size: 9px;
-      font-weight: 800;
-      color: var(--primary-h4);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 2px;
+    .inv-customer-title { font-size: 9px; font-weight: 800; color: var(--primary-h4); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
+    .inv-customer-details { font-size: 9.5px; color: #334155; line-height: 1.3; white-space: pre-line; }
+
+    .inv-items-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+    .inv-items-table th { background: var(--primary-h4); color: #FFFFFF; font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.5px; padding: 5px 6px; font-weight: 700; border: 1px solid var(--primary-h4); }
+    .inv-items-table td { border: 1px solid #CBD5E1; padding: 5px 6px; font-size: 10.5px; vertical-align: middle; }
+    .inv-items-table tbody tr:nth-child(even) { background: #F8FAFC; }
+
+    .inv-summary-row { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+    .inv-words-block { flex: 1; background: #F8FAFC; border: 1px dashed var(--border-color); border-radius: 4px; padding: 8px 10px; font-size: 9.5px; }
+    .inv-words-title { font-weight: 700; color: #64748B; text-transform: uppercase; font-size: 8.5px; margin-bottom: 2px; }
+    .inv-words-text { font-weight: 800; color: var(--navy-h4); font-style: italic; font-size: 10.5px; }
+    .inv-greeting-box { margin-top: 6px; padding: 5px 8px; border-radius: 4px; line-height: 1.35; }
+
+    .inv-totals-table { width: 250px; border-collapse: collapse; font-size: 10.5px; }
+    .inv-totals-table td { padding: 3px 6px; }
+    .inv-totals-table td.label-col { text-align: right; color: #475569; font-weight: 600; }
+    .inv-totals-table td.val-col { text-align: right; font-weight: 700; color: var(--navy-h4); }
+    .inv-discount-val { color: var(--success-green) !important; }
+
+    .inv-footer-details { display: flex; justify-content: space-between; gap: 16px; border-top: 1px solid #E2E8F0; padding-top: 8px; margin-top: auto; }
+    .inv-bank-box { font-size: 9px; color: #334155; line-height: 1.35; flex: 1; }
+    .inv-bank-title { font-size: 9.5px; font-weight: 800; color: var(--primary-h4); text-transform: uppercase; margin-bottom: 3px; }
+    .inv-bottom-sign { display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-end; width: 170px; text-align: center; font-size: 9.5px; }
+    .sign-line { width: 130px; border-bottom: 1px solid #475569; margin-bottom: 4px; }
+
+    /* SETTINGS MODAL / SLIDE-IN DRAWER (Contains Editor, Designer, Company, Fonts, Save) */
+    #settings-drawer {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 480px;
+      max-width: 95vw;
+      height: 100vh;
+      background: #FFFFFF;
+      box-shadow: -4px 0 20px rgba(0,0,0,0.3);
+      z-index: 200;
+      transition: right 0.25s ease-in-out;
+      display: flex;
+      flex-direction: column;
     }
 
-    .inv-customer-details {
-      font-size: 9.5px;
-      color: #334155;
-      line-height: 1.3;
-      white-space: pre-line;
+    #settings-drawer.open {
+      right: 0;
     }
 
-    /* TABLE */
-    .inv-items-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 10px;
-    }
-
-    .inv-items-table th {
+    .drawer-header {
       background: var(--primary-h4);
-      color: #FFFFFF;
-      font-size: 9.5px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      padding: 5px 6px;
-      font-weight: 700;
-      border: 1px solid var(--primary-h4);
-    }
-
-    .inv-items-table td {
-      border: 1px solid #CBD5E1;
-      padding: 5px 6px;
-      font-size: 10.5px;
-      vertical-align: middle;
-    }
-
-    .inv-items-table tbody tr:nth-child(even) {
-      background: #F8FAFC;
-    }
-
-    /* TOTALS & SUMMARY */
-    .inv-summary-row {
+      color: white;
+      padding: 10px 14px;
       display: flex;
       justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 10px;
+      align-items: center;
     }
 
-    .inv-words-block {
-      flex: 1;
-      background: #F8FAFC;
-      border: 1px dashed var(--border-color);
-      border-radius: 4px;
-      padding: 8px 10px;
-      font-size: 9.5px;
+    .drawer-nav-tabs {
       display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-    }
-
-    .inv-words-title {
-      font-weight: 700;
-      color: #64748B;
-      text-transform: uppercase;
-      font-size: 8.5px;
-      margin-bottom: 2px;
-    }
-
-    .inv-words-text {
-      font-weight: 800;
-      color: var(--navy-h4);
-      font-style: italic;
-      font-size: 10.5px;
-    }
-
-    .inv-greeting-box {
-      margin-top: 6px;
-      padding: 5px 8px;
-      border-radius: 4px;
-      line-height: 1.35;
-    }
-
-    .inv-totals-table {
-      width: 250px;
-      border-collapse: collapse;
-      font-size: 10.5px;
-    }
-
-    .inv-totals-table td {
-      padding: 3px 6px;
-    }
-
-    .inv-totals-table td.label-col {
-      text-align: right;
-      color: #475569;
-      font-weight: 600;
-    }
-
-    .inv-totals-table td.val-col {
-      text-align: right;
-      font-weight: 700;
-      color: var(--navy-h4);
-    }
-
-    .inv-discount-val {
-      color: var(--success-green) !important;
-    }
-
-    /* BANK & SIGNATURE */
-    .inv-footer-details {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      border-top: 1px solid #E2E8F0;
-      padding-top: 8px;
-      margin-top: auto;
-    }
-
-    .inv-bank-box {
-      font-size: 9px;
-      color: #334155;
-      line-height: 1.35;
-      flex: 1;
-    }
-
-    .inv-bank-title {
-      font-size: 9.5px;
-      font-weight: 800;
-      color: var(--primary-h4);
-      text-transform: uppercase;
-      margin-bottom: 3px;
-    }
-
-    .inv-bottom-sign {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      justify-content: flex-end;
-      width: 170px;
-      text-align: center;
-      font-size: 9.5px;
-    }
-
-    .sign-line {
-      width: 130px;
-      border-bottom: 1px solid #475569;
-      margin-bottom: 4px;
-    }
-
-    .history-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.82rem;
-    }
-
-    .history-table th, .history-table td {
-      border: 1px solid var(--border-color);
-      padding: 7px;
-      text-align: left;
-    }
-
-    .history-table th {
+      gap: 4px;
       background: #F1F5F9;
-      font-weight: 700;
+      padding: 6px;
+      overflow-x: auto;
+      border-bottom: 1px solid var(--border-color);
     }
 
-    /* STRICT SINGLE-PAGE PRINT */
+    .drawer-tab-btn {
+      padding: 5px 10px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border-radius: 5px;
+      border: 1px solid #CBD5E1;
+      background: white;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .drawer-tab-btn.active {
+      background: var(--primary-h4);
+      color: white;
+      border-color: var(--primary-h4);
+    }
+
+    .drawer-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .card-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--primary-h4);
+      border-bottom: 1px solid #E2E8F0;
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .form-group { display: flex; flex-direction: column; gap: 4px; margin-bottom: 8px; }
+    .form-row { display: flex; gap: 8px; }
+    .form-row .form-group { flex: 1; }
+    label { font-size: 0.7rem; font-weight: 600; color: #475569; text-transform: uppercase; }
+    input, select, textarea { padding: 7px 10px; border: 1px solid var(--border-color); border-radius: 5px; font-size: 0.82rem; outline: none; width: 100%; }
+    input:focus, select:focus, textarea:focus { border-color: var(--primary-h4); }
+    .switch-label { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
+    .switch-label input[type="checkbox"] { width: 15px; height: 15px; accent-color: var(--primary-h4); }
+    .item-entry-row { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 9px; margin-bottom: 8px; }
+    .item-row-header { display: flex; justify-content: space-between; margin-bottom: 4px; }
+    .item-row-num { font-size: 0.72rem; font-weight: 700; color: #64748B; }
+
+    .history-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    .history-table th, .history-table td { border: 1px solid var(--border-color); padding: 7px; text-align: left; }
+    .history-table th { background: #F1F5F9; font-weight: 700; }
+
+    .drawer-footer {
+      padding: 10px 14px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      background: #F8FAFC;
+    }
+
+    /* PRINT */
     @media print {
-      @page {
-        size: A4 portrait;
-        margin: 0;
-      }
-
-      html, body {
-        overflow: visible !important;
-        height: auto !important;
-        background: #FFFFFF !important;
-      }
-
-      header.app-header,
-      section.controls-panel,
-      .zoom-toolbar,
-      #pull-refresh-indicator {
-        display: none !important;
-      }
-
-      main.workspace {
-        display: block !important;
-        height: auto !important;
-        overflow: visible !important;
-      }
-
-      section.preview-stage {
-        display: block !important;
-        padding: 0 !important;
-        background: #FFFFFF !important;
-        overflow: visible !important;
-      }
-
-      .invoice-container-wrapper {
-        transform: none !important;
-      }
-
+      @page { size: A4 portrait; margin: 0; }
+      html, body { overflow: visible !important; height: auto !important; background: #FFFFFF !important; }
+      header.app-header, .zoom-toolbar, #pull-refresh-indicator, #settings-drawer { display: none !important; }
+      main.workspace { display: block !important; height: auto !important; }
+      section.preview-stage { display: block !important; padding: 0 !important; background: #FFFFFF !important; }
+      .invoice-container-wrapper { transform: none !important; }
       .invoice-sheet {
         width: 210mm !important;
         height: 297mm !important;
@@ -723,7 +415,7 @@
     }
   </style>
 </head>
-<body class="view-editor">
+<body>
 
   <!-- REFRESH BADGE -->
   <div id="pull-refresh-indicator">
@@ -731,41 +423,63 @@
     <span>Refreshing...</span>
   </div>
 
-  <!-- HEADER -->
+  <!-- HEADER (ONLY PREVIEW & ACTIONS VISIBLE INITIALLY) -->
   <header class="app-header">
     <div class="brand-title">
       H4 Invoice
-      <span class="brand-badge">A4 FIT</span>
+      <span class="brand-badge">A4 PRO</span>
     </div>
 
-    <nav class="nav-tabs">
-      <button class="nav-tab-btn active" data-tab="tab-editor">Editor</button>
-      <button class="nav-tab-btn nav-tab-preview" data-tab="view-preview-mode">👁️ Preview</button>
-      <button class="nav-tab-btn" data-tab="tab-designer">Designer</button>
-      <button class="nav-tab-btn" data-tab="tab-company">Company</button>
-      <button class="nav-tab-btn" data-tab="tab-fonts">Fonts</button>
-      <button class="nav-tab-btn" data-tab="tab-history">History</button>
-    </nav>
-
     <div class="header-actions">
-      <button class="btn btn-white" id="btn-new-invoice">+ New</button>
-      <button class="btn btn-wa" id="btn-share-whatsapp">WA</button>
-      <button class="btn btn-gold" id="btn-save-invoice">Save</button>
-      <button class="btn btn-white" id="btn-print-invoice">Print</button>
+      <button class="btn btn-settings" id="btn-open-settings">⚙️ Settings</button>
+      <button class="btn btn-wa" id="btn-share-whatsapp">WhatsApp</button>
+      <button class="btn btn-white" id="btn-print-invoice">Print/PDF</button>
     </div>
   </header>
 
-  <!-- WORKSPACE CONTAINER (100% SINGLE VIEWPORT) -->
+  <!-- WORKSPACE WITH LIVE A4 PREVIEW (ONE PAGE AUTO FIT) -->
   <main class="workspace">
-    
-    <!-- LEFT CONTROLS -->
-    <section class="controls-panel">
+    <section class="preview-stage" id="preview-stage-container">
+      <div class="zoom-toolbar">
+        <button class="zoom-btn" id="btn-zoom-out">-</button>
+        <button class="zoom-btn" id="btn-zoom-fit">Auto Fit</button>
+        <button class="zoom-btn" id="btn-zoom-in">+</button>
+        <span class="zoom-level-text" id="lbl-zoom-val">100%</span>
+      </div>
+
+      <!-- THE SINGLE SOURCE CONTAINER REQUIRED BY SPEC -->
+      <div class="invoice-container-wrapper" id="invoice-wrapper">
+        <div class="invoice-sheet" id="previewA4Container">
+          <!-- Live rendered by invoiceHTML() -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- SLIDE-IN SETTINGS DRAWER (HOUSES EDITOR, DESIGNER, COMPANY, FONTS, SAVE) -->
+  <aside id="settings-drawer">
+    <div class="drawer-header">
+      <strong style="font-size: 0.95rem;">Settings & Editor</strong>
+      <button class="btn btn-white" id="btn-close-settings" style="padding: 2px 8px;">✕ Close</button>
+    </div>
+
+    <div class="drawer-nav-tabs">
+      <button class="drawer-tab-btn active" data-tab="tab-editor">Editor</button>
+      <button class="drawer-tab-btn" data-tab="tab-designer">Designer</button>
+      <button class="drawer-tab-btn" data-tab="tab-company">Company</button>
+      <button class="drawer-tab-btn" data-tab="tab-fonts">Fonts</button>
+      <button class="drawer-tab-btn" data-tab="tab-history">History</button>
+    </div>
+
+    <div class="drawer-content">
       
       <!-- 1. EDITOR VIEW -->
       <div class="panel-view active" id="tab-editor">
-        
         <div class="card">
-          <div class="card-title">Invoice Meta</div>
+          <div class="card-title">
+            Invoice Meta
+            <button class="btn btn-gold" id="btn-new-invoice" style="padding: 2px 6px;">+ Clean New</button>
+          </div>
           <div class="form-row">
             <div class="form-group">
               <label>Invoice Number</label>
@@ -796,7 +510,7 @@
           </div>
           <div class="form-group">
             <label>Address</label>
-            <textarea id="inp-cust-address" rows="2" placeholder="Site, Street, Location"></textarea>
+            <textarea id="inp-cust-address" rows="2" placeholder="Site, Location"></textarea>
           </div>
         </div>
 
@@ -835,10 +549,9 @@
         </div>
 
         <div class="card">
-          <div class="card-title">Terms & Notes</div>
-          <textarea id="inp-invoice-notes" rows="2" placeholder="Terms and conditions"></textarea>
+          <div class="card-title">Terms & Notes (Right-aligned in PDF)</div>
+          <textarea id="inp-invoice-notes" rows="2" placeholder="Terms and notes"></textarea>
         </div>
-
       </div>
 
       <!-- 2. DESIGNER VIEW -->
@@ -1113,31 +826,21 @@ Malappuram, Kerala</textarea>
         </div>
       </div>
 
-    </section>
+    </div>
 
-    <!-- RIGHT/MOBILE PREVIEW STAGE (A4 SHEET) -->
-    <section class="preview-stage" id="preview-stage-container">
-      <div class="zoom-toolbar">
-        <button class="zoom-btn" id="btn-zoom-out">-</button>
-        <button class="zoom-btn" id="btn-zoom-fit">Auto Fit</button>
-        <button class="zoom-btn" id="btn-zoom-in">+</button>
-        <span class="zoom-level-text" id="lbl-zoom-val">100%</span>
-      </div>
-
-      <div class="invoice-container-wrapper" id="invoice-wrapper">
-        <div class="invoice-sheet" id="invoice-sheet-target"></div>
-      </div>
-    </section>
-
-  </main>
+    <!-- DRAWER FOOTER: SAVE & DONE -->
+    <div class="drawer-footer">
+      <button class="btn btn-gold" id="btn-save-invoice" style="flex:1; justify-content:center;">💾 Save Invoice</button>
+      <button class="btn btn-secondary" id="btn-done-settings" style="flex:1; justify-content:center;">Done (View)</button>
+    </div>
+  </aside>
 
   <script>
-    const STORAGE_KEY_SETTINGS = "h4_app_settings_v1";
-    const STORAGE_KEY_DESIGNER = "h4_app_designer_v2";
+    const STORAGE_KEY_STATE = "h4_app_state_v3";
     const STORAGE_KEY_HISTORY = "h4_app_history_v1";
     const STORAGE_KEY_SEQ = "h4_invoice_seq_v1";
 
-    // INDEXEDDB ENGINE
+    // INDEXEDDB ENGINE FOR OFFLINE FONTS
     const DB_NAME = "H4FontsDB";
     const DB_VERSION = 1;
     const STORE_NAME = "fonts";
@@ -1147,9 +850,7 @@ Malappuram, Kerala</textarea>
         const req = indexedDB.open(DB_NAME, DB_VERSION);
         req.onupgradeneeded = e => {
           const db = e.target.result;
-          if (!db.objectStoreNames.contains(STORE_NAME)) {
-            db.createObjectStore(STORE_NAME, { keyPath: "name" });
-          }
+          if (!db.objectStoreNames.contains(STORE_NAME)) db.createObjectStore(STORE_NAME, { keyPath: "name" });
         };
         req.onsuccess = e => resolve(e.target.result);
         req.onerror = e => reject(e.target.error);
@@ -1186,7 +887,16 @@ Malappuram, Kerala</textarea>
       });
     }
 
-    // CREATE FRESH CLEAN INVOICE
+    function getNextInvoiceNumber() {
+      let seq = parseInt(localStorage.getItem(STORAGE_KEY_SEQ) || "101", 10);
+      return { number: "H4-INV-" + String(seq).padStart(4, "0"), seq: seq };
+    }
+
+    function incrementInvoiceNumber() {
+      let seq = parseInt(localStorage.getItem(STORAGE_KEY_SEQ) || "101", 10);
+      localStorage.setItem(STORAGE_KEY_SEQ, (seq + 1).toString());
+    }
+
     function createCleanInvoice() {
       return {
         invoiceNumber: getNextInvoiceNumber().number,
@@ -1199,69 +909,88 @@ Malappuram, Kerala</textarea>
       };
     }
 
-    let currentInvoice = createCleanInvoice();
-
-    let companySettings = {
-      legalName: "AV CHEMTIRUR TRADING LLP",
-      brandName: "H4 Construction Solutions",
-      address: "Makkilapeedika, Kannamkulam, PO\nBP Angadi, Tirur, Pincode: 676102\nMalappuram, Kerala",
-      phone: "+91 79073 44030",
-      whatsapp: "+91 97458 38382",
-      email: "avchemtirur@gmail.com",
-      website: "avchemtirur.github.io",
-      showWebsite: true,
-      gstin: "32AAACH0000A1Z5",
-      logo: "",
-      showLogo: true,
-      logoHeight: 60,
-      bank: {
-        show: true,
-        bankName: "State Bank of India",
-        accountName: "AV CHEMTIRUR TRADING LLP",
-        accountNumber: "41234567890",
-        ifsc: "SBIN0001234",
-        branch: "Tirur Main",
-        upi: "h4solutions@sbi"
+    // UNIFIED APPLICATION STATE ARCHITECTURE
+    const state = {
+      invoice: createCleanInvoice(),
+      settings: {
+        legalName: "AV CHEMTIRUR TRADING LLP",
+        brandName: "H4 Construction Solutions",
+        address: "Makkilapeedika, Kannamkulam, PO\nBP Angadi, Tirur, Pincode: 676102\nMalappuram, Kerala",
+        phone: "+91 79073 44030",
+        whatsapp: "+91 97458 38382",
+        email: "avchemtirur@gmail.com",
+        website: "avchemtirur.github.io",
+        showWebsite: true,
+        gstin: "32AAACH0000A1Z5",
+        logo: "",
+        showLogo: true,
+        logoHeight: 60,
+        bank: {
+          show: true,
+          bankName: "State Bank of India",
+          accountName: "AV CHEMTIRUR TRADING LLP",
+          accountNumber: "41234567890",
+          ifsc: "SBIN0001234",
+          branch: "Tirur Main",
+          upi: "h4solutions@sbi"
+        },
+        designer: {
+          fontFamily: "system-ui, sans-serif",
+          primaryColor: "#A8238B",
+          goldColor: "#D4AF37",
+          brand: { fontFamily: "inherit", size: 19, color: "#A8238B" },
+          legal: { fontFamily: "inherit", size: 12, color: "#1E293B" },
+          customer: { fontFamily: "inherit", size: 12, color: "#0F172A" },
+          total: { fontFamily: "inherit", size: 13, text: "#0F172A", bg: "#FEF08A", pad: 5 },
+          greeting: {
+            show: true,
+            text: "Thank You for Choosing H4 Construction Solutions.",
+            fontFamily: "inherit",
+            size: 10,
+            color: "#A8238B",
+            bg: "#F5F3FF"
+          },
+          colUnitShow: true,
+          colTaxableShow: true,
+          colWidthProduct: 46,
+          colWidthQty: 12
+        }
       }
-    };
-
-    let designerSettings = {
-      fontFamily: "system-ui, sans-serif",
-      primaryColor: "#A8238B",
-      goldColor: "#D4AF37",
-      brand: { fontFamily: "inherit", size: 19, color: "#A8238B" },
-      legal: { fontFamily: "inherit", size: 12, color: "#1E293B" },
-      customer: { fontFamily: "inherit", size: 12, color: "#0F172A" },
-      total: { fontFamily: "inherit", size: 13, text: "#0F172A", bg: "#FEF08A", pad: 5 },
-      greeting: {
-        show: true,
-        text: "Thank You for Choosing H4 Construction Solutions.",
-        fontFamily: "inherit",
-        size: 10,
-        color: "#A8238B",
-        bg: "#F5F3FF"
-      },
-      colUnitShow: true,
-      colTaxableShow: true,
-      colWidthProduct: 46,
-      colWidthQty: 12
     };
 
     let invoiceHistory = [];
     let customFonts = [];
     let currentZoom = 1.0;
 
-    function getNextInvoiceNumber() {
-      let seq = parseInt(localStorage.getItem(STORAGE_KEY_SEQ) || "101", 10);
-      return { number: "H4-INV-" + String(seq).padStart(4, "0"), seq: seq };
+    function ensureDesignerSettings() {
+      if (!state.settings) state.settings = {};
+      if (!state.settings.designer) {
+        state.settings.designer = {
+          fontFamily: "system-ui, sans-serif",
+          primaryColor: "#A8238B",
+          goldColor: "#D4AF37",
+          brand: { fontFamily: "inherit", size: 19, color: "#A8238B" },
+          legal: { fontFamily: "inherit", size: 12, color: "#1E293B" },
+          customer: { fontFamily: "inherit", size: 12, color: "#0F172A" },
+          total: { fontFamily: "inherit", size: 13, text: "#0F172A", bg: "#FEF08A", pad: 5 },
+          greeting: {
+            show: true,
+            text: "Thank You for Choosing H4 Construction Solutions.",
+            fontFamily: "inherit",
+            size: 10,
+            color: "#A8238B",
+            bg: "#F5F3FF"
+          },
+          colUnitShow: true,
+          colTaxableShow: true,
+          colWidthProduct: 46,
+          colWidthQty: 12
+        };
+      }
     }
 
-    function incrementInvoiceNumber() {
-      let seq = parseInt(localStorage.getItem(STORAGE_KEY_SEQ) || "101", 10);
-      localStorage.setItem(STORAGE_KEY_SEQ, (seq + 1).toString());
-    }
-
-    function calculateInvoiceTotals(inv) {
+    // CALCULATION ENGINE
+    function computeTotals(inv) {
       let subtotal = 0;
       const calculatedItems = (inv.items || []).map(item => {
         const q = (item.qty === "" || isNaN(parseFloat(item.qty))) ? 0 : parseFloat(item.qty);
@@ -1296,24 +1025,14 @@ Malappuram, Kerala</textarea>
 
       const grandTotal = Math.round((taxableAmount + gstAmount) * 100) / 100;
 
-      return {
-        items: calculatedItems,
-        subtotal,
-        discountAmount,
-        taxableAmount,
-        gstRate,
-        gstAmount,
-        grandTotal
-      };
+      return { items: calculatedItems, subtotal, discountAmount, taxableAmount, gstRate, gstAmount, grandTotal };
     }
 
     function convertNumberToIndianWords(amount) {
       const num = Math.floor(amount);
       if (num === 0) return "Zero Rupees Only";
-
       const a = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
-        "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen",
-        "Seventeen", "Eighteen", "Nineteen"];
+        "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
       const b = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
 
       function inWords(n) {
@@ -1338,18 +1057,21 @@ Malappuram, Kerala</textarea>
     }
 
     function formatINR(val) {
-      return "₹" + Number(val || 0).toLocaleString("en-IN", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      });
+      return "₹" + Number(val || 0).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function escapeHTML(str) {
+      if (!str) return "";
+      return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
     }
 
     function resolveFont(fontVal, defaultFont) {
       return (fontVal && fontVal !== "inherit") ? fontVal : defaultFont;
     }
 
-    function renderInvoiceHTML(inv, company, designer) {
-      const calc = calculateInvoiceTotals(inv);
+    // THE SINGLE SOURCE INVOICE RENDERER (TERMS & NOTES AT RIGHT SIDE AS REQUESTED)
+    function invoiceHTML(inv, company, designer) {
+      const calc = computeTotals(inv);
       const words = convertNumberToIndianWords(calc.grandTotal);
 
       const rowsHTML = calc.items.map((it, idx) => `
@@ -1368,11 +1090,11 @@ Malappuram, Kerala</textarea>
         </tr>
       `).join("");
 
-      const brandFont = resolveFont(designer.brand.fontFamily, designer.fontFamily);
-      const legalFont = resolveFont(designer.legal.fontFamily, designer.fontFamily);
-      const custFont = resolveFont(designer.customer.fontFamily, designer.fontFamily);
-      const totalFont = resolveFont(designer.total.fontFamily, designer.fontFamily);
-      const greetingFont = resolveFont(designer.greeting.fontFamily, designer.fontFamily);
+      const brandFont = resolveFont(designer.brand?.fontFamily, designer.fontFamily);
+      const legalFont = resolveFont(designer.legal?.fontFamily, designer.fontFamily);
+      const custFont = resolveFont(designer.customer?.fontFamily, designer.fontFamily);
+      const totalFont = resolveFont(designer.total?.fontFamily, designer.fontFamily);
+      const greetingFont = resolveFont(designer.greeting?.fontFamily, designer.fontFamily);
 
       return `
         <div style="font-family: ${designer.fontFamily}; display: flex; flex-direction: column; height: 100%; justify-content: space-between;">
@@ -1380,18 +1102,18 @@ Malappuram, Kerala</textarea>
             <!-- INVOICE HEADER -->
             <div class="inv-header" style="border-bottom-color: ${designer.primaryColor};">
               <div class="inv-company-block">
-                ${company.showLogo && company.logo ? `<img src="${company.logo}" class="inv-logo-img" style="max-height: ${company.logoHeight}px;" alt="Logo" />` : ""}
+                ${company.showLogo && company.logo ? `<img src="${company.logo}" class="inv-logo-img" style="max-height: ${company.logoHeight || 60}px;" alt="Logo" />` : ""}
                 <div class="inv-brand-name" style="
                   font-family: ${brandFont};
-                  font-size: ${designer.brand.size}px;
-                  color: ${designer.brand.color};
+                  font-size: ${designer.brand?.size || 19}px;
+                  color: ${designer.brand?.color || '#A8238B'};
                   font-weight: 800;">
                   ${escapeHTML(company.brandName)}
                 </div>
                 <div class="inv-legal-name" style="
                   font-family: ${legalFont};
-                  font-size: ${designer.legal.size}px;
-                  color: ${designer.legal.color};
+                  font-size: ${designer.legal?.size || 12}px;
+                  color: ${designer.legal?.color || '#1E293B'};
                   font-weight: 700;">
                   ${escapeHTML(company.legalName)}
                 </div>
@@ -1423,14 +1145,14 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
               <div class="inv-customer-title" style="color: ${designer.primaryColor};">Billed To</div>
               <div class="inv-customer-name" style="
                 font-family: ${custFont};
-                font-size: ${designer.customer.size}px;
-                color: ${designer.customer.color};
+                font-size: ${designer.customer?.size || 12}px;
+                color: ${designer.customer?.color || '#0F172A'};
                 font-weight: 800;">
-                ${escapeHTML(inv.customer.name || "-")}
+                ${escapeHTML(inv.customer?.name || "-")}
               </div>
               <div class="inv-customer-details">
-                ${escapeHTML(inv.customer.address || "")}<br/>
-                ${inv.customer.phone ? `Contact: ${escapeHTML(inv.customer.phone)}` : ""}
+                ${escapeHTML(inv.customer?.address || "")}<br/>
+                ${inv.customer?.phone ? `Contact: ${escapeHTML(inv.customer.phone)}` : ""}
               </div>
             </div>
 
@@ -1439,8 +1161,8 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
               <thead>
                 <tr style="background: ${designer.primaryColor};">
                   <th style="width: 32px; text-align: center;">#</th>
-                  <th style="width: ${designer.colWidthProduct}%;">Description</th>
-                  <th style="width: ${designer.colWidthQty}%; text-align: right;">Qty</th>
+                  <th style="width: ${designer.colWidthProduct || 46}%;">Description</th>
+                  <th style="width: ${designer.colWidthQty || 12}%; text-align: right;">Qty</th>
                   ${designer.colUnitShow ? `<th style="width: 45px; text-align: center;">Unit</th>` : ""}
                   <th style="text-align: right;">Rate</th>
                   ${designer.colTaxableShow ? `<th style="text-align: right;">Taxable</th>` : ""}
@@ -1452,73 +1174,78 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
               </tbody>
             </table>
 
-            <!-- TOTALS & SUMMARY SECTION -->
+            <!-- TOTALS & SUMMARY: WITH TERMS AND NOTE RIGHT-ALIGNED -->
             <div class="inv-summary-row">
+              <!-- Left side: Words & Greeting -->
               <div class="inv-words-block">
                 <span class="inv-words-title">Amount in Words:</span>
-                <span class="inv-words-text">${words}</span>${designer.greeting.show ? `
+                <span class="inv-words-text">${words}</span>${designer.greeting?.show ? `
                   <div class="inv-greeting-box" style="
                     font-family: ${greetingFont};
-                    font-size: ${designer.greeting.size}px;
-                    background: ${designer.greeting.bg};
-                    color: ${designer.greeting.color};
+                    font-size: ${designer.greeting?.size || 10}px;
+                    background: ${designer.greeting?.bg || '#F5F3FF'};
+                    color: ${designer.greeting?.color || '#A8238B'};
                     font-weight: 700;
                     border-left: 3px solid ${designer.primaryColor};">
-                    ${escapeHTML(designer.greeting.text)}
-                  </div>
-                ` : ""}
-
-                ${inv.notes ? `
-                  <div style="margin-top: 6px; font-size: 8.5px; color: #475569; white-space: pre-line;">
-                    <strong>Terms & Notes:</strong><br/>${escapeHTML(inv.notes)}
+                    ${escapeHTML(designer.greeting?.text)}
                   </div>
                 ` : ""}
               </div>
 
-              <table class="inv-totals-table">
-                <tr>
-                  <td class="label-col">Subtotal:</td>
-                  <td class="val-col">${formatINR(calc.subtotal)}</td>
-                </tr>
+              <!-- Right side: Calculation table & Terms & Notes on right -->
+              <div style="width: 250px; display: flex; flex-direction: column; align-items: flex-end;">
+                <table class="inv-totals-table">
+                  <tr>
+                    <td class="label-col">Subtotal:</td>
+                    <td class="val-col">${formatINR(calc.subtotal)}</td>
+                  </tr>
 
-                ${inv.discount && inv.discount.enabled && calc.discountAmount > 0 ? `
-                  <tr>
-                    <td class="label-col">Discount ${inv.discount.type === 'PERCENT' ? `(${inv.discount.value}%)` : ''}:</td>
-                    <td class="val-col inv-discount-val">- ${formatINR(calc.discountAmount)}</td>
+                  ${inv.discount && inv.discount.enabled && calc.discountAmount > 0 ? `
+                    <tr>
+                      <td class="label-col">Discount ${inv.discount.type === 'PERCENT' ? `(${inv.discount.value}%)` : ''}:</td>
+                      <td class="val-col inv-discount-val">- ${formatINR(calc.discountAmount)}</td>
+                    </tr>
+                    <tr>
+                      <td class="label-col">Taxable:</td>
+                      <td class="val-col">${formatINR(calc.taxableAmount)}</td>
+                    </tr>
+                  ` : ""}
+
+                  ${inv.gst && inv.gst.enabled ? `
+                    <tr>
+                      <td class="label-col">GST (${calc.gstRate}%):</td>
+                      <td class="val-col">${formatINR(calc.gstAmount)}</td>
+                    </tr>
+                  ` : ""}
+
+                  <tr style="border-top: 1.5px solid #CBD5E1;">
+                    <td class="label-col" style="
+                      font-family: ${totalFont};
+                      font-size: ${designer.total?.size || 13}px;
+                      padding: ${designer.total?.pad || 5}px 6px;
+                      color: #000;
+                      font-weight:800;">
+                      Grand Total:
+                    </td>
+                    <td class="val-col" style="
+                      font-family: ${totalFont};
+                      font-size: ${designer.total?.size || 13}px;
+                      padding: ${designer.total?.pad || 5}px 6px;
+                      background: ${designer.total?.bg || '#FEF08A'};
+                      color: ${designer.total?.text || '#0F172A'};
+                      font-weight: 900;">
+                      ${formatINR(calc.grandTotal)}
+                    </td>
                   </tr>
-                  <tr>
-                    <td class="label-col">Taxable:</td>
-                    <td class="val-col">${formatINR(calc.taxableAmount)}</td>
-                  </tr>
+                </table>
+
+                <!-- TERMS AND NOTE ON RIGHT SIDE AS REQUESTED -->
+                ${inv.notes ? `
+                  <div style="margin-top: 6px; width: 100%; text-align: right; font-size: 8.5px; color: #475569; background: #F8FAFC; border: 1px dashed #CBD5E1; border-radius: 4px; padding: 5px 8px; white-space: pre-line;">
+                    <strong style="color: #1E293B;">Terms & Notes:</strong><br/>${escapeHTML(inv.notes)}
+                  </div>
                 ` : ""}
-
-                ${inv.gst && inv.gst.enabled ? `
-                  <tr>
-                    <td class="label-col">GST (${calc.gstRate}%):</td>
-                    <td class="val-col">${formatINR(calc.gstAmount)}</td>
-                  </tr>
-                ` : ""}
-
-                <tr style="border-top: 1.5px solid #CBD5E1;">
-                  <td class="label-col" style="
-                    font-family: ${totalFont};
-                    font-size: ${designer.total.size}px;
-                    padding: ${designer.total.pad}px 6px;
-                    color: #000;
-                    font-weight:800;">
-                    Grand Total:
-                  </td>
-                  <td class="val-col" style="
-                    font-family: ${totalFont};
-                    font-size: ${designer.total.size}px;
-                    padding: ${designer.total.pad}px 6px;
-                    background: ${designer.total.bg};
-                    color: ${designer.total.text};
-                    font-weight: 900;">
-                    ${formatINR(calc.grandTotal)}
-                  </td>
-                </tr>
-              </table>
+              </div>
             </div>
 
           </div>
@@ -1549,49 +1276,230 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       `;
     }
 
-    function escapeHTML(str) {
-      if (!str) return "";
-      return String(str)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
+    // ==================================================
+    // CRITICAL FUNCTION 1: renderSettings()
+    // Purpose: Synchronize state into the Settings UI safely
+    // ==================================================
+    function renderSettings() {
+      ensureDesignerSettings();
+      const s = state.settings || {};
+      const d = s.designer || {};
+      const inv = state.invoice || {};
 
-    function updateLivePreview() {
-      const container = document.getElementById("invoice-sheet-target");
-      container.innerHTML = renderInvoiceHTML(currentInvoice, companySettings, designerSettings);
-    }
+      const setVal = (id, val) => {
+        const el = document.getElementById(id);
+        if (!el || val === undefined || val === null) return;
+        if (el.type === "checkbox") el.checked = Boolean(val);
+        else el.value = val;
+      };
 
-    function bindEditorInputs() {
-      document.getElementById("inp-inv-num").value = currentInvoice.invoiceNumber;
-      document.getElementById("inp-inv-date").value = currentInvoice.date;
-      document.getElementById("inp-cust-name").value = currentInvoice.customer.name;
-      document.getElementById("inp-cust-phone").value = currentInvoice.customer.phone;
-      document.getElementById("inp-cust-whatsapp").value = currentInvoice.customer.whatsapp;
-      document.getElementById("inp-cust-address").value = currentInvoice.customer.address;
+      // Company profile fields
+      setVal("inp-comp-legal", s.legalName);
+      setVal("inp-comp-brand", s.brandName);
+      setVal("inp-comp-address", s.address);
+      setVal("inp-comp-phone", s.phone);
+      setVal("inp-comp-wa", s.whatsapp);
+      setVal("inp-comp-email", s.email);
+      setVal("inp-comp-gstin", s.gstin);
+      setVal("inp-comp-website", s.website);
+      setVal("chk-show-website", s.showWebsite);
+      setVal("chk-show-logo", s.showLogo);
 
-      document.getElementById("chk-discount-on").checked = currentInvoice.discount.enabled;
-      document.getElementById("sel-discount-type").value = currentInvoice.discount.type;
-      document.getElementById("inp-discount-val").value = currentInvoice.discount.value;
-      document.getElementById("sel-discount-type").disabled = !currentInvoice.discount.enabled;
-      document.getElementById("inp-discount-val").disabled = !currentInvoice.discount.enabled;
+      // Bank fields
+      if (s.bank) {
+        setVal("chk-bank-on", s.bank.show);
+        setVal("inp-bank-name", s.bank.bankName);
+        setVal("inp-bank-accname", s.bank.accountName);
+        setVal("inp-bank-accnum", s.bank.accountNumber);
+        setVal("inp-bank-ifsc", s.bank.ifsc);
+        setVal("inp-bank-branch", s.bank.branch);
+        setVal("inp-bank-upi", s.bank.upi);
+      }
 
-      document.getElementById("chk-gst-on").checked = currentInvoice.gst.enabled;
-      document.getElementById("sel-gst-rate").value = currentInvoice.gst.rate;
-      document.getElementById("sel-gst-rate").disabled = !currentInvoice.gst.enabled;
+      // Designer fields
+      setVal("sel-active-font", d.fontFamily);
+      setVal("clr-primary", d.primaryColor);
+      setVal("clr-gold", d.goldColor);
 
-      document.getElementById("inp-invoice-notes").value = currentInvoice.notes;
+      // Typography specific
+      setVal("sel-brand-font", d.brand?.fontFamily);
+      setVal("num-brand-size", d.brand?.size);
+      setVal("clr-brand-color", d.brand?.color);
+
+      setVal("sel-legal-font", d.legal?.fontFamily);
+      setVal("num-legal-size", d.legal?.size);
+      setVal("clr-legal-color", d.legal?.color);
+
+      setVal("sel-custname-font", d.customer?.fontFamily);
+      setVal("num-custname-size", d.customer?.size);
+      setVal("clr-custname-color", d.customer?.color);
+
+      setVal("sel-total-font", d.total?.fontFamily);
+      setVal("clr-total-bg", d.total?.bg);
+      setVal("clr-total-text", d.total?.text);
+      setVal("num-total-size", d.total?.size);
+      setVal("num-total-pad", d.total?.pad);
+
+      setVal("chk-greeting-on", d.greeting?.show);
+      setVal("inp-greeting-text", d.greeting?.text);
+      setVal("sel-greeting-font", d.greeting?.fontFamily);
+      setVal("num-greeting-size", d.greeting?.size);
+      setVal("clr-greeting-bg", d.greeting?.bg);
+      setVal("clr-greeting-text", d.greeting?.color);
+
+      // Editor values
+      setVal("inp-inv-num", inv.invoiceNumber);
+      setVal("inp-inv-date", inv.date);
+      setVal("inp-cust-name", inv.customer?.name);
+      setVal("inp-cust-phone", inv.customer?.phone);
+      setVal("inp-cust-whatsapp", inv.customer?.whatsapp);
+      setVal("inp-cust-address", inv.customer?.address);
+      setVal("chk-discount-on", inv.discount?.enabled);
+      setVal("sel-discount-type", inv.discount?.type);
+      setVal("inp-discount-val", inv.discount?.value);
+      setVal("chk-gst-on", inv.gst?.enabled);
+      setVal("sel-gst-rate", inv.gst?.rate);
+      setVal("inp-invoice-notes", inv.notes);
+
+      const discType = document.getElementById("sel-discount-type");
+      const discVal = document.getElementById("inp-discount-val");
+      if (discType && discVal) {
+        discType.disabled = !inv.discount?.enabled;
+        discVal.disabled = !inv.discount?.enabled;
+      }
+      const gstRate = document.getElementById("sel-gst-rate");
+      if (gstRate) {
+        gstRate.disabled = !inv.gst?.enabled;
+      }
 
       renderItemInputs();
     }
 
+    // ==================================================
+    // CRITICAL FUNCTION 2: syncDesignerInputsToState()
+    // Purpose: Synchronize user changes from Designer UI into application state
+    // ==================================================
+    function syncDesignerInputsToState() {
+      ensureDesignerSettings();
+      const d = state.settings.designer;
+
+      const getNum = (id, fallback) => {
+        const el = document.getElementById(id);
+        if (!el) return fallback;
+        const v = parseFloat(el.value);
+        return isNaN(v) ? fallback : v;
+      };
+
+      const getColor = (id, fallback) => {
+        const el = document.getElementById(id);
+        if (!el) return fallback;
+        const v = el.value.trim();
+        return (v.startsWith("#") || v.startsWith("rgb")) ? v : fallback;
+      };
+
+      const getVal = (id, fallback) => {
+        const el = document.getElementById(id);
+        return el ? el.value : fallback;
+      };
+
+      const getBool = (id, fallback) => {
+        const el = document.getElementById(id);
+        return el ? el.checked : fallback;
+      };
+
+      // Global Colors & Font
+      d.fontFamily = getVal("sel-active-font", d.fontFamily);
+      d.primaryColor = getColor("clr-primary", d.primaryColor);
+      d.goldColor = getColor("clr-gold", d.goldColor);
+
+      // Brand
+      if (!d.brand) d.brand = {};
+      d.brand.fontFamily = getVal("sel-brand-font", d.brand.fontFamily || "inherit");
+      d.brand.size = getNum("num-brand-size", 19);
+      d.brand.color = getColor("clr-brand-color", d.brand.color || "#A8238B");
+
+      // Legal
+      if (!d.legal) d.legal = {};
+      d.legal.fontFamily = getVal("sel-legal-font", d.legal.fontFamily || "inherit");
+      d.legal.size = getNum("num-legal-size", 12);
+      d.legal.color = getColor("clr-legal-color", d.legal.color || "#1E293B");
+
+      // Customer
+      if (!d.customer) d.customer = {};
+      d.customer.fontFamily = getVal("sel-custname-font", d.customer.fontFamily || "inherit");
+      d.customer.size = getNum("num-custname-size", 12);
+      d.customer.color = getColor("clr-custname-color", d.customer.color || "#0F172A");
+
+      // Grand Total
+      if (!d.total) d.total = {};
+      d.total.fontFamily = getVal("sel-total-font", d.total.fontFamily || "inherit");
+      d.total.size = getNum("num-total-size", 13);
+      d.total.pad = getNum("num-total-pad", 5);
+      d.total.bg = getColor("clr-total-bg", d.total.bg || "#FEF08A");
+      d.total.text = getColor("clr-total-text", d.total.text || "#0F172A");
+
+      // Greeting
+      if (!d.greeting) d.greeting = {};
+      d.greeting.show = getBool("chk-greeting-on", true);
+      d.greeting.text = getVal("inp-greeting-text", d.greeting.text);
+      d.greeting.fontFamily = getVal("sel-greeting-font", d.greeting.fontFamily || "inherit");
+      d.greeting.size = getNum("num-greeting-size", 10);
+      d.greeting.color = getColor("clr-greeting-text", d.greeting.color || "#A8238B");
+      d.greeting.bg = getColor("clr-greeting-bg", d.greeting.bg || "#F5F3FF");
+
+      // Trigger standard appearance & preview updates
+      applyAppearance();
+      refreshOpenPreview();
+      saveState();
+    }
+
+    // ==================================================
+    // CRITICAL FUNCTION 3: refreshOpenPreview()
+    // Purpose: Refresh the open A4 Live Preview using the existing invoice renderer
+    // ==================================================
+    function refreshOpenPreview() {
+      const container = document.getElementById("previewA4Container");
+      if (!container) return;
+
+      ensureDesignerSettings();
+      const currentInv = state.invoice || createCleanInvoice();
+      const company = state.settings || {};
+      const designer = state.settings.designer || {};
+
+      container.innerHTML = invoiceHTML(currentInv, company, designer);
+      applyZoom(currentZoom);
+    }
+
+    function applyAppearance() {
+      const primary = state.settings?.designer?.primaryColor || "#A8238B";
+      const gold = state.settings?.designer?.goldColor || "#D4AF37";
+      document.documentElement.style.setProperty("--primary-h4", primary);
+      document.documentElement.style.setProperty("--gold-h4", gold);
+    }
+
+    function applyZoom(val) {
+      currentZoom = Math.round(val * 100) / 100;
+      const el = document.getElementById("invoice-wrapper");
+      if (el) el.style.transform = `scale(${currentZoom})`;
+      const lbl = document.getElementById("lbl-zoom-val");
+      if (lbl) lbl.innerText = Math.round(currentZoom * 100) + "%";
+    }
+
+    function fitZoomToScreen() {
+      const stage = document.getElementById("preview-stage-container");
+      if (!stage) return;
+      const availableWidth = stage.clientWidth - 16;
+      const scale = Math.min(1.15, Math.max(0.32, availableWidth / 794));
+      applyZoom(scale);
+    }
+
     function renderItemInputs() {
       const container = document.getElementById("items-list-container");
+      if (!container) return;
       container.innerHTML = "";
 
-      currentInvoice.items.forEach((item, index) => {
+      const items = state.invoice?.items || [];
+      items.forEach((item, index) => {
         const div = document.createElement("div");
         div.className = "item-entry-row";
         div.innerHTML = `
@@ -1601,7 +1509,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
           </div>
           <div class="form-group">
             <label>Description</label>
-            <input type="text" class="item-desc" data-index="${index}" value="${escapeHTML(item.description)}" placeholder="Product Name" />
+            <input type="text" class="item-desc" data-index="${index}" value="${escapeHTML(item.description)}" placeholder="Product Item" />
           </div>
           <div class="form-row">
             <div class="form-group">
@@ -1622,292 +1530,53 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       });
     }
 
-    // STRICT 1-PAGE AUTO FIT
-    function fitZoomToScreen() {
-      const stage = document.getElementById("preview-stage-container");
-      const availableWidth = stage.clientWidth - 16;
-      const scale = Math.min(1.15, Math.max(0.32, availableWidth / 794));
-      applyZoom(scale);
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY_STATE, JSON.stringify(state.settings));
+      } catch (e) {
+        console.warn("Save state warning", e);
+      }
     }
 
-    function applyZoom(val) {
-      currentZoom = Math.round(val * 100) / 100;
-      document.getElementById("invoice-wrapper").style.transform = `scale(${currentZoom})`;
-      document.getElementById("lbl-zoom-val").innerText = Math.round(currentZoom * 100) + "%";
-    }
-
-    function setupEventListeners() {
-      // TAB CONTROLLER (SWITCH BETWEEN EDIT / PREVIEW / SETTINGS IN 1 PAGE)
-      document.querySelectorAll(".nav-tab-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-          document.querySelectorAll(".nav-tab-btn").forEach(b => b.classList.remove("active"));
-          btn.classList.add("active");
-
-          const targetTab = btn.getAttribute("data-tab");
-
-          if (targetTab === "view-preview-mode") {
-            // SHOW ONLY PREVIEW SCREEN ON MOBILE
-            document.body.classList.remove("view-editor");
-            document.body.classList.add("view-preview");
-            updateLivePreview();
-            setTimeout(fitZoomToScreen, 50);
-          } else {
-            // SHOW CONTROLS ON MOBILE
-            document.body.classList.remove("view-preview");
-            document.body.classList.add("view-editor");
-
-            document.querySelectorAll(".panel-view").forEach(pv => pv.classList.remove("active"));
-            const targetPanel = document.getElementById(targetTab);
-            if (targetPanel) targetPanel.classList.add("active");
-
-            if (targetTab === "tab-history") renderHistoryTable();
+    function loadSavedState() {
+      const saved = localStorage.getItem(STORAGE_KEY_STATE);
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          state.settings = Object.assign(state.settings, parsed);
+          if (parsed.designer) {
+            state.settings.designer = Object.assign(state.settings.designer, parsed.designer);
           }
-        });
-      });
+        } catch (e) {}
+      }
 
-      // CREATE NEW BLANK INVOICE
-      document.getElementById("btn-new-invoice").addEventListener("click", () => {
-        if (confirm("Create new blank invoice? (പുതിയ ഇൻവോയ്സ് ആരംഭിക്കണോ?)")) {
-          currentInvoice = createCleanInvoice();
-          bindEditorInputs();
-          updateLivePreview();
-          document.querySelector('[data-tab="tab-editor"]').click();
-        }
-      });
-
-      // Meta Inputs
-      document.getElementById("inp-inv-num").addEventListener("input", e => { currentInvoice.invoiceNumber = e.target.value; updateLivePreview(); });
-      document.getElementById("inp-inv-date").addEventListener("change", e => { currentInvoice.date = e.target.value; updateLivePreview(); });
-
-      // Customer Inputs
-      document.getElementById("inp-cust-name").addEventListener("input", e => { currentInvoice.customer.name = e.target.value; updateLivePreview(); });
-      document.getElementById("inp-cust-phone").addEventListener("input", e => { currentInvoice.customer.phone = e.target.value; updateLivePreview(); });
-      document.getElementById("inp-cust-whatsapp").addEventListener("input", e => { currentInvoice.customer.whatsapp = e.target.value; });
-      document.getElementById("inp-cust-address").addEventListener("input", e => { currentInvoice.customer.address = e.target.value; updateLivePreview(); });
-
-      // Discount & GST
-      document.getElementById("chk-discount-on").addEventListener("change", e => {
-        currentInvoice.discount.enabled = e.target.checked;
-        document.getElementById("sel-discount-type").disabled = !e.target.checked;
-        document.getElementById("inp-discount-val").disabled = !e.target.checked;
-        updateLivePreview();
-      });
-      document.getElementById("sel-discount-type").addEventListener("change", e => { currentInvoice.discount.type = e.target.value; updateLivePreview(); });
-      document.getElementById("inp-discount-val").addEventListener("input", e => { currentInvoice.discount.value = parseFloat(e.target.value) || 0; updateLivePreview(); });
-
-      document.getElementById("chk-gst-on").addEventListener("change", e => {
-        currentInvoice.gst.enabled = e.target.checked;
-        document.getElementById("sel-gst-rate").disabled = !e.target.checked;
-        updateLivePreview();
-      });
-      document.getElementById("sel-gst-rate").addEventListener("change", e => { currentInvoice.gst.rate = parseFloat(e.target.value) || 0; updateLivePreview(); });
-
-      document.getElementById("inp-invoice-notes").addEventListener("input", e => { currentInvoice.notes = e.target.value; updateLivePreview(); });
-
-      document.getElementById("btn-add-item").addEventListener("click", () => {
-        currentInvoice.items.push({ description: "", qty: "", unit: "BAG", rate: "" });
-        renderItemInputs();
-        updateLivePreview();
-      });
-
-      const itemContainer = document.getElementById("items-list-container");
-      itemContainer.addEventListener("input", e => {
-        const idx = e.target.getAttribute("data-index");
-        if (idx === null) return;
-        const index = parseInt(idx, 10);
-
-        if (e.target.classList.contains("item-desc")) {
-          currentInvoice.items[index].description = e.target.value;
-        } else if (e.target.classList.contains("item-qty")) {
-          currentInvoice.items[index].qty = e.target.value.trim() === "" ? "" : parseFloat(e.target.value);
-        } else if (e.target.classList.contains("item-unit")) {
-          currentInvoice.items[index].unit = e.target.value;
-        } else if (e.target.classList.contains("item-rate")) {
-          currentInvoice.items[index].rate = e.target.value.trim() === "" ? "" : parseFloat(e.target.value);
-        }
-        updateLivePreview();
-      });
-
-      itemContainer.addEventListener("click", e => {
-        if (e.target.tagName === "BUTTON") {
-          const index = parseInt(e.target.getAttribute("data-index"), 10);
-          currentInvoice.items.splice(index, 1);
-          renderItemInputs();
-          updateLivePreview();
-        }
-      });
-
-      // Zoom
-      document.getElementById("btn-zoom-in").addEventListener("click", () => applyZoom(currentZoom + 0.15));
-      document.getElementById("btn-zoom-out").addEventListener("click", () => applyZoom(Math.max(0.3, currentZoom - 0.15)));
-      document.getElementById("btn-zoom-fit").addEventListener("click", fitZoomToScreen);
-
-      // Company Settings
-      document.getElementById("inp-comp-legal").addEventListener("input", e => { companySettings.legalName = e.target.value; saveSettingsToStorage(); updateLivePreview(); });
-      document.getElementById("inp-comp-brand").addEventListener("input", e => { companySettings.brandName = e.target.value; saveSettingsToStorage(); updateLivePreview(); });
-      document.getElementById("inp-comp-address").addEventListener("input", e => { companySettings.address = e.target.value; saveSettingsToStorage(); updateLivePreview(); });
-      document.getElementById("inp-comp-phone").addEventListener("input", e => { companySettings.phone = e.target.value; saveSettingsToStorage(); updateLivePreview(); });
-      document.getElementById("inp-comp-wa").addEventListener("input", e => { companySettings.whatsapp = e.target.value; saveSettingsToStorage(); updateLivePreview(); });
-      document.getElementById("inp-comp-email").addEventListener("input", e => { companySettings.email = e.target.value; saveSettingsToStorage(); updateLivePreview(); });
-      document.getElementById("inp-comp-gstin").addEventListener("input", e => { companySettings.gstin = e.target.value; saveSettingsToStorage(); updateLivePreview(); });
-      document.getElementById("inp-comp-website").addEventListener("input", e => { companySettings.website = e.target.value; saveSettingsToStorage(); updateLivePreview(); });
-      document.getElementById("chk-show-website").addEventListener("change", e => { companySettings.showWebsite = e.target.checked; saveSettingsToStorage(); updateLivePreview(); });
-
-      // Bank Details
-      document.getElementById("chk-bank-on").addEventListener("change", e => { companySettings.bank.show = e.target.checked; saveSettingsToStorage(); updateLivePreview(); });
-      document.getElementById("inp-bank-name").addEventListener("input", e => { companySettings.bank.bankName = e.target.value; saveSettingsToStorage(); updateLivePreview(); });
-      document.getElementById("inp-bank-accname").addEventListener("input", e => { companySettings.bank.accountName = e.target.value; saveSettingsToStorage(); updateLivePreview(); });
-      document.getElementById("inp-bank-accnum").addEventListener("input", e => { companySettings.bank.accountNumber = e.target.value; saveSettingsToStorage(); updateLivePreview(); });
-      document.getElementById("inp-bank-ifsc").addEventListener("input", e => { companySettings.bank.ifsc = e.target.value; saveSettingsToStorage(); updateLivePreview(); });
-      document.getElementById("inp-bank-branch").addEventListener("input", e => { companySettings.bank.branch = e.target.value; saveSettingsToStorage(); updateLivePreview(); });
-      document.getElementById("inp-bank-upi").addEventListener("input", e => { companySettings.bank.upi = e.target.value; saveSettingsToStorage(); updateLivePreview(); });
-
-      // Logo
-      document.getElementById("inp-logo-file").addEventListener("change", e => {
-        const file = e.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = evt => {
-            companySettings.logo = evt.target.result;
-            saveSettingsToStorage();
-            updateLivePreview();
-          };
-          reader.readAsDataURL(file);
-        }
-      });
-      document.getElementById("chk-show-logo").addEventListener("change", e => { companySettings.showLogo = e.target.checked; saveSettingsToStorage(); updateLivePreview(); });
-      document.getElementById("btn-remove-logo").addEventListener("click", () => {
-        companySettings.logo = "";
-        document.getElementById("inp-logo-file").value = "";
-        saveSettingsToStorage();
-        updateLivePreview();
-      });
-
-      // Designer Customization
-      document.getElementById("sel-active-font").addEventListener("change", e => { designerSettings.fontFamily = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
-      document.getElementById("clr-primary").addEventListener("input", e => { designerSettings.primaryColor = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
-      document.getElementById("clr-gold").addEventListener("input", e => { designerSettings.goldColor = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
-
-      document.getElementById("sel-brand-font").addEventListener("change", e => { designerSettings.brand.fontFamily = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
-      document.getElementById("num-brand-size").addEventListener("input", e => { designerSettings.brand.size = parseInt(e.target.value, 10) || 19; saveDesignerToStorage(); updateLivePreview(); });
-      document.getElementById("clr-brand-color").addEventListener("input", e => { designerSettings.brand.color = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
-
-      document.getElementById("sel-legal-font").addEventListener("change", e => { designerSettings.legal.fontFamily = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
-      document.getElementById("num-legal-size").addEventListener("input", e => { designerSettings.legal.size = parseInt(e.target.value, 10) || 12; saveDesignerToStorage(); updateLivePreview(); });
-      document.getElementById("clr-legal-color").addEventListener("input", e => { designerSettings.legal.color = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
-
-      document.getElementById("sel-custname-font").addEventListener("change", e => { designerSettings.customer.fontFamily = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
-      document.getElementById("num-custname-size").addEventListener("input", e => { designerSettings.customer.size = parseInt(e.target.value, 10) || 12; saveDesignerToStorage(); updateLivePreview(); });
-      document.getElementById("clr-custname-color").addEventListener("input", e => { designerSettings.customer.color = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
-
-      document.getElementById("sel-total-font").addEventListener("change", e => { designerSettings.total.fontFamily = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
-      document.getElementById("clr-total-bg").addEventListener("input", e => { designerSettings.total.bg = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
-      document.getElementById("clr-total-text").addEventListener("input", e => { designerSettings.total.text = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
-      document.getElementById("num-total-size").addEventListener("input", e => { designerSettings.total.size = parseInt(e.target.value, 10) || 13; saveDesignerToStorage(); updateLivePreview(); });
-      document.getElementById("num-total-pad").addEventListener("input", e => { designerSettings.total.pad = parseInt(e.target.value, 10) || 5; saveDesignerToStorage(); updateLivePreview(); });
-
-      document.getElementById("chk-greeting-on").addEventListener("change", e => { designerSettings.greeting.show = e.target.checked; saveDesignerToStorage(); updateLivePreview(); });
-      document.getElementById("inp-greeting-text").addEventListener("input", e => { designerSettings.greeting.text = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
-      document.getElementById("sel-greeting-font").addEventListener("change", e => { designerSettings.greeting.fontFamily = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
-      document.getElementById("num-greeting-size").addEventListener("input", e => { designerSettings.greeting.size = parseInt(e.target.value, 10) || 10; saveDesignerToStorage(); updateLivePreview(); });
-      document.getElementById("clr-greeting-bg").addEventListener("input", e => { designerSettings.greeting.bg = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
-      document.getElementById("clr-greeting-text").addEventListener("input", e => { designerSettings.greeting.color = e.target.value; saveDesignerToStorage(); updateLivePreview(); });
-
-      document.getElementById("btn-reset-designer").addEventListener("click", () => {
-        localStorage.removeItem(STORAGE_KEY_DESIGNER);
-        location.reload();
-      });
-
-      document.getElementById("btn-print-invoice").addEventListener("click", () => window.print());
-      document.getElementById("btn-save-invoice").addEventListener("click", saveCurrentInvoice);
-      document.getElementById("btn-share-whatsapp").addEventListener("click", shareInvoiceWhatsApp);
-      document.getElementById("btn-upload-font").addEventListener("click", handleFontUpload);
-
-      initTouchInteractions();
+      const savedHistory = localStorage.getItem(STORAGE_KEY_HISTORY);
+      if (savedHistory) {
+        try { invoiceHistory = JSON.parse(savedHistory); } catch (e) {}
+      }
     }
 
-    function initTouchInteractions() {
-      const container = document.getElementById("preview-stage-container");
-      const indicator = document.getElementById("pull-refresh-indicator");
-      
-      let startY = 0;
-      let currentY = 0;
-      let isPulling = false;
-      let initialDist = 0;
-      let baseZoom = 1;
-
-      // Pinch to Zoom
-      container.addEventListener("touchstart", e => {
-        if (e.touches.length === 2) {
-          initialDist = Math.hypot(
-            e.touches[0].pageX - e.touches[1].pageX,
-            e.touches[0].pageY - e.touches[1].pageY
-          );
-          baseZoom = currentZoom;
-        } else if (e.touches.length === 1 && container.scrollTop === 0) {
-          startY = e.touches[0].pageY;
-          isPulling = true;
-        }
-      }, { passive: true });
-
-      container.addEventListener("touchmove", e => {
-        if (e.touches.length === 2 && initialDist > 0) {
-          const dist = Math.hypot(
-            e.touches[0].pageX - e.touches[1].pageX,
-            e.touches[0].pageY - e.touches[1].pageY
-          );
-          const factor = dist / initialDist;
-          applyZoom(Math.min(2.2, Math.max(0.3, baseZoom * factor)));
-        } else if (e.touches.length === 1 && isPulling) {
-          currentY = e.touches[0].pageY;
-          const diff = currentY - startY;
-          if (diff > 40 && container.scrollTop === 0) {
-            indicator.classList.add("visible");
-          } else {
-            indicator.classList.remove("visible");
-          }
-        }
-      }, { passive: true });
-
-      container.addEventListener("touchend", e => {
-        if (isPulling) {
-          const diff = currentY - startY;
-          isPulling = false;
-          if (diff > 80 && container.scrollTop === 0) {
-            indicator.classList.add("visible");
-            setTimeout(() => window.location.reload(), 350);
-          } else {
-            indicator.classList.remove("visible");
-          }
-        }
-        if (e.touches.length < 2) {
-          initialDist = 0;
-        }
-      });
-    }
-
-    // INVOICE HISTORY
-    function saveCurrentInvoice() {
-      const calc = calculateInvoiceTotals(currentInvoice);
-      const existingIdx = invoiceHistory.findIndex(h => h.invoiceNumber === currentInvoice.invoiceNumber);
+    function saveCurrentInvoiceToHistory() {
+      const calc = computeTotals(state.invoice);
+      const existingIdx = invoiceHistory.findIndex(h => h.invoiceNumber === state.invoice.invoiceNumber);
 
       const snapshot = {
-        invoiceNumber: currentInvoice.invoiceNumber,
-        date: currentInvoice.date,
-        customerName: currentInvoice.customer.name,
+        invoiceNumber: state.invoice.invoiceNumber,
+        date: state.invoice.date,
+        customerName: state.invoice.customer?.name || "Customer",
         grandTotal: calc.grandTotal,
         savedAt: new Date().toISOString(),
-        invoiceData: JSON.parse(JSON.stringify(currentInvoice)),
-        companySnapshot: JSON.parse(JSON.stringify(companySettings))
+        invoiceData: JSON.parse(JSON.stringify(state.invoice)),
+        companySnapshot: JSON.parse(JSON.stringify(state.settings))
       };
 
       if (existingIdx >= 0) {
         invoiceHistory[existingIdx] = snapshot;
-        alert(`Invoice ${currentInvoice.invoiceNumber} updated.`);
+        alert(`Invoice ${state.invoice.invoiceNumber} updated.`);
       } else {
         invoiceHistory.unshift(snapshot);
         incrementInvoiceNumber();
-        alert(`Invoice ${currentInvoice.invoiceNumber} saved.`);
+        alert(`Invoice ${state.invoice.invoiceNumber} saved.`);
       }
 
       localStorage.setItem(STORAGE_KEY_HISTORY, JSON.stringify(invoiceHistory));
@@ -1916,6 +1585,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
 
     function renderHistoryTable() {
       const tbody = document.getElementById("history-table-body");
+      if (!tbody) return;
       tbody.innerHTML = "";
 
       if (invoiceHistory.length === 0) {
@@ -1940,23 +1610,22 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       });
     }
 
-    // PREVIOUS INVOICE IS LOADED ONLY WHEN EXPLICITLY CLICKED
     window.loadInvoice = function(invNum, isDuplicate) {
       const record = invoiceHistory.find(h => h.invoiceNumber === invNum);
       if (!record) return;
 
-      currentInvoice = JSON.parse(JSON.stringify(record.invoiceData));
+      state.invoice = JSON.parse(JSON.stringify(record.invoiceData));
 
       if (isDuplicate) {
         const next = getNextInvoiceNumber();
-        currentInvoice.invoiceNumber = next.number;
-        currentInvoice.date = new Date().toISOString().substring(0, 10);
+        state.invoice.invoiceNumber = next.number;
+        state.invoice.date = new Date().toISOString().substring(0, 10);
       }
 
+      renderSettings();
+      refreshOpenPreview();
       document.querySelector('[data-tab="tab-editor"]').click();
-      bindEditorInputs();
-      updateLivePreview();
-      alert(`Loaded invoice ${invNum} for editing.`);
+      alert(`Loaded invoice ${invNum}.`);
     };
 
     window.deleteInvoice = function(invNum) {
@@ -1967,7 +1636,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
     };
 
     function shareInvoiceWhatsApp() {
-      const rawWa = currentInvoice.customer.whatsapp || currentInvoice.customer.phone || "";
+      const rawWa = state.invoice.customer?.whatsapp || state.invoice.customer?.phone || "";
       const cleanPhone = rawWa.replace(/[^0-9]/g, "");
 
       if (!cleanPhone) {
@@ -1975,30 +1644,29 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
         return;
       }
 
-      const calc = calculateInvoiceTotals(currentInvoice);
-      const message = `Hello *${currentInvoice.customer.name || "Customer"}*,\n\nHere is your invoice *${currentInvoice.invoiceNumber}* from *${companySettings.brandName}*.\n\n*Invoice Date:* ${currentInvoice.date}\n*Total Amount:* ₹${calc.grandTotal.toLocaleString("en-IN")}\n\nThank you for choosing H4 Construction Solutions!`;
+      const calc = computeTotals(state.invoice);
+      const message = `Hello *${state.invoice.customer?.name || "Customer"}*,\n\nHere is your invoice *${state.invoice.invoiceNumber}* from *${state.settings.brandName}*.\n\n*Invoice Date:* ${state.invoice.date}\n*Total Amount:* ₹${calc.grandTotal.toLocaleString("en-IN")}\n\nThank you for choosing H4 Construction Solutions!`;
 
       window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`, "_blank");
     }
 
-    // UNLIMITED FONT ENGINE
     async function handleFontUpload() {
       const nameInput = document.getElementById("inp-font-name");
       const fileInput = document.getElementById("inp-font-file");
+      if (!nameInput || !fileInput) return;
 
       const fontName = nameInput.value.trim().replace(/['"]/g, "");
       const file = fileInput.files[0];
 
       if (!fontName || !file) {
-        alert("Please specify a font name and select a font file.");
+        alert("Please specify a font name and select a file.");
         return;
       }
 
       const reader = new FileReader();
       reader.onload = async e => {
-        const fontObj = { name: fontName, data: e.target.result };
         try {
-          await saveFontToDB(fontObj);
+          await saveFontToDB({ name: fontName, data: e.target.result });
           customFonts = await getAllFontsFromDB();
           applyCustomFontsToDOM();
           refreshAllFontDropdowns();
@@ -2023,7 +1691,6 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
 
     function refreshAllFontDropdowns() {
       const dropdowns = document.querySelectorAll(".font-dropdown-target");
-
       dropdowns.forEach(select => {
         const currentVal = select.value;
         const isNotGlobal = select.id !== "sel-active-font";
@@ -2043,16 +1710,19 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
         if (currentVal) select.value = currentVal;
       });
 
-      document.getElementById("sel-active-font").value = designerSettings.fontFamily || "system-ui, sans-serif";
-      document.getElementById("sel-brand-font").value = designerSettings.brand.fontFamily || "inherit";
-      document.getElementById("sel-legal-font").value = designerSettings.legal.fontFamily || "inherit";
-      document.getElementById("sel-custname-font").value = designerSettings.customer.fontFamily || "inherit";
-      document.getElementById("sel-total-font").value = designerSettings.total.fontFamily || "inherit";
-      document.getElementById("sel-greeting-font").value = designerSettings.greeting.fontFamily || "inherit";
+      const d = state.settings.designer || {};
+      const setVal = (id, val) => { const el = document.getElementById(id); if (el) el.value = val; };
+      setVal("sel-active-font", d.fontFamily || "system-ui, sans-serif");
+      setVal("sel-brand-font", d.brand?.fontFamily || "inherit");
+      setVal("sel-legal-font", d.legal?.fontFamily || "inherit");
+      setVal("sel-custname-font", d.customer?.fontFamily || "inherit");
+      setVal("sel-total-font", d.total?.fontFamily || "inherit");
+      setVal("sel-greeting-font", d.greeting?.fontFamily || "inherit");
     }
 
     function renderCustomFontsList() {
       const container = document.getElementById("installed-fonts-list");
+      if (!container) return;
       if (customFonts.length === 0) {
         container.innerHTML = `<p style="font-size:0.8rem; color:#64748B;">No custom fonts installed.</p>`;
         return;
@@ -2076,99 +1746,207 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       applyCustomFontsToDOM();
       refreshAllFontDropdowns();
       renderCustomFontsList();
-      updateLivePreview();
+      refreshOpenPreview();
     };
 
-    function saveSettingsToStorage() {
-      localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(companySettings));
+    function setupEventListeners() {
+      // SETTINGS DRAWER CONTROLS
+      const drawer = document.getElementById("settings-drawer");
+      document.getElementById("btn-open-settings")?.addEventListener("click", () => {
+        renderSettings();
+        drawer.classList.add("open");
+      });
+      document.getElementById("btn-close-settings")?.addEventListener("click", () => drawer.classList.remove("open"));
+      document.getElementById("btn-done-settings")?.addEventListener("click", () => drawer.classList.remove("open"));
+
+      // DRAWER TABS
+      document.querySelectorAll(".drawer-tab-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".drawer-tab-btn").forEach(b => b.classList.remove("active"));
+          document.querySelectorAll(".panel-view").forEach(p => p.classList.remove("active"));
+          btn.classList.add("active");
+          const target = document.getElementById(btn.getAttribute("data-tab"));
+          if (target) target.classList.add("active");
+          if (btn.getAttribute("data-tab") === "tab-history") renderHistoryTable();
+        });
+      });
+
+      // CLEAN INVOICE BUTTON
+      document.getElementById("btn-new-invoice")?.addEventListener("click", () => {
+        if (confirm("Create new clean invoice?")) {
+          state.invoice = createCleanInvoice();
+          renderSettings();
+          refreshOpenPreview();
+        }
+      });
+
+      // EDITOR EVENT LISTENERS -> STATE -> LIVE PREVIEW
+      document.getElementById("inp-inv-num")?.addEventListener("input", e => { state.invoice.invoiceNumber = e.target.value; refreshOpenPreview(); });
+      document.getElementById("inp-inv-date")?.addEventListener("change", e => { state.invoice.date = e.target.value; refreshOpenPreview(); });
+      document.getElementById("inp-cust-name")?.addEventListener("input", e => { if (!state.invoice.customer) state.invoice.customer = {}; state.invoice.customer.name = e.target.value; refreshOpenPreview(); });
+      document.getElementById("inp-cust-phone")?.addEventListener("input", e => { if (!state.invoice.customer) state.invoice.customer = {}; state.invoice.customer.phone = e.target.value; refreshOpenPreview(); });
+      document.getElementById("inp-cust-whatsapp")?.addEventListener("input", e => { if (!state.invoice.customer) state.invoice.customer = {}; state.invoice.customer.whatsapp = e.target.value; });
+      document.getElementById("inp-cust-address")?.addEventListener("input", e => { if (!state.invoice.customer) state.invoice.customer = {}; state.invoice.customer.address = e.target.value; refreshOpenPreview(); });
+
+      document.getElementById("chk-discount-on")?.addEventListener("change", e => {
+        if (!state.invoice.discount) state.invoice.discount = {};
+        state.invoice.discount.enabled = e.target.checked;
+        document.getElementById("sel-discount-type").disabled = !e.target.checked;
+        document.getElementById("inp-discount-val").disabled = !e.target.checked;
+        refreshOpenPreview();
+      });
+      document.getElementById("sel-discount-type")?.addEventListener("change", e => { state.invoice.discount.type = e.target.value; refreshOpenPreview(); });
+      document.getElementById("inp-discount-val")?.addEventListener("input", e => { state.invoice.discount.value = parseFloat(e.target.value) || 0; refreshOpenPreview(); });
+
+      document.getElementById("chk-gst-on")?.addEventListener("change", e => {
+        if (!state.invoice.gst) state.invoice.gst = {};
+        state.invoice.gst.enabled = e.target.checked;
+        document.getElementById("sel-gst-rate").disabled = !e.target.checked;
+        refreshOpenPreview();
+      });
+      document.getElementById("sel-gst-rate")?.addEventListener("change", e => { state.invoice.gst.rate = parseFloat(e.target.value) || 0; refreshOpenPreview(); });
+      document.getElementById("inp-invoice-notes")?.addEventListener("input", e => { state.invoice.notes = e.target.value; refreshOpenPreview(); });
+
+      // ADD ITEM
+      document.getElementById("btn-add-item")?.addEventListener("click", () => {
+        if (!state.invoice.items) state.invoice.items = [];
+        state.invoice.items.push({ description: "", qty: "", unit: "BAG", rate: "" });
+        renderItemInputs();
+        refreshOpenPreview();
+      });
+
+      // ITEM DELEGATION
+      const itemContainer = document.getElementById("items-list-container");
+      itemContainer?.addEventListener("input", e => {
+        const idx = e.target.getAttribute("data-index");
+        if (idx === null) return;
+        const i = parseInt(idx, 10);
+        if (e.target.classList.contains("item-desc")) state.invoice.items[i].description = e.target.value;
+        else if (e.target.classList.contains("item-qty")) state.invoice.items[i].qty = e.target.value.trim() === "" ? "" : parseFloat(e.target.value);
+        else if (e.target.classList.contains("item-unit")) state.invoice.items[i].unit = e.target.value;
+        else if (e.target.classList.contains("item-rate")) state.invoice.items[i].rate = e.target.value.trim() === "" ? "" : parseFloat(e.target.value);
+        refreshOpenPreview();
+      });
+
+      itemContainer?.addEventListener("click", e => {
+        if (e.target.tagName === "BUTTON") {
+          const i = parseInt(e.target.getAttribute("data-index"), 10);
+          state.invoice.items.splice(i, 1);
+          renderItemInputs();
+          refreshOpenPreview();
+        }
+      });
+
+      // DESIGNER INPUTS -> SYNC TO STATE
+      const designerInputs = [
+        "sel-active-font", "clr-primary", "clr-gold",
+        "sel-brand-font", "num-brand-size", "clr-brand-color",
+        "sel-legal-font", "num-legal-size", "clr-legal-color",
+        "sel-custname-font", "num-custname-size", "clr-custname-color",
+        "sel-total-font", "clr-total-bg", "clr-total-text", "num-total-size", "num-total-pad",
+        "chk-greeting-on", "inp-greeting-text", "sel-greeting-font", "num-greeting-size", "clr-greeting-bg", "clr-greeting-text"
+      ];
+      designerInputs.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener("input", syncDesignerInputsToState);
+          el.addEventListener("change", syncDesignerInputsToState);
+        }
+      });
+
+      // COMPANY SETTINGS INPUTS
+      document.getElementById("inp-comp-legal")?.addEventListener("input", e => { state.settings.legalName = e.target.value; saveState(); refreshOpenPreview(); });
+      document.getElementById("inp-comp-brand")?.addEventListener("input", e => { state.settings.brandName = e.target.value; saveState(); refreshOpenPreview(); });
+      document.getElementById("inp-comp-address")?.addEventListener("input", e => { state.settings.address = e.target.value; saveState(); refreshOpenPreview(); });
+      document.getElementById("inp-comp-phone")?.addEventListener("input", e => { state.settings.phone = e.target.value; saveState(); refreshOpenPreview(); });
+      document.getElementById("inp-comp-wa")?.addEventListener("input", e => { state.settings.whatsapp = e.target.value; saveState(); refreshOpenPreview(); });
+      document.getElementById("inp-comp-email")?.addEventListener("input", e => { state.settings.email = e.target.value; saveState(); refreshOpenPreview(); });
+      document.getElementById("inp-comp-gstin")?.addEventListener("input", e => { state.settings.gstin = e.target.value; saveState(); refreshOpenPreview(); });
+      document.getElementById("inp-comp-website")?.addEventListener("input", e => { state.settings.website = e.target.value; saveState(); refreshOpenPreview(); });
+      document.getElementById("chk-show-website")?.addEventListener("change", e => { state.settings.showWebsite = e.target.checked; saveState(); refreshOpenPreview(); });
+
+      // BANK
+      document.getElementById("chk-bank-on")?.addEventListener("change", e => { if (!state.settings.bank) state.settings.bank = {}; state.settings.bank.show = e.target.checked; saveState(); refreshOpenPreview(); });
+      document.getElementById("inp-bank-name")?.addEventListener("input", e => { state.settings.bank.bankName = e.target.value; saveState(); refreshOpenPreview(); });
+      document.getElementById("inp-bank-accname")?.addEventListener("input", e => { state.settings.bank.accountName = e.target.value; saveState(); refreshOpenPreview(); });
+      document.getElementById("inp-bank-accnum")?.addEventListener("input", e => { state.settings.bank.accountNumber = e.target.value; saveState(); refreshOpenPreview(); });
+      document.getElementById("inp-bank-ifsc")?.addEventListener("input", e => { state.settings.bank.ifsc = e.target.value; saveState(); refreshOpenPreview(); });
+      document.getElementById("inp-bank-branch")?.addEventListener("input", e => { state.settings.bank.branch = e.target.value; saveState(); refreshOpenPreview(); });
+      document.getElementById("inp-bank-upi")?.addEventListener("input", e => { state.settings.bank.upi = e.target.value; saveState(); refreshOpenPreview(); });
+
+      // LOGO
+      document.getElementById("inp-logo-file")?.addEventListener("change", e => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = evt => { state.settings.logo = evt.target.result; saveState(); refreshOpenPreview(); };
+          reader.readAsDataURL(file);
+        }
+      });
+      document.getElementById("chk-show-logo")?.addEventListener("change", e => { state.settings.showLogo = e.target.checked; saveState(); refreshOpenPreview(); });
+      document.getElementById("btn-remove-logo")?.addEventListener("click", () => {
+        state.settings.logo = "";
+        const f = document.getElementById("inp-logo-file");
+        if (f) f.value = "";
+        saveState();
+        refreshOpenPreview();
+      });
+
+      // ZOOM & ACTIONS
+      document.getElementById("btn-zoom-in")?.addEventListener("click", () => applyZoom(currentZoom + 0.15));
+      document.getElementById("btn-zoom-out")?.addEventListener("click", () => applyZoom(Math.max(0.3, currentZoom - 0.15)));
+      document.getElementById("btn-zoom-fit")?.addEventListener("click", fitZoomToScreen);
+      document.getElementById("btn-print-invoice")?.addEventListener("click", () => window.print());
+      document.getElementById("btn-save-invoice")?.addEventListener("click", saveCurrentInvoiceToHistory);
+      document.getElementById("btn-share-whatsapp")?.addEventListener("click", shareInvoiceWhatsApp);
+      document.getElementById("btn-upload-font")?.addEventListener("click", handleFontUpload);
+      document.getElementById("btn-reset-designer")?.addEventListener("click", () => {
+        localStorage.removeItem(STORAGE_KEY_STATE);
+        location.reload();
+      });
+
+      initTouchInteractions();
     }
 
-    function saveDesignerToStorage() {
-      localStorage.setItem(STORAGE_KEY_DESIGNER, JSON.stringify(designerSettings));
-    }
+    function initTouchInteractions() {
+      const container = document.getElementById("preview-stage-container");
+      const indicator = document.getElementById("pull-refresh-indicator");
+      let startY = 0, currentY = 0, isPulling = false, initialDist = 0, baseZoom = 1;
 
-    async function loadPersistedData() {
-      const savedSettings = localStorage.getItem(STORAGE_KEY_SETTINGS);
-      if (savedSettings) {
-        try { companySettings = Object.assign(companySettings, JSON.parse(savedSettings)); } catch (e) {}
-      }
+      container?.addEventListener("touchstart", e => {
+        if (e.touches.length === 2) {
+          initialDist = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
+          baseZoom = currentZoom;
+        } else if (e.touches.length === 1 && container.scrollTop === 0) {
+          startY = e.touches[0].pageY;
+          isPulling = true;
+        }
+      }, { passive: true });
 
-      const savedDesigner = localStorage.getItem(STORAGE_KEY_DESIGNER);
-      if (savedDesigner) {
-        try {
-          const parsed = JSON.parse(savedDesigner);
-          designerSettings = Object.assign(designerSettings, parsed);
-          if (parsed.brand) designerSettings.brand = Object.assign(designerSettings.brand, parsed.brand);
-          if (parsed.legal) designerSettings.legal = Object.assign(designerSettings.legal, parsed.legal);
-          if (parsed.customer) designerSettings.customer = Object.assign(designerSettings.customer, parsed.customer);
-          if (parsed.total) designerSettings.total = Object.assign(designerSettings.total, parsed.total);
-          if (parsed.greeting) designerSettings.greeting = Object.assign(designerSettings.greeting, parsed.greeting);
-        } catch (e) {}
-      }
+      container?.addEventListener("touchmove", e => {
+        if (e.touches.length === 2 && initialDist > 0) {
+          const dist = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
+          applyZoom(Math.min(2.2, Math.max(0.3, baseZoom * (dist / initialDist))));
+        } else if (e.touches.length === 1 && isPulling) {
+          currentY = e.touches[0].pageY;
+          if (currentY - startY > 40 && container.scrollTop === 0) indicator?.classList.add("visible");
+          else indicator?.classList.remove("visible");
+        }
+      }, { passive: true });
 
-      try {
-        customFonts = await getAllFontsFromDB();
-        applyCustomFontsToDOM();
-      } catch (e) {}
-
-      const savedHistory = localStorage.getItem(STORAGE_KEY_HISTORY);
-      if (savedHistory) {
-        try { invoiceHistory = JSON.parse(savedHistory); } catch (e) {}
-      }
-
-      syncCompanyUI();
-      syncDesignerUI();
-    }
-
-    function syncCompanyUI() {
-      document.getElementById("inp-comp-legal").value = companySettings.legalName;
-      document.getElementById("inp-comp-brand").value = companySettings.brandName;
-      document.getElementById("inp-comp-address").value = companySettings.address;
-      document.getElementById("inp-comp-phone").value = companySettings.phone;
-      document.getElementById("inp-comp-wa").value = companySettings.whatsapp;
-      document.getElementById("inp-comp-email").value = companySettings.email;
-      document.getElementById("inp-comp-gstin").value = companySettings.gstin;
-      document.getElementById("inp-comp-website").value = companySettings.website;
-      document.getElementById("chk-show-website").checked = companySettings.showWebsite;
-      document.getElementById("chk-show-logo").checked = companySettings.showLogo;
-
-      if (companySettings.bank) {
-        document.getElementById("chk-bank-on").checked = companySettings.bank.show;
-        document.getElementById("inp-bank-name").value = companySettings.bank.bankName;
-        document.getElementById("inp-bank-accname").value = companySettings.bank.accountName;
-        document.getElementById("inp-bank-accnum").value = companySettings.bank.accountNumber;
-        document.getElementById("inp-bank-ifsc").value = companySettings.bank.ifsc;
-        document.getElementById("inp-bank-branch").value = companySettings.bank.branch;
-        document.getElementById("inp-bank-upi").value = companySettings.bank.upi;
-      }
-    }
-
-    function syncDesignerUI() {
-      document.getElementById("clr-primary").value = designerSettings.primaryColor;
-      document.getElementById("clr-gold").value = designerSettings.goldColor;
-
-      document.getElementById("num-brand-size").value = designerSettings.brand.size;
-      document.getElementById("clr-brand-color").value = designerSettings.brand.color;
-
-      document.getElementById("num-legal-size").value = designerSettings.legal.size;
-      document.getElementById("clr-legal-color").value = designerSettings.legal.color;
-
-      document.getElementById("num-custname-size").value = designerSettings.customer.size;
-      document.getElementById("clr-custname-color").value = designerSettings.customer.color;
-
-      document.getElementById("clr-total-bg").value = designerSettings.total.bg;
-      document.getElementById("clr-total-text").value = designerSettings.total.text;
-      document.getElementById("num-total-size").value = designerSettings.total.size;
-      document.getElementById("num-total-pad").value = designerSettings.total.pad;
-
-      document.getElementById("chk-greeting-on").checked = designerSettings.greeting.show;
-      document.getElementById("inp-greeting-text").value = designerSettings.greeting.text;
-      document.getElementById("num-greeting-size").value = designerSettings.greeting.size;
-      document.getElementById("clr-greeting-bg").value = designerSettings.greeting.bg;
-      document.getElementById("clr-greeting-text").value = designerSettings.greeting.color;
-
-      refreshAllFontDropdowns();
-      renderCustomFontsList();
+      container?.addEventListener("touchend", e => {
+        if (isPulling) {
+          const diff = currentY - startY;
+          isPulling = false;
+          if (diff > 80 && container.scrollTop === 0) {
+            indicator?.classList.add("visible");
+            setTimeout(() => window.location.reload(), 350);
+          } else {
+            indicator?.classList.remove("visible");
+          }
+        }
+        if (e.touches.length < 2) initialDist = 0;
+      });
     }
 
     function initPWA() {
@@ -2185,9 +1963,8 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
           type: "image/svg+xml"
         }]
       };
-
-      const manifestBlob = new Blob([JSON.stringify(manifest)], { type: "application/json" });
-      document.getElementById("pwa-manifest").setAttribute("href", URL.createObjectURL(manifestBlob));
+      const blob = new Blob([JSON.stringify(manifest)], { type: "application/json" });
+      document.getElementById("pwa-manifest")?.setAttribute("href", URL.createObjectURL(blob));
 
       if ("serviceWorker" in navigator) {
         const swScript = `
@@ -2195,16 +1972,24 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
           self.addEventListener('activate', e => event.waitUntil(clients.claim()));
           self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => caches.match(e.request))));
         `;
-        const swBlob = new Blob([swScript], { type: "application/javascript" });
-        navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(() => {});
+        navigator.serviceWorker.register(URL.createObjectURL(new Blob([swScript], { type: "application/javascript" }))).catch(() => {});
       }
     }
 
+    // INITIALIZATION
     window.addEventListener("DOMContentLoaded", async () => {
-      await loadPersistedData();
-      bindEditorInputs();
+      loadSavedState();
+      try {
+        customFonts = await getAllFontsFromDB();
+        applyCustomFontsToDOM();
+      } catch (e) {}
+
       setupEventListeners();
-      updateLivePreview();
+      refreshAllFontDropdowns();
+      renderCustomFontsList();
+      renderSettings();
+      applyAppearance();
+      refreshOpenPreview();
       fitZoomToScreen();
       initPWA();
     });
