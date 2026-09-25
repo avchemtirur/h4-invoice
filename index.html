@@ -1833,7 +1833,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
 
       // CLEAN INVOICE
       document.getElementById("btn-new-invoice")?.addEventListener("click", () => {
-        if (confirm("Create clean invoice? (കമ്പനി വിവരങ്ങൾ നിലനിൽക്കും)")) {
+        if (confirm("Create clean invoice? ( ) {
           state.invoice = createCleanInvoice();
           renderSettings();
           refreshOpenPreview();
