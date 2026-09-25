@@ -6,8 +6,8 @@
   <title>H4 Direct Invoice</title>
   <meta name="theme-color" content="#A8238B">
   
-  <!-- Embedded PWA Manifest -->
-  <link rel="manifest" id="pwa-manifest">
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json" id="pwa-manifest">
 
   <style id="dynamic-custom-fonts"></style>
 
@@ -472,7 +472,7 @@
   <main class="workspace">
     <div class="tab-content-container">
 
-      <!-- 1. TAB: EDITOR (MAIN VIEW) -->
+      <!-- 1. TAB: EDITOR -->
       <div class="panel-view active" id="tab-editor">
         
         <div class="card">
@@ -516,7 +516,7 @@
           <div class="card-title">Product Items</div>
           <div id="items-list-container"></div>
           
-          <button type="button" class="btn btn-gold" id="btn-add-item" onclick="addItemRow()" style="width: 100%; margin-top: 8px; justify-content: center; padding: 10px; font-weight: 700;">
+          <button type="button" class="btn btn-gold" id="btn-add-item" style="width: 100%; margin-top: 8px; justify-content: center; padding: 10px; font-weight: 700;">
             + Add Item
           </button>
         </div>
@@ -852,7 +852,7 @@ Malappuram, Kerala</textarea>
   </main>
 
   <script>
-    const STORAGE_KEY_STATE = "h4_app_state_v6";
+    const STORAGE_KEY_STATE = "h4_app_state_v7";
     const STORAGE_KEY_HISTORY = "h4_app_history_v1";
     const STORAGE_KEY_COMPANY_LOCKED = "h4_company_permanent_profile";
     const STORAGE_KEY_SEQ = "h4_invoice_seq_v1";
@@ -1087,7 +1087,7 @@ Malappuram, Kerala</textarea>
       return (fontVal && fontVal !== "inherit") ? fontVal : defaultFont;
     }
 
-    // INVOICE HTML RENDERER - BANK DETAILS UNDER GREETING (LEFT) & SIGNATURE UNDER NOTES (RIGHT)
+    // INVOICE HTML RENDERER: BANK DETAILS UNDER GREETING (LEFT) & SIGNATURE UNDER TERMS & NOTES (RIGHT)
     function invoiceHTML(inv, company, designer) {
       const calc = computeTotals(inv);
       const words = convertNumberToIndianWords(calc.grandTotal);
@@ -1197,7 +1197,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
             <!-- SUMMARY ROW: LEFT (WORDS -> GREETING -> BANK) & RIGHT (TOTALS -> NOTES -> SIGNATURE) -->
             <div class="inv-summary-row">
               
-              <!-- LEFT COLUMN: Words -> Greeting -> Bank Details -->
+              <!-- LEFT COLUMN: WORDS -> GREETING -> BANK DETAILS (RAISED UP) -->
               <div style="flex: 1; display: flex; flex-direction: column; gap: 6px;">
                 <div class="inv-words-block">
                   <span class="inv-words-title">Amount in Words:</span>
@@ -1228,7 +1228,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
                 ` : ""}
               </div>
 
-              <!-- RIGHT COLUMN: Totals Table -> Terms & Notes -> Signature -->
+              <!-- RIGHT COLUMN: TOTALS -> NOTES -> SIGNATURE (RAISED UP) -->
               <div style="width: 250px; display: flex; flex-direction: column; align-items: flex-end; gap: 6px;">
                 <table class="inv-totals-table">
                   <tr>
@@ -1373,9 +1373,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       });
     }
 
-    // ==================================================
     // 1. renderSettings()
-    // ==================================================
     function renderSettings() {
       ensureDesignerSettings();
       const s = state.settings || {};
@@ -1464,9 +1462,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       renderItemInputs();
     }
 
-    // ==================================================
     // 2. syncDesignerInputsToState()
-    // ==================================================
     function syncDesignerInputsToState() {
       ensureDesignerSettings();
       const d = state.settings.designer;
@@ -1534,9 +1530,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       saveState();
     }
 
-    // ==================================================
     // 3. refreshOpenPreview()
-    // ==================================================
     function refreshOpenPreview() {
       const container = document.getElementById("previewA4Container");
       if (!container) return;
@@ -1833,7 +1827,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
 
       // CLEAN INVOICE
       document.getElementById("btn-new-invoice")?.addEventListener("click", () => {
-        if (confirm("Create clean invoice? ( ) {
+        if (confirm("Create clean invoice? (കമ്പനി വിവരങ്ങൾ നിലനിൽക്കും)")) {
           state.invoice = createCleanInvoice();
           renderSettings();
           refreshOpenPreview();
@@ -1988,30 +1982,19 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       });
     }
 
+    // PWA REGISTRATION (FIXED e.waitUntil & STANDARD sw.js ARCHITECTURE)
     function initPWA() {
-      const manifest = {
-        name: "H4 Direct Invoice",
-        short_name: "H4 Invoice",
-        start_url: window.location.href,
-        display: "standalone",
-        background_color: "#FFFFFF",
-        theme_color: "#A8238B",
-        icons: [{
-          src: "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23A8238B'/><text x='50%' y='65%' font-size='48' font-weight='bold' fill='%23FFFFFF' text-anchor='middle'>H4</text></svg>",
-          sizes: "192x192 512x512",
-          type: "image/svg+xml"
-        }]
-      };
-      const blob = new Blob([JSON.stringify(manifest)], { type: "application/json" });
-      document.getElementById("pwa-manifest")?.setAttribute("href", URL.createObjectURL(blob));
-
       if ("serviceWorker" in navigator) {
-        const swScript = `
-          self.addEventListener('install', e => self.skipWaiting());
-          self.addEventListener('activate', e => event.waitUntil(clients.claim()));
-          self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => caches.match(e.request))));
-        `;
-        navigator.serviceWorker.register(URL.createObjectURL(new Blob([swScript], { type: "application/javascript" }))).catch(() => {});
+        // Registers standard sw.js file with inline fallback containing the fix: e.waitUntil(clients.claim())
+        navigator.serviceWorker.register("sw.js").catch(() => {
+          const swScript = `
+            self.addEventListener('install', e => self.skipWaiting());
+            self.addEventListener('activate', e => e.waitUntil(clients.claim()));
+            self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => caches.match(e.request))));
+          `;
+          const blob = new Blob([swScript], { type: "application/javascript" });
+          navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
+        });
       }
     }
 
