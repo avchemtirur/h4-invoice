@@ -380,7 +380,8 @@
     .inv-company-details {
       font-size: 10px;
       color: #475569;
-      line-height: 1.35;
+      line-height: 1.4;
+      white-space: pre-line; /* Allows address to break into multiple lines cleanly */
     }
 
     .inv-meta-block {
@@ -445,6 +446,7 @@
       font-size: 10px;
       color: #334155;
       line-height: 1.3;
+      white-space: pre-line;
     }
 
     /* TABLE LAYOUT */
@@ -489,11 +491,11 @@
       background: #F8FAFC;
       border: 1px dashed var(--border-color);
       border-radius: 4px;
-      padding: 8px 10px;
+      padding: 10px 12px;
       font-size: 10px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
     }
 
     .inv-words-title {
@@ -505,9 +507,18 @@
     }
 
     .inv-words-text {
-      font-weight: 700;
+      font-weight: 800;
       color: var(--navy-h4);
       font-style: italic;
+      font-size: 11px;
+    }
+
+    .inv-greeting-box {
+      margin-top: 8px;
+      padding: 6px 10px;
+      font-weight: 700;
+      border-radius: 4px;
+      line-height: 1.4;
     }
 
     .inv-totals-table {
@@ -540,7 +551,7 @@
       font-weight: 900 !important;
     }
 
-    /* BANK & GREETING */
+    /* BANK & SIGNATURE */
     .inv-footer-details {
       display: flex;
       justify-content: space-between;
@@ -563,14 +574,6 @@
       color: var(--primary-h4);
       text-transform: uppercase;
       margin-bottom: 4px;
-    }
-
-    .inv-greeting-box {
-      margin-top: 10px;
-      text-align: center;
-      padding: 6px;
-      font-weight: 700;
-      border-radius: 4px;
     }
 
     .inv-bottom-sign {
@@ -607,7 +610,7 @@
       font-weight: 700;
     }
 
-    /* PRINT SPECIFIC STYLES - STRICT A4 */
+    /* STRICT A4 PRINT STYLES */
     @media print {
       @page {
         size: A4 portrait;
@@ -685,7 +688,7 @@
 
   <!-- WORKSPACE -->
   <main class="workspace">
-    <!-- LEFT SETTINGS & EDIT CONTROLS -->
+    <!-- LEFT CONTROLS -->
     <section class="controls-panel">
       
       <!-- 1. TAB: EDITOR -->
@@ -711,7 +714,7 @@
           <div class="card-title">Customer Information</div>
           <div class="form-group">
             <label>Customer Name / M/s</label>
-            <input type="text" id="inp-cust-name" placeholder="John Doe or BuildCorp Ltd" />
+            <input type="text" id="inp-cust-name" placeholder="VAHIDA" />
           </div>
           <div class="form-row">
             <div class="form-group">
@@ -725,18 +728,14 @@
           </div>
           <div class="form-group">
             <label>Customer Address</label>
-            <textarea id="inp-cust-address" rows="2" placeholder="Site, Street, Town"></textarea>
+            <textarea id="inp-cust-address" rows="2" placeholder="Commercial Project"></textarea>
           </div>
         </div>
 
         <!-- Item Rows Section -->
         <div class="card">
           <div class="card-title">Product Items</div>
-          
-          <!-- Dynamic Items Container -->
           <div id="items-list-container"></div>
-
-          <!-- Add Item Button Placed BELOW the items and rates -->
           <button class="btn btn-gold" id="btn-add-item" style="width: 100%; margin-top: 10px; justify-content: center; padding: 10px; font-weight: 700;">
             + Add Item
           </button>
@@ -745,20 +744,17 @@
         <!-- Discount & Taxes -->
         <div class="card">
           <div class="card-title">Discounts & GST</div>
-          
-          <!-- Discount -->
           <div class="form-row" style="align-items: center; margin-bottom: 8px;">
             <label class="switch-label">
               <input type="checkbox" id="chk-discount-on"> Enable Discount
             </label>
             <select id="sel-discount-type" style="width: 120px;" disabled>
               <option value="PERCENT">Percentage (%)</option>
-              <option value="FLAT">Flat (₹)</option>
+              <option value="FLAT" selected>Flat (₹)</option>
             </select>
             <input type="number" id="inp-discount-val" style="width: 100px;" min="0" value="0" disabled />
           </div>
 
-          <!-- GST -->
           <div class="form-row" style="align-items: center;">
             <label class="switch-label">
               <input type="checkbox" id="chk-gst-on"> Enable GST
@@ -774,8 +770,8 @@
 
         <!-- Notes -->
         <div class="card">
-          <div class="card-title">Notes / Terms</div>
-          <textarea id="inp-invoice-notes" rows="2" placeholder="Payment terms or warranty"></textarea>
+          <div class="card-title">Terms & Notes</div>
+          <textarea id="inp-invoice-notes" rows="2" placeholder="Terms and conditions"></textarea>
         </div>
 
       </div>
@@ -816,11 +812,11 @@
           <div class="form-row">
             <div class="form-group">
               <label>Background Color</label>
-              <input type="color" id="clr-total-bg" value="#A8238B">
+              <input type="color" id="clr-total-bg" value="#FEF08A">
             </div>
             <div class="form-group">
               <label>Text Color</label>
-              <input type="color" id="clr-total-text" value="#FFFFFF">
+              <input type="color" id="clr-total-text" value="#0F172A">
             </div>
           </div>
           <div class="form-row">
@@ -888,7 +884,7 @@
           <div class="form-row">
             <div class="form-group">
               <label>Background</label>
-              <input type="color" id="clr-greeting-bg" value="#F8FAFC">
+              <input type="color" id="clr-greeting-bg" value="#F3E8FF">
             </div>
             <div class="form-group">
               <label>Text Color</label>
@@ -913,23 +909,25 @@
             <input type="text" id="inp-comp-brand" value="H4 Construction Solutions">
           </div>
           <div class="form-group">
-            <label>Company Address</label>
-            <textarea id="inp-comp-address" rows="2">Building 4/428, Tirur - Kadalundi Road, Malappuram, Kerala, 676101</textarea>
+            <label>Company Address (New lines will appear in invoice)</label>
+            <textarea id="inp-comp-address" rows="3">Makkilapeedika, Kannamkulam, PO
+BP Angadi, Tirur, Pincode: 676102
+Malappuram, Kerala</textarea>
           </div>
           <div class="form-row">
             <div class="form-group">
               <label>Phone</label>
-              <input type="text" id="inp-comp-phone" value="+91 94000 00000">
+              <input type="text" id="inp-comp-phone" value="+91 79073 44030">
             </div>
             <div class="form-group">
-              <label>Company WhatsApp (Display)</label>
-              <input type="text" id="inp-comp-wa" value="+91 94000 00000">
+              <label>Company WhatsApp</label>
+              <input type="text" id="inp-comp-wa" value="+91 97458 38382">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
               <label>Email</label>
-              <input type="email" id="inp-comp-email" value="contact@avchemtirur.com">
+              <input type="email" id="inp-comp-email" value="avchemtirur@gmail.com">
             </div>
             <div class="form-group">
               <label>GSTIN</label>
@@ -954,7 +952,7 @@
             <input type="checkbox" id="chk-show-logo" checked> Display Logo
           </label>
           <div class="form-group">
-            <label>Upload Image (PNG/JPG/SVG)</label>
+            <label>Upload Logo</label>
             <input type="file" id="inp-logo-file" accept="image/*">
           </div>
           <div class="form-row" style="align-items: center;">
@@ -1010,7 +1008,7 @@
           <div class="card-title">Add Custom Offline Font</div>
           <div class="form-group">
             <label>Font Name</label>
-            <input type="text" id="inp-font-name" placeholder="e.g. MalayalamSan, CorporateFont">
+            <input type="text" id="inp-font-name" placeholder="e.g. MalayalamFont">
           </div>
           <div class="form-group">
             <label>Font File (.ttf, .otf, .woff, .woff2)</label>
@@ -1050,10 +1048,8 @@
 
     </section>
 
-    <!-- RIGHT A4 LIVE PREVIEW STAGE -->
+    <!-- RIGHT A4 PREVIEW STAGE -->
     <section class="preview-stage">
-      
-      <!-- ZOOM CONTROL TOOLBAR -->
       <div class="zoom-toolbar">
         <button class="zoom-btn" id="btn-zoom-out">-</button>
         <button class="zoom-btn" data-zoom="75">75%</button>
@@ -1066,15 +1062,12 @@
         <span class="zoom-level-text" id="lbl-zoom-val">100%</span>
       </div>
 
-      <!-- A4 CONTAINER -->
       <div class="invoice-container-wrapper" id="invoice-wrapper">
         <div class="invoice-sheet" id="invoice-sheet-target"></div>
       </div>
-
     </section>
   </main>
 
-  <!-- JAVASCRIPT APPLICATION CORE -->
   <script>
     const STORAGE_KEY_SETTINGS = "h4_app_settings_v1";
     const STORAGE_KEY_DESIGNER = "h4_app_designer_v1";
@@ -1086,19 +1079,19 @@
       invoiceNumber: "",
       date: new Date().toISOString().substring(0, 10),
       customer: {
-        name: "Supreme Builders & Developers",
-        phone: "+91 98460 12345",
-        whatsapp: "919846012345",
-        address: "Commercial Project Site 4, City Center, Calicut"
+        name: "VAHIDA",
+        phone: "+91 62358 38382",
+        whatsapp: "916235838382",
+        address: "Commercial Project"
       },
       items: [
-        { description: "H4 Tile Adhesive Standard Gray (20kg)", qty: "", unit: "BAG", rate: "" },
-        { description: "H4 High Polymer Waterproofing Slurry (10L)", qty: "", unit: "BUCKET", rate: "" }
+        { description: "TILE ADHESIVE", qty: 1, unit: "BAG", rate: 350 },
+        { description: "Product Item", qty: "", unit: "BAG", rate: "" }
       ],
       discount: {
-        enabled: false,
-        type: "PERCENT",
-        value: 0
+        enabled: true,
+        type: "FLAT",
+        value: 10
       },
       gst: {
         enabled: true,
@@ -1110,10 +1103,10 @@
     let companySettings = {
       legalName: "AV CHEMTIRUR TRADING LLP",
       brandName: "H4 Construction Solutions",
-      address: "Building 4/428, Tirur - Kadalundi Road, Malappuram, Kerala, 676101",
-      phone: "+91 94000 00000",
-      whatsapp: "+91 94000 00000",
-      email: "contact@avchemtirur.com",
+      address: "Makkilapeedika, Kannamkulam, PO\nBP Angadi, Tirur, Pincode: 676102\nMalappuram, Kerala",
+      phone: "+91 79073 44030",
+      whatsapp: "+91 97458 38382",
+      email: "avchemtirur@gmail.com",
       website: "avchemtirur.github.io",
       showWebsite: true,
       gstin: "32AAACH0000A1Z5",
@@ -1135,8 +1128,8 @@
       fontFamily: "system-ui, sans-serif",
       primaryColor: "#A8238B",
       goldColor: "#D4AF37",
-      totalBg: "#A8238B",
-      totalText: "#FFFFFF",
+      totalBg: "#FEF08A",
+      totalText: "#0F172A",
       totalSize: 14,
       totalPad: 6,
       colUnitShow: true,
@@ -1148,7 +1141,7 @@
       greeting: {
         show: true,
         text: "Thank You for Choosing H4 Construction Solutions.",
-        bg: "#F8FAFC",
+        bg: "#F5F3FF",
         color: "#A8238B"
       }
     };
@@ -1158,16 +1151,15 @@
     let currentZoom = 1.0;
 
     function getNextInvoiceNumber() {
-      let seq = parseInt(localStorage.getItem(STORAGE_KEY_SEQ) || "101", 10);
+      let seq = parseInt(localStorage.getItem(STORAGE_KEY_SEQ) || "102", 10);
       return { number: "H4-INV-" + String(seq).padStart(4, "0"), seq: seq };
     }
 
     function incrementInvoiceNumber() {
-      let seq = parseInt(localStorage.getItem(STORAGE_KEY_SEQ) || "101", 10);
+      let seq = parseInt(localStorage.getItem(STORAGE_KEY_SEQ) || "102", 10);
       localStorage.setItem(STORAGE_KEY_SEQ, (seq + 1).toString());
     }
 
-    // CALCULATION ENGINE
     function calculateInvoiceTotals(inv) {
       let subtotal = 0;
       const calculatedItems = (inv.items || []).map(item => {
@@ -1177,8 +1169,8 @@
         subtotal += lineAmount;
         return {
           ...item,
-          qtyDisplay: item.qty !== "" ? item.qty : "",
-          rateDisplay: item.rate !== "" ? item.rate : "",
+          qtyDisplay: item.qty !== "" ? item.qty : "-",
+          rateDisplay: item.rate !== "" ? item.rate : "-",
           amount: lineAmount
         };
       });
@@ -1263,10 +1255,10 @@
               <strong>${escapeHTML(it.description || "Product Item")}</strong>
             </td>
             <td style="text-align: right; width: ${designer.colWidthQty}%;">
-              ${it.qtyDisplay !== "" ? it.qtyDisplay : "-"}
+              ${it.qtyDisplay}
             </td>
-            ${designer.colUnitShow ? `<td style="text-align: center; width: 50px;">${escapeHTML(it.unit || "NOS")}</td>` : ""}
-            <td style="text-align: right;">${it.rateDisplay !== "" ? formatINR(it.rateDisplay) : "-"}</td>
+            ${designer.colUnitShow ? `<td style="text-align: center; width: 50px;">${escapeHTML(it.unit || "BAG")}</td>` : ""}
+            <td style="text-align: right;">${it.rateDisplay !== '-' ? formatINR(it.rateDisplay) : '-'}</td>
             ${designer.colTaxableShow ? `<td style="text-align: right;">${formatINR(it.amount)}</td>` : ""}
             <td style="text-align: right; font-weight: 700;">${formatINR(it.amount)}</td>
           </tr>
@@ -1282,12 +1274,13 @@
                 ${company.showLogo && company.logo ? `<img src="${company.logo}" class="inv-logo-img" style="max-height: ${company.logoHeight}px;" alt="Logo" />` : ""}
                 <div class="inv-brand-name" style="color: ${designer.primaryColor};">${escapeHTML(company.brandName)}</div>
                 <div class="inv-legal-name">${escapeHTML(company.legalName)}</div>
+                <!-- Multi-line address -->
                 <div class="inv-company-details">
-                  ${escapeHTML(company.address)}<br/>
-                  Phone: ${escapeHTML(company.phone)} | WhatsApp: ${escapeHTML(company.whatsapp)}<br/>
-                  Email: ${escapeHTML(company.email)}
-                  ${company.showWebsite && company.website ? `<br/>Web: <strong>${escapeHTML(company.website)}</strong>` : ""}
-                  <br/><strong>GSTIN: ${escapeHTML(company.gstin)}</strong>
+${escapeHTML(company.address)}
+Phone: ${escapeHTML(company.phone)} | WhatsApp: ${escapeHTML(company.whatsapp)}
+Email: ${escapeHTML(company.email)}
+${company.showWebsite && company.website ? `Web: <strong>${escapeHTML(company.website)}</strong>` : ""}
+<strong>GSTIN: ${escapeHTML(company.gstin)}</strong>
                 </div>
               </div>
 
@@ -1309,7 +1302,7 @@
             <!-- CUSTOMER DETAILS -->
             <div class="inv-customer-card" style="border-left-color: ${designer.primaryColor}; margin-bottom: ${designer.sectionGap}px;">
               <div class="inv-customer-title" style="color: ${designer.primaryColor};">Billed To</div>
-              <div class="inv-customer-name">${escapeHTML(inv.customer.name || "Valued Customer")}</div>
+              <div class="inv-customer-name">${escapeHTML(inv.customer.name || "Customer")}</div>
               <div class="inv-customer-details">
                 ${escapeHTML(inv.customer.address || "")}<br/>
                 ${inv.customer.phone ? `Contact: ${escapeHTML(inv.customer.phone)}` : ""}
@@ -1334,14 +1327,21 @@
               </tbody>
             </table>
 
-            <!-- TOTALS & SUMMARY -->
+            <!-- TOTALS & SUMMARY SECTION -->
             <div class="inv-summary-row" style="margin-bottom: ${designer.sectionGap}px;">
               <div class="inv-words-block">
                 <span class="inv-words-title">Amount in Words:</span>
                 <span class="inv-words-text">${words}</span>
                 
+                <!-- GREETING MESSAGE: PLACED EXACTLY AFTER AMOUNT IN WORDS -->
+                ${designer.greeting.show ? `
+                  <div class="inv-greeting-box" style="background: ${designer.greeting.bg}; color: ${designer.greeting.color}; font-size: 11px; border-left: 3px solid${designer.primaryColor};">
+                    ${escapeHTML(designer.greeting.text)}
+                  </div>
+                ` : ""}
+
                 ${inv.notes ? `
-                  <div style="margin-top: 8px; font-size: 9px; color: #475569; white-space: pre-line;">
+                  <div style="margin-top: 10px; font-size: 9px; color: #475569; white-space: pre-line;">
                     <strong>Terms & Notes:</strong><br/>${escapeHTML(inv.notes)}
                   </div>
                 ` : ""}
@@ -1371,12 +1371,12 @@
                   </tr>
                 ` : ""}
 
-                <tr style="border-top: 1px solid #CBD5E1;">
+                <tr style="border-top: 2px solid #CBD5E1;">
                   <td class="label-col" style="font-size: ${designer.totalSize}px; padding: ${designer.totalPad}px 8px; color: #000; font-weight:800;">
                     Grand Total:
                   </td>
                   <td class="val-col inv-grand-total-box" 
-                      style="font-size: ${designer.totalSize}px; padding: ${designer.totalPad}px 8px; background: ${designer.totalBg}; color: ${designer.totalText};">
+                      style="font-size: ${designer.totalSize}px; padding: ${designer.totalPad}px 8px; background: ${designer.totalBg}; color: ${designer.totalText}; font-weight:900;">
                     ${formatINR(calc.grandTotal)}
                   </td>
                 </tr>
@@ -1385,14 +1385,8 @@
 
           </div>
 
-          <!-- BOTTOM SECTION -->
+          <!-- BOTTOM SECTION: BANK & AUTHORIZED SIGNATORY -->
           <div>
-            ${designer.greeting.show ? `
-              <div class="inv-greeting-box" style="background: ${designer.greeting.bg}; color:${designer.greeting.color}; font-size: 11px;">
-                ${escapeHTML(designer.greeting.text)}
-              </div>
-            ` : ""}
-
             <div class="inv-footer-details">
               ${company.bank && company.bank.show ? `
                 <div class="inv-bank-box">
@@ -1432,7 +1426,6 @@
       container.innerHTML = renderInvoiceHTML(currentInvoice, companySettings, designerSettings);
     }
 
-    // EDITOR RENDERING WITH EMPTY/PLACEHOLDER QUANTITY
     function bindEditorInputs() {
       document.getElementById("inp-inv-num").value = currentInvoice.invoiceNumber;
       document.getElementById("inp-inv-date").value = currentInvoice.date;
@@ -1470,7 +1463,7 @@
           </div>
           <div class="form-group">
             <label>Product Description</label>
-            <input type="text" class="item-desc" data-index="${index}" value="${escapeHTML(item.description)}" placeholder="e.g. H4 Tile Adhesive" />
+            <input type="text" class="item-desc" data-index="${index}" value="${escapeHTML(item.description)}" placeholder="e.g. Tile Adhesive" />
           </div>
           <div class="form-row">
             <div class="form-group">
@@ -1479,7 +1472,7 @@
             </div>
             <div class="form-group">
               <label>Unit</label>
-              <input type="text" class="item-unit" data-index="${index}" value="${escapeHTML(item.unit || 'BAG')}" placeholder="BAG / NOS" />
+              <input type="text" class="item-unit" data-index="${index}" value="${escapeHTML(item.unit || 'BAG')}" placeholder="BAG" />
             </div>
             <div class="form-group">
               <label>Rate (₹)</label>
@@ -1505,30 +1498,13 @@
         });
       });
 
-      document.getElementById("inp-inv-num").addEventListener("input", e => {
-        currentInvoice.invoiceNumber = e.target.value;
-        updateLivePreview();
-      });
-      document.getElementById("inp-inv-date").addEventListener("change", e => {
-        currentInvoice.date = e.target.value;
-        updateLivePreview();
-      });
+      document.getElementById("inp-inv-num").addEventListener("input", e => { currentInvoice.invoiceNumber = e.target.value; updateLivePreview(); });
+      document.getElementById("inp-inv-date").addEventListener("change", e => { currentInvoice.date = e.target.value; updateLivePreview(); });
 
-      document.getElementById("inp-cust-name").addEventListener("input", e => {
-        currentInvoice.customer.name = e.target.value;
-        updateLivePreview();
-      });
-      document.getElementById("inp-cust-phone").addEventListener("input", e => {
-        currentInvoice.customer.phone = e.target.value;
-        updateLivePreview();
-      });
-      document.getElementById("inp-cust-whatsapp").addEventListener("input", e => {
-        currentInvoice.customer.whatsapp = e.target.value;
-      });
-      document.getElementById("inp-cust-address").addEventListener("input", e => {
-        currentInvoice.customer.address = e.target.value;
-        updateLivePreview();
-      });
+      document.getElementById("inp-cust-name").addEventListener("input", e => { currentInvoice.customer.name = e.target.value; updateLivePreview(); });
+      document.getElementById("inp-cust-phone").addEventListener("input", e => { currentInvoice.customer.phone = e.target.value; updateLivePreview(); });
+      document.getElementById("inp-cust-whatsapp").addEventListener("input", e => { currentInvoice.customer.whatsapp = e.target.value; });
+      document.getElementById("inp-cust-address").addEventListener("input", e => { currentInvoice.customer.address = e.target.value; updateLivePreview(); });
 
       document.getElementById("chk-discount-on").addEventListener("change", e => {
         currentInvoice.discount.enabled = e.target.checked;
@@ -1536,43 +1512,24 @@
         document.getElementById("inp-discount-val").disabled = !e.target.checked;
         updateLivePreview();
       });
-      document.getElementById("sel-discount-type").addEventListener("change", e => {
-        currentInvoice.discount.type = e.target.value;
-        updateLivePreview();
-      });
-      document.getElementById("inp-discount-val").addEventListener("input", e => {
-        currentInvoice.discount.value = parseFloat(e.target.value) || 0;
-        updateLivePreview();
-      });
+      document.getElementById("sel-discount-type").addEventListener("change", e => { currentInvoice.discount.type = e.target.value; updateLivePreview(); });
+      document.getElementById("inp-discount-val").addEventListener("input", e => { currentInvoice.discount.value = parseFloat(e.target.value) || 0; updateLivePreview(); });
 
       document.getElementById("chk-gst-on").addEventListener("change", e => {
         currentInvoice.gst.enabled = e.target.checked;
         document.getElementById("sel-gst-rate").disabled = !e.target.checked;
         updateLivePreview();
       });
-      document.getElementById("sel-gst-rate").addEventListener("change", e => {
-        currentInvoice.gst.rate = parseFloat(e.target.value) || 0;
-        updateLivePreview();
-      });
+      document.getElementById("sel-gst-rate").addEventListener("change", e => { currentInvoice.gst.rate = parseFloat(e.target.value) || 0; updateLivePreview(); });
 
-      document.getElementById("inp-invoice-notes").addEventListener("input", e => {
-        currentInvoice.notes = e.target.value;
-        updateLivePreview();
-      });
+      document.getElementById("inp-invoice-notes").addEventListener("input", e => { currentInvoice.notes = e.target.value; updateLivePreview(); });
 
-      // ADD ITEM BUTTON (Now located below rate/item lines)
       document.getElementById("btn-add-item").addEventListener("click", () => {
-        currentInvoice.items.push({
-          description: "",
-          qty: "",
-          unit: "BAG",
-          rate: ""
-        });
+        currentInvoice.items.push({ description: "", qty: "", unit: "BAG", rate: "" });
         renderItemInputs();
         updateLivePreview();
       });
 
-      // Realtime item editing
       const itemContainer = document.getElementById("items-list-container");
       itemContainer.addEventListener("input", e => {
         const idx = e.target.getAttribute("data-index");
@@ -1582,7 +1539,6 @@
         if (e.target.classList.contains("item-desc")) {
           currentInvoice.items[index].description = e.target.value;
         } else if (e.target.classList.contains("item-qty")) {
-          // Leave as empty string when user clears it
           currentInvoice.items[index].qty = e.target.value.trim() === "" ? "" : parseFloat(e.target.value);
         } else if (e.target.classList.contains("item-unit")) {
           currentInvoice.items[index].unit = e.target.value;
