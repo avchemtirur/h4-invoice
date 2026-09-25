@@ -6,7 +6,9 @@
   <title>H4 Direct Invoice</title>
   <meta name="theme-color" content="#A8238B">
   
+  <!-- Embedded PWA Manifest -->
   <link rel="manifest" id="pwa-manifest">
+
   <style id="dynamic-custom-fonts"></style>
 
   <style>
@@ -42,6 +44,44 @@
       flex-direction: column;
     }
 
+    /* PULL TO REFRESH */
+    #pull-refresh-indicator {
+      position: fixed;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--primary-h4);
+      color: white;
+      padding: 8px 18px;
+      border-radius: 25px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: top 0.2s ease, opacity 0.2s;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #pull-refresh-indicator.visible {
+      top: 15px;
+      opacity: 1;
+    }
+
+    .spinner {
+      width: 14px;
+      height: 14px;
+      border: 2px solid #FFFFFF;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
     /* HEADER */
     header.app-header {
       background-color: var(--primary-h4);
@@ -60,6 +100,7 @@
     .brand-title {
       font-size: 1.1rem;
       font-weight: 700;
+      letter-spacing: 0.5px;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -396,6 +437,12 @@
 </head>
 <body>
 
+  <!-- PULL REFRESH -->
+  <div id="pull-refresh-indicator">
+    <div class="spinner"></div>
+    <span>Refreshing...</span>
+  </div>
+
   <!-- HEADER -->
   <header class="app-header">
     <div class="brand-title">
@@ -403,6 +450,7 @@
       <span class="brand-badge">A4 PRO</span>
     </div>
 
+    <!-- NAVIGATION TABS -->
     <nav class="nav-tabs">
       <button type="button" class="nav-tab-btn active" data-tab="tab-editor">📝 Editor</button>
       <button type="button" class="nav-tab-btn nav-tab-preview" data-tab="tab-preview">👁️ Preview</button>
@@ -424,7 +472,7 @@
   <main class="workspace">
     <div class="tab-content-container">
 
-      <!-- 1. TAB: EDITOR -->
+      <!-- 1. TAB: EDITOR (MAIN VIEW) -->
       <div class="panel-view active" id="tab-editor">
         
         <div class="card">
@@ -468,7 +516,7 @@
           <div class="card-title">Product Items</div>
           <div id="items-list-container"></div>
           
-          <button type="button" class="btn btn-gold" id="btn-add-item" style="width: 100%; margin-top: 8px; justify-content: center; padding: 10px; font-weight: 700;">
+          <button type="button" class="btn btn-gold" id="btn-add-item" onclick="addItemRow()" style="width: 100%; margin-top: 8px; justify-content: center; padding: 10px; font-weight: 700;">
             + Add Item
           </button>
         </div>
@@ -814,7 +862,7 @@ Malappuram, Kerala</textarea>
     const STORE_NAME = "fonts";
 
     function openFontsDB() {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         if (!window.indexedDB) return resolve(null);
         try {
           const req = indexedDB.open(DB_NAME, DB_VERSION);
@@ -1039,12 +1087,7 @@ Malappuram, Kerala</textarea>
       return (fontVal && fontVal !== "inherit") ? fontVal : defaultFont;
     }
 
-    function escapeHTML(str) {
-      if (!str) return "";
-      return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-    }
-
-    // INVOICE HTML RENDERER
+    // INVOICE HTML RENDERER - BANK DETAILS UNDER GREETING (LEFT) & SIGNATURE UNDER NOTES (RIGHT)
     function invoiceHTML(inv, company, designer) {
       const calc = computeTotals(inv);
       const words = convertNumberToIndianWords(calc.grandTotal);
@@ -1151,8 +1194,10 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
               </tbody>
             </table>
 
-            <!-- SUMMARY ROW -->
+            <!-- SUMMARY ROW: LEFT (WORDS -> GREETING -> BANK) & RIGHT (TOTALS -> NOTES -> SIGNATURE) -->
             <div class="inv-summary-row">
+              
+              <!-- LEFT COLUMN: Words -> Greeting -> Bank Details -->
               <div style="flex: 1; display: flex; flex-direction: column; gap: 6px;">
                 <div class="inv-words-block">
                   <span class="inv-words-title">Amount in Words:</span>
@@ -1171,11 +1216,11 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
                   </div>
                 ` : ""}
 
-                <!-- BANK DETAILS UNDER GREETING -->
+                <!-- BANK DETAILS DIRECTLY UNDER GREETING ON THE LEFT SIDE -->
                 ${company.bank && company.bank.show ? `
-                  <div class="inv-bank-box" style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 4px; padding: 6px 8px; font-size: 8.5px; line-height: 1.35;">
+                  <div class="inv-bank-box" style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 4px; padding: 6px 8px; font-size: 8.5px; line-height: 1.35; margin-top: 2px;">
                     <div class="inv-bank-title" style="color: ${designer.primaryColor}; font-weight: 800; font-size: 9px; text-transform: uppercase; margin-bottom: 2px;">Bank Account Details</div>
-                    Bank: <strong>${escapeHTML(company.bank.bankName)}</strong> | A/C: <strong>${escapeHTML(company.bank.accountNumber)}</strong><br/>
+                    Bank: <strong>${escapeHTML(company.bank.bankName)}</strong> | A/C No: <strong>${escapeHTML(company.bank.accountNumber)}</strong><br/>
                     A/C Name: ${escapeHTML(company.bank.accountName)}<br/>
                     IFSC: <strong>${escapeHTML(company.bank.ifsc)}</strong> | Branch: ${escapeHTML(company.bank.branch)}<br/>
                     UPI ID: <strong>${escapeHTML(company.bank.upi)}</strong>
@@ -1183,7 +1228,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
                 ` : ""}
               </div>
 
-              <!-- RIGHT: TOTALS, NOTES, SIGNATURE -->
+              <!-- RIGHT COLUMN: Totals Table -> Terms & Notes -> Signature -->
               <div style="width: 250px; display: flex; flex-direction: column; align-items: flex-end; gap: 6px;">
                 <table class="inv-totals-table">
                   <tr>
@@ -1215,7 +1260,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
                       font-size: ${designer.total?.size || 13}px;
                       padding: ${designer.total?.pad || 5}px 6px;
                       color: #000;
-                      font-weight:800;">
+                      font-weight: 800;">
                       Grand Total:
                     </td>
                     <td class="val-col" style="
@@ -1237,13 +1282,14 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
                   </div>
                 ` : ""}
 
-                <!-- AUTHORIZED SIGNATORY -->
-                <div class="inv-bottom-sign" style="width: 100%; margin-top: 10px; display: flex; flex-direction: column; align-items: flex-end;">
+                <!-- AUTHORIZED SIGNATORY DIRECTLY UNDER TERMS & NOTES ON THE RIGHT SIDE -->
+                <div class="inv-bottom-sign" style="width: 100%; margin-top: 8px; display: flex; flex-direction: column; align-items: flex-end;">
                   <div class="sign-line" style="width: 130px; border-bottom: 1px solid #475569; margin-bottom: 4px;"></div>
                   <strong style="font-size: 9.5px;">Authorized Signatory</strong>
                   <span style="font-size: 8.5px; color: #64748B;">${escapeHTML(company.brandName)}</span>
                 </div>
               </div>
+
             </div>
 
           </div>
@@ -1252,7 +1298,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       `;
     }
 
-    // ADD ITEM IMPLEMENTATION (BULLETPROOF)
+    // ADD ITEM ROW
     function addItemRow() {
       if (!state.invoice) state.invoice = createCleanInvoice();
       if (!Array.isArray(state.invoice.items)) state.invoice.items = [];
@@ -1620,7 +1666,6 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       });
     }
 
-    // LOAD INVOICE FROM HISTORY (EDIT PREVIOUS)
     window.loadInvoice = function(invNum, isDuplicate) {
       const record = invoiceHistory.find(h => h.invoiceNumber === invNum);
       if (!record) return;
@@ -1701,7 +1746,6 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       document.getElementById("dynamic-custom-fonts").innerHTML = cssRules;
     }
 
-    // POPULATE ALL DROPDOWNS SYNCHRONOUSLY
     function refreshAllFontDropdowns() {
       const dropdowns = document.querySelectorAll(".font-dropdown-target");
       dropdowns.forEach(select => {
@@ -1786,9 +1830,6 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       document.getElementById("btn-goto-preview")?.addEventListener("click", () => {
         document.querySelector('[data-tab="tab-preview"]')?.click();
       });
-
-      // ADD ITEM BUTTON
-      document.getElementById("btn-add-item")?.addEventListener("click", addItemRow);
 
       // CLEAN INVOICE
       document.getElementById("btn-new-invoice")?.addEventListener("click", () => {
@@ -1902,6 +1943,49 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
         localStorage.removeItem(STORAGE_KEY_STATE);
         location.reload();
       });
+
+      initTouchInteractions();
+    }
+
+    function initTouchInteractions() {
+      const container = document.getElementById("tab-preview");
+      const indicator = document.getElementById("pull-refresh-indicator");
+      let startY = 0, currentY = 0, isPulling = false, initialDist = 0, baseZoom = 1;
+
+      container?.addEventListener("touchstart", e => {
+        if (e.touches.length === 2) {
+          initialDist = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
+          baseZoom = currentZoom;
+        } else if (e.touches.length === 1 && container.scrollTop === 0) {
+          startY = e.touches[0].pageY;
+          isPulling = true;
+        }
+      }, { passive: true });
+
+      container?.addEventListener("touchmove", e => {
+        if (e.touches.length === 2 && initialDist > 0) {
+          const dist = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
+          applyZoom(Math.min(2.2, Math.max(0.3, baseZoom * (dist / initialDist))));
+        } else if (e.touches.length === 1 && isPulling) {
+          currentY = e.touches[0].pageY;
+          if (currentY - startY > 40 && container.scrollTop === 0) indicator?.classList.add("visible");
+          else indicator?.classList.remove("visible");
+        }
+      }, { passive: true });
+
+      container?.addEventListener("touchend", e => {
+        if (isPulling) {
+          const diff = currentY - startY;
+          isPulling = false;
+          if (diff > 80 && container.scrollTop === 0) {
+            indicator?.classList.add("visible");
+            setTimeout(() => window.location.reload(), 350);
+          } else {
+            indicator?.classList.remove("visible");
+          }
+        }
+        if (e.touches.length < 2) initialDist = 0;
+      });
     }
 
     function initPWA() {
@@ -1920,6 +2004,15 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       };
       const blob = new Blob([JSON.stringify(manifest)], { type: "application/json" });
       document.getElementById("pwa-manifest")?.setAttribute("href", URL.createObjectURL(blob));
+
+      if ("serviceWorker" in navigator) {
+        const swScript = `
+          self.addEventListener('install', e => self.skipWaiting());
+          self.addEventListener('activate', e => event.waitUntil(clients.claim()));
+          self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => caches.match(e.request))));
+        `;
+        navigator.serviceWorker.register(URL.createObjectURL(new Blob([swScript], { type: "application/javascript" }))).catch(() => {});
+      }
     }
 
     // INITIALIZATION
