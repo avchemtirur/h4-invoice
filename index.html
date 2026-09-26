@@ -6,8 +6,8 @@
   <title>H4 Direct Invoice</title>
   <meta name="theme-color" content="#A8238B">
   
-  <!-- PWA Manifest -->
-  <link rel="manifest" href="manifest.json" id="pwa-manifest">
+  <!-- Embedded PWA Manifest -->
+  <link rel="manifest" id="pwa-manifest">
 
   <style id="dynamic-custom-fonts"></style>
 
@@ -195,6 +195,7 @@
       background: #F8FAFC;
     }
 
+    /* FULL WIDTH CONTAINER FOR TABS */
     .tab-content-container {
       width: 100%;
       height: 100%;
@@ -217,32 +218,17 @@
       display: flex;
     }
 
-    /* PREVIEW CONTAINER (ALL-DIRECTION ZOOM & SCROLL) */
+    /* PREVIEW PANEL STYLES */
     #tab-preview.panel-view {
       max-width: 100% !important;
       height: 100%;
       background: #475569;
-      padding: 16px 12px;
-      display: none;
-      flex-direction: column;
+      padding: 12px 6px;
       align-items: center;
-      overflow: auto;
+      overflow-y: auto;
       touch-action: pan-x pan-y;
       -webkit-overflow-scrolling: touch;
       user-select: none;
-    }
-
-    #tab-preview.panel-view.active {
-      display: flex;
-    }
-
-    .preview-scroll-stage {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: min-content;
-      padding: 10px 20px 60px 20px;
     }
 
     .card {
@@ -281,7 +267,7 @@
     .zoom-toolbar {
       position: sticky;
       top: 0;
-      background: rgba(15, 23, 42, 0.92);
+      background: rgba(15, 23, 42, 0.9);
       backdrop-filter: blur(4px);
       padding: 5px 12px;
       border-radius: 20px;
@@ -290,7 +276,7 @@
       align-items: center;
       color: white;
       z-index: 10;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
 
@@ -316,8 +302,6 @@
     /* A4 CONTAINER */
     .invoice-container-wrapper {
       transform-origin: top center;
-      margin: 0 auto;
-      display: inline-block;
       transition: transform 0.08s ease-out;
     }
 
@@ -337,7 +321,7 @@
       box-sizing: border-box;
     }
 
-    /* INVOICE CONTENT */
+    /* INVOICE PREVIEW CONTENT */
     .inv-header {
       display: flex;
       justify-content: space-between;
@@ -370,7 +354,6 @@
     }
 
     .inv-customer-title { font-size: 9px; font-weight: 800; color: var(--primary-h4); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
-    .inv-customer-name { text-transform: uppercase; }
     .inv-customer-details { font-size: 9.5px; color: #334155; line-height: 1.3; white-space: pre-line; }
 
     .inv-items-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
@@ -378,32 +361,23 @@
     .inv-items-table td { border: 1px solid #CBD5E1; padding: 5px 6px; font-size: 10.5px; vertical-align: middle; }
     .inv-items-table tbody tr:nth-child(even) { background: #F8FAFC; }
 
-    /* SUMMARY AND BALANCED BOTTOM LAYOUT */
-    .inv-summary-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 8px;
-      align-items: flex-start;
-    }
-
-    .inv-words-block {
-      background: #F8FAFC;
-      border: 1px dashed var(--border-color);
-      border-radius: 4px;
-      padding: 8px 10px;
-      font-size: 9.5px;
-    }
-
+    .inv-summary-row { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+    .inv-words-block { flex: 1; background: #F8FAFC; border: 1px dashed var(--border-color); border-radius: 4px; padding: 8px 10px; font-size: 9.5px; }
     .inv-words-title { font-weight: 700; color: #64748B; text-transform: uppercase; font-size: 8.5px; margin-bottom: 2px; }
     .inv-words-text { font-weight: 800; color: var(--navy-h4); font-style: italic; font-size: 10.5px; }
-    .inv-greeting-box { padding: 6px 9px; border-radius: 4px; line-height: 1.35; }
+    .inv-greeting-box { margin-top: 6px; padding: 5px 8px; border-radius: 4px; line-height: 1.35; }
 
     .inv-totals-table { width: 250px; border-collapse: collapse; font-size: 10.5px; }
     .inv-totals-table td { padding: 3px 6px; }
     .inv-totals-table td.label-col { text-align: right; color: #475569; font-weight: 600; }
     .inv-totals-table td.val-col { text-align: right; font-weight: 700; color: var(--navy-h4); }
     .inv-discount-val { color: var(--success-green) !important; }
+
+    .inv-footer-details { display: flex; justify-content: space-between; gap: 16px; border-top: 1px solid #E2E8F0; padding-top: 8px; margin-top: auto; }
+    .inv-bank-box { font-size: 9px; color: #334155; line-height: 1.35; flex: 1; }
+    .inv-bank-title { font-size: 9.5px; font-weight: 800; color: var(--primary-h4); text-transform: uppercase; margin-bottom: 3px; }
+    .inv-bottom-sign { display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-end; width: 170px; text-align: center; font-size: 9.5px; }
+    .sign-line { width: 130px; border-bottom: 1px solid #475569; margin-bottom: 4px; }
 
     .history-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
     .history-table th, .history-table td { border: 1px solid var(--border-color); padding: 7px; text-align: left; }
@@ -417,7 +391,6 @@
       main.workspace { display: block !important; height: auto !important; background: #FFFFFF !important; }
       .tab-content-container { display: block !important; padding: 0 !important; height: auto !important; }
       #tab-preview.panel-view { display: block !important; padding: 0 !important; background: #FFFFFF !important; height: auto !important; }
-      .preview-scroll-stage { display: block !important; padding: 0 !important; }
       .invoice-container-wrapper { transform: none !important; }
       .invoice-sheet {
         width: 210mm !important;
@@ -450,21 +423,21 @@
       <span class="brand-badge">A4 PRO</span>
     </div>
 
-    <!-- NAVIGATION TABS -->
+    <!-- TABS: EDITOR IS ACTIVE FIRST BY DEFAULT -->
     <nav class="nav-tabs">
-      <button type="button" class="nav-tab-btn active" data-tab="tab-editor">📝 Editor</button>
-      <button type="button" class="nav-tab-btn nav-tab-preview" data-tab="tab-preview">👁️ Preview</button>
-      <button type="button" class="nav-tab-btn" data-tab="tab-designer">🎨 Designer</button>
-      <button type="button" class="nav-tab-btn" data-tab="tab-company">🏢 Company</button>
-      <button type="button" class="nav-tab-btn" data-tab="tab-fonts">🔤 Fonts</button>
-      <button type="button" class="nav-tab-btn" data-tab="tab-history">📜 History</button>
+      <button class="nav-tab-btn active" data-tab="tab-editor">📝 Editor</button>
+      <button class="nav-tab-btn nav-tab-preview" data-tab="tab-preview">👁️ Preview</button>
+      <button class="nav-tab-btn" data-tab="tab-designer">🎨 Designer</button>
+      <button class="nav-tab-btn" data-tab="tab-company">🏢 Company</button>
+      <button class="nav-tab-btn" data-tab="tab-fonts">🔤 Fonts</button>
+      <button class="nav-tab-btn" data-tab="tab-history">📜 History</button>
     </nav>
 
     <div class="header-actions">
-      <button type="button" class="btn btn-white" id="btn-new-invoice">+ Clean</button>
-      <button type="button" class="btn btn-gold" id="btn-save-invoice">💾 Save</button>
-      <button type="button" class="btn btn-wa" id="btn-share-whatsapp">WA</button>
-      <button type="button" class="btn btn-white" id="btn-print-invoice">Print</button>
+      <button class="btn btn-white" id="btn-new-invoice">+ Clean</button>
+      <button class="btn btn-gold" id="btn-save-invoice">💾 Save</button>
+      <button class="btn btn-wa" id="btn-share-whatsapp">WA</button>
+      <button class="btn btn-white" id="btn-print-invoice">Print</button>
     </div>
   </header>
 
@@ -472,7 +445,7 @@
   <main class="workspace">
     <div class="tab-content-container">
 
-      <!-- 1. TAB: EDITOR -->
+      <!-- 1. TAB: EDITOR (MAIN VIEW ON OPEN) -->
       <div class="panel-view active" id="tab-editor">
         
         <div class="card">
@@ -492,8 +465,8 @@
         <div class="card">
           <div class="card-title">Customer Information</div>
           <div class="form-group">
-            <label>Customer Name (CAPITAL LETTERS)</label>
-            <input type="text" id="inp-cust-name" style="text-transform: uppercase;" placeholder="ENTER CUSTOMER NAME" />
+            <label>Customer Name</label>
+            <input type="text" id="inp-cust-name" placeholder="Enter Customer / Party Name" />
           </div>
           <div class="form-row">
             <div class="form-group">
@@ -511,12 +484,10 @@
           </div>
         </div>
 
-        <!-- ITEMS CARD -->
         <div class="card">
           <div class="card-title">Product Items</div>
           <div id="items-list-container"></div>
-          
-          <button type="button" class="btn btn-gold" id="btn-add-item" style="width: 100%; margin-top: 8px; justify-content: center; padding: 10px; font-weight: 700;">
+          <button class="btn btn-gold" id="btn-add-item" style="width: 100%; margin-top: 8px; justify-content: center; padding: 10px; font-weight: 700;">
             + Add Item
           </button>
         </div>
@@ -552,26 +523,25 @@
           <textarea id="inp-invoice-notes" rows="2" placeholder="Terms and conditions"></textarea>
         </div>
 
-        <button type="button" class="btn btn-gold" id="btn-goto-preview" style="width: 100%; padding: 12px; font-size: 0.95rem; font-weight: 800; background: #0284C7; color: white; justify-content: center;">
+        <!-- ACTION BUTTON TO GO TO PREVIEW DIRECTLY -->
+        <button class="btn btn-gold" id="btn-goto-preview" style="width: 100%; padding: 12px; font-size: 0.95rem; font-weight: 800; background: #0284C7; color: white; justify-content: center;">
           👁️ View Invoice Preview (ഇൻവോയ്സ് കാണുക)
         </button>
 
       </div>
 
-      <!-- 2. TAB: PREVIEW -->
+      <!-- 2. TAB: PREVIEW (ACCESSED VIA TAB OR PREVIEW BUTTON) -->
       <div class="panel-view" id="tab-preview">
         <div class="zoom-toolbar">
-          <button type="button" class="zoom-btn" id="btn-zoom-out">-</button>
-          <button type="button" class="zoom-btn" id="btn-zoom-fit">Auto Fit</button>
-          <button type="button" class="zoom-btn" id="btn-zoom-in">+</button>
+          <button class="zoom-btn" id="btn-zoom-out">-</button>
+          <button class="zoom-btn" id="btn-zoom-fit">Auto Fit</button>
+          <button class="zoom-btn" id="btn-zoom-in">+</button>
           <span class="zoom-level-text" id="lbl-zoom-val">100%</span>
         </div>
 
-        <div class="preview-scroll-stage">
-          <div class="invoice-container-wrapper" id="invoice-wrapper">
-            <div class="invoice-sheet" id="previewA4Container">
-              <!-- Rendered by invoiceHTML() -->
-            </div>
+        <div class="invoice-container-wrapper" id="invoice-wrapper">
+          <div class="invoice-sheet" id="previewA4Container">
+            <!-- Rendered by invoiceHTML() -->
           </div>
         </div>
       </div>
@@ -581,7 +551,7 @@
         <div class="card">
           <div class="card-title">
             Global Layout & Colors
-            <button type="button" class="btn btn-secondary" id="btn-reset-designer">Reset</button>
+            <button class="btn btn-secondary" id="btn-reset-designer">Reset</button>
           </div>
           <div class="form-group">
             <label>General Document Font</label>
@@ -714,7 +684,7 @@
       <!-- 4. TAB: COMPANY -->
       <div class="panel-view" id="tab-company">
         <div class="card">
-          <div class="card-title">Company Profile (Permanent Lock)</div>
+          <div class="card-title">Company Profile</div>
           <div class="form-group">
             <label>Legal Name</label>
             <input type="text" id="inp-comp-legal" value="AV CHEMTIRUR TRADING LLP">
@@ -767,7 +737,7 @@ Malappuram, Kerala</textarea>
           <div class="form-group">
             <input type="file" id="inp-logo-file" accept="image/*">
           </div>
-          <button type="button" class="btn btn-danger" id="btn-remove-logo" style="margin-top: 6px;">Remove Logo</button>
+          <button class="btn btn-danger" id="btn-remove-logo" style="margin-top: 6px;">Remove Logo</button>
         </div>
 
         <div class="card">
@@ -818,7 +788,7 @@ Malappuram, Kerala</textarea>
             <label>Font File (.ttf, .otf, .woff, .woff2)</label>
             <input type="file" id="inp-font-file" accept=".ttf,.otf,.woff,.woff2">
           </div>
-          <button type="button" class="btn btn-gold" id="btn-upload-font">Install Font (IndexedDB)</button>
+          <button class="btn btn-gold" id="btn-upload-font">Install Font (IndexedDB)</button>
         </div>
 
         <div class="card">
@@ -830,7 +800,7 @@ Malappuram, Kerala</textarea>
       <!-- 6. TAB: HISTORY -->
       <div class="panel-view" id="tab-history">
         <div class="card">
-          <div class="card-title">Saved Invoices (Edit ക്ലിക്ക് ചെയ്താൽ ലോഡ് ആവും)</div>
+          <div class="card-title">Saved Invoices (Edit ക്ലിക്ക് ചെയ്താൽ മാത്രം ലോഡ് ആവും)</div>
           <div style="overflow-x: auto;">
             <table class="history-table">
               <thead>
@@ -852,35 +822,29 @@ Malappuram, Kerala</textarea>
   </main>
 
   <script>
-    const STORAGE_KEY_STATE = "h4_app_state_v7";
+    const STORAGE_KEY_STATE = "h4_app_state_v4";
     const STORAGE_KEY_HISTORY = "h4_app_history_v1";
-    const STORAGE_KEY_COMPANY_LOCKED = "h4_company_permanent_profile";
     const STORAGE_KEY_SEQ = "h4_invoice_seq_v1";
 
+    // INDEXEDDB ENGINE
     const DB_NAME = "H4FontsDB";
     const DB_VERSION = 1;
     const STORE_NAME = "fonts";
 
     function openFontsDB() {
-      return new Promise((resolve) => {
-        if (!window.indexedDB) return resolve(null);
-        try {
-          const req = indexedDB.open(DB_NAME, DB_VERSION);
-          req.onupgradeneeded = e => {
-            const db = e.target.result;
-            if (!db.objectStoreNames.contains(STORE_NAME)) db.createObjectStore(STORE_NAME, { keyPath: "name" });
-          };
-          req.onsuccess = e => resolve(e.target.result);
-          req.onerror = () => resolve(null);
-        } catch (err) {
-          resolve(null);
-        }
+      return new Promise((resolve, reject) => {
+        const req = indexedDB.open(DB_NAME, DB_VERSION);
+        req.onupgradeneeded = e => {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains(STORE_NAME)) db.createObjectStore(STORE_NAME, { keyPath: "name" });
+        };
+        req.onsuccess = e => resolve(e.target.result);
+        req.onerror = e => reject(e.target.error);
       });
     }
 
     async function saveFontToDB(fontObj) {
       const db = await openFontsDB();
-      if (!db) return;
       return new Promise((resolve, reject) => {
         const tx = db.transaction(STORE_NAME, "readwrite");
         tx.objectStore(STORE_NAME).put(fontObj);
@@ -891,18 +855,16 @@ Malappuram, Kerala</textarea>
 
     async function getAllFontsFromDB() {
       const db = await openFontsDB();
-      if (!db) return [];
-      return new Promise((resolve) => {
+      return new Promise((resolve, reject) => {
         const tx = db.transaction(STORE_NAME, "readonly");
         const req = tx.objectStore(STORE_NAME).getAll();
         req.onsuccess = () => resolve(req.result || []);
-        req.onerror = () => resolve([]);
+        req.onerror = () => reject(req.error);
       });
     }
 
     async function deleteFontFromDB(fontName) {
       const db = await openFontsDB();
-      if (!db) return;
       return new Promise((resolve, reject) => {
         const tx = db.transaction(STORE_NAME, "readwrite");
         tx.objectStore(STORE_NAME).delete(fontName);
@@ -1015,8 +977,7 @@ Malappuram, Kerala</textarea>
 
     function computeTotals(inv) {
       let subtotal = 0;
-      const itemsList = Array.isArray(inv?.items) ? inv.items : [];
-      const calculatedItems = itemsList.map(item => {
+      const calculatedItems = (inv.items || []).map(item => {
         const q = (item.qty === "" || isNaN(parseFloat(item.qty))) ? 0 : parseFloat(item.qty);
         const r = (item.rate === "" || isNaN(parseFloat(item.rate))) ? 0 : parseFloat(item.rate);
         const lineAmount = Math.round((q * r) * 100) / 100;
@@ -1032,7 +993,7 @@ Malappuram, Kerala</textarea>
       subtotal = Math.round(subtotal * 100) / 100;
 
       let discountAmount = 0;
-      if (inv?.discount && inv.discount.enabled) {
+      if (inv.discount && inv.discount.enabled) {
         const discVal = parseFloat(inv.discount.value) || 0;
         discountAmount = inv.discount.type === "PERCENT" ? (subtotal * discVal) / 100 : discVal;
         discountAmount = Math.min(discountAmount, subtotal);
@@ -1042,12 +1003,13 @@ Malappuram, Kerala</textarea>
       const taxableAmount = Math.max(0, Math.round((subtotal - discountAmount) * 100) / 100);
 
       let gstAmount = 0;
-      const gstRate = (inv?.gst && inv.gst.enabled) ? (parseFloat(inv.gst.rate) || 0) : 0;
+      const gstRate = (inv.gst && inv.gst.enabled) ? (parseFloat(inv.gst.rate) || 0) : 0;
       if (gstRate > 0) {
         gstAmount = Math.round((taxableAmount * (gstRate / 100)) * 100) / 100;
       }
 
       const grandTotal = Math.round((taxableAmount + gstAmount) * 100) / 100;
+
       return { items: calculatedItems, subtotal, discountAmount, taxableAmount, gstRate, gstAmount, grandTotal };
     }
 
@@ -1083,11 +1045,16 @@ Malappuram, Kerala</textarea>
       return "₹" + Number(val || 0).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
+    function escapeHTML(str) {
+      if (!str) return "";
+      return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    }
+
     function resolveFont(fontVal, defaultFont) {
       return (fontVal && fontVal !== "inherit") ? fontVal : defaultFont;
     }
 
-    // INVOICE HTML RENDERER: BANK DETAILS UNDER GREETING (LEFT) & SIGNATURE UNDER TERMS & NOTES (RIGHT)
+    // SINGLE SOURCE OF TRUTH RENDERER
     function invoiceHTML(inv, company, designer) {
       const calc = computeTotals(inv);
       const words = convertNumberToIndianWords(calc.grandTotal);
@@ -1095,10 +1062,10 @@ Malappuram, Kerala</textarea>
       const rowsHTML = calc.items.map((it, idx) => `
         <tr>
           <td style="text-align: center; width: 32px;">${idx + 1}</td>
-          <td style="width: ${designer.colWidthProduct || 46}%;">
+          <td style="width: ${designer.colWidthProduct}%;">
             <strong>${escapeHTML(it.description || "-")}</strong>
           </td>
-          <td style="text-align: right; width: ${designer.colWidthQty || 12}%;">
+          <td style="text-align: right; width: ${designer.colWidthQty}%;">
             ${it.qtyDisplay}
           </td>
           ${designer.colUnitShow ? `<td style="text-align: center; width: 45px;">${escapeHTML(it.unit || "BAG")}</td>` : ""}
@@ -1113,8 +1080,6 @@ Malappuram, Kerala</textarea>
       const custFont = resolveFont(designer.customer?.fontFamily, designer.fontFamily);
       const totalFont = resolveFont(designer.total?.fontFamily, designer.fontFamily);
       const greetingFont = resolveFont(designer.greeting?.fontFamily, designer.fontFamily);
-
-      const customerDisplayName = escapeHTML((inv?.customer?.name || "-").toUpperCase());
 
       return `
         <div style="font-family: ${designer.fontFamily}; display: flex; flex-direction: column; height: 100%; justify-content: space-between;">
@@ -1150,11 +1115,11 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
                 <table class="inv-meta-table">
                   <tr>
                     <td class="inv-meta-label">Invoice No:</td>
-                    <td class="inv-meta-val">${escapeHTML(inv?.invoiceNumber || '')}</td>
+                    <td class="inv-meta-val">${escapeHTML(inv.invoiceNumber)}</td>
                   </tr>
                   <tr>
                     <td class="inv-meta-label">Date:</td>
-                    <td class="inv-meta-val">${escapeHTML(inv?.date || '')}</td>
+                    <td class="inv-meta-val">${escapeHTML(inv.date)}</td>
                   </tr>
                 </table>
               </div>
@@ -1168,11 +1133,11 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
                 font-size: ${designer.customer?.size || 12}px;
                 color: ${designer.customer?.color || '#0F172A'};
                 font-weight: 800;">
-                ${customerDisplayName}
+                ${escapeHTML(inv.customer?.name || "-")}
               </div>
               <div class="inv-customer-details">
-                ${escapeHTML(inv?.customer?.address || "")}<br/>
-                ${inv?.customer?.phone ? `Contact: ${escapeHTML(inv.customer.phone)}` : ""}
+                ${escapeHTML(inv.customer?.address || "")}<br/>
+                ${inv.customer?.phone ? `Contact: ${escapeHTML(inv.customer.phone)}` : ""}
               </div>
             </div>
 
@@ -1194,17 +1159,11 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
               </tbody>
             </table>
 
-            <!-- SUMMARY ROW: LEFT (WORDS -> GREETING -> BANK) & RIGHT (TOTALS -> NOTES -> SIGNATURE) -->
+            <!-- TOTALS & SUMMARY: TERMS & NOTES ON THE RIGHT -->
             <div class="inv-summary-row">
-              
-              <!-- LEFT COLUMN: WORDS -> GREETING -> BANK DETAILS (RAISED UP) -->
-              <div style="flex: 1; display: flex; flex-direction: column; gap: 6px;">
-                <div class="inv-words-block">
-                  <span class="inv-words-title">Amount in Words:</span>
-                  <span class="inv-words-text">${words}</span>
-                </div>
-                
-                ${designer.greeting?.show ? `
+              <div class="inv-words-block">
+                <span class="inv-words-title">Amount in Words:</span>
+                <span class="inv-words-text">${words}</span>${designer.greeting?.show ? `
                   <div class="inv-greeting-box" style="
                     font-family: ${greetingFont};
                     font-size: ${designer.greeting?.size || 10}px;
@@ -1215,28 +1174,16 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
                     ${escapeHTML(designer.greeting?.text)}
                   </div>
                 ` : ""}
-
-                <!-- BANK DETAILS DIRECTLY UNDER GREETING ON THE LEFT SIDE -->
-                ${company.bank && company.bank.show ? `
-                  <div class="inv-bank-box" style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 4px; padding: 6px 8px; font-size: 8.5px; line-height: 1.35; margin-top: 2px;">
-                    <div class="inv-bank-title" style="color: ${designer.primaryColor}; font-weight: 800; font-size: 9px; text-transform: uppercase; margin-bottom: 2px;">Bank Account Details</div>
-                    Bank: <strong>${escapeHTML(company.bank.bankName)}</strong> | A/C No: <strong>${escapeHTML(company.bank.accountNumber)}</strong><br/>
-                    A/C Name: ${escapeHTML(company.bank.accountName)}<br/>
-                    IFSC: <strong>${escapeHTML(company.bank.ifsc)}</strong> | Branch: ${escapeHTML(company.bank.branch)}<br/>
-                    UPI ID: <strong>${escapeHTML(company.bank.upi)}</strong>
-                  </div>
-                ` : ""}
               </div>
 
-              <!-- RIGHT COLUMN: TOTALS -> NOTES -> SIGNATURE (RAISED UP) -->
-              <div style="width: 250px; display: flex; flex-direction: column; align-items: flex-end; gap: 6px;">
+              <div style="width: 250px; display: flex; flex-direction: column; align-items: flex-end;">
                 <table class="inv-totals-table">
                   <tr>
                     <td class="label-col">Subtotal:</td>
                     <td class="val-col">${formatINR(calc.subtotal)}</td>
                   </tr>
 
-                  ${inv?.discount && inv.discount.enabled && calc.discountAmount > 0 ? `
+                  ${inv.discount && inv.discount.enabled && calc.discountAmount > 0 ? `
                     <tr>
                       <td class="label-col">Discount ${inv.discount.type === 'PERCENT' ? `(${inv.discount.value}%)` : ''}:</td>
                       <td class="val-col inv-discount-val">- ${formatINR(calc.discountAmount)}</td>
@@ -1247,7 +1194,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
                     </tr>
                   ` : ""}
 
-                  ${inv?.gst && inv.gst.enabled ? `
+                  ${inv.gst && inv.gst.enabled ? `
                     <tr>
                       <td class="label-col">GST (${calc.gstRate}%):</td>
                       <td class="val-col">${formatINR(calc.gstAmount)}</td>
@@ -1260,7 +1207,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
                       font-size: ${designer.total?.size || 13}px;
                       padding: ${designer.total?.pad || 5}px 6px;
                       color: #000;
-                      font-weight: 800;">
+                      font-weight:800;">
                       Grand Total:
                     </td>
                     <td class="val-col" style="
@@ -1275,105 +1222,45 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
                   </tr>
                 </table>
 
-                <!-- TERMS AND NOTES -->
-                ${inv?.notes ? `
-                  <div style="width: 100%; text-align: right; font-size: 8.5px; color: #475569; background: #F8FAFC; border: 1px dashed #CBD5E1; border-radius: 4px; padding: 4px 6px; white-space: pre-line;">
+                ${inv.notes ? `
+                  <div style="margin-top: 6px; width: 100%; text-align: right; font-size: 8.5px; color: #475569; background: #F8FAFC; border: 1px dashed #CBD5E1; border-radius: 4px; padding: 5px 8px; white-space: pre-line;">
                     <strong style="color: #1E293B;">Terms & Notes:</strong><br/>${escapeHTML(inv.notes)}
                   </div>
                 ` : ""}
-
-                <!-- AUTHORIZED SIGNATORY DIRECTLY UNDER TERMS & NOTES ON THE RIGHT SIDE -->
-                <div class="inv-bottom-sign" style="width: 100%; margin-top: 8px; display: flex; flex-direction: column; align-items: flex-end;">
-                  <div class="sign-line" style="width: 130px; border-bottom: 1px solid #475569; margin-bottom: 4px;"></div>
-                  <strong style="font-size: 9.5px;">Authorized Signatory</strong>
-                  <span style="font-size: 8.5px; color: #64748B;">${escapeHTML(company.brandName)}</span>
-                </div>
               </div>
-
             </div>
 
           </div>
-          <div style="height: 1px;"></div>
+
+          <!-- BOTTOM SECTION -->
+          <div>
+            <div class="inv-footer-details">
+              ${company.bank && company.bank.show ? `
+                <div class="inv-bank-box">
+                  <div class="inv-bank-title" style="color: ${designer.primaryColor};">Bank Account Details</div>
+                  Bank: <strong>${escapeHTML(company.bank.bankName)}</strong><br/>
+                  A/C Name: ${escapeHTML(company.bank.accountName)}<br/>
+                  A/C No: <strong>${escapeHTML(company.bank.accountNumber)}</strong><br/>
+                  IFSC: <strong>${escapeHTML(company.bank.ifsc)}</strong> | Branch: ${escapeHTML(company.bank.branch)}<br/>
+                  UPI ID: <strong>${escapeHTML(company.bank.upi)}</strong>
+                </div>
+              ` : `<div></div>`}
+
+              <div class="inv-bottom-sign">
+                <div class="sign-line"></div>
+                <strong>Authorized Signatory</strong>
+                <span>${escapeHTML(company.brandName)}</span>
+              </div>
+            </div>
+          </div>
+
         </div>
       `;
     }
 
-    // ADD ITEM ROW
-    function addItemRow() {
-      if (!state.invoice) state.invoice = createCleanInvoice();
-      if (!Array.isArray(state.invoice.items)) state.invoice.items = [];
-      state.invoice.items.push({ description: "", qty: "", unit: "BAG", rate: "" });
-      
-      renderItemInputs();
-      refreshOpenPreview();
-
-      setTimeout(() => {
-        const allDescs = document.querySelectorAll(".item-desc");
-        if (allDescs.length > 0) {
-          const lastDesc = allDescs[allDescs.length - 1];
-          lastDesc.focus();
-        }
-      }, 30);
-    }
-    window.addItemRow = addItemRow;
-
-    function onProductInput(el, field, index) {
-      if (!state.invoice?.items?.[index]) return;
-      if (field === 'description') state.invoice.items[index].description = el.value;
-      else if (field === 'qty') state.invoice.items[index].qty = el.value.trim() === "" ? "" : parseFloat(el.value);
-      else if (field === 'unit') state.invoice.items[index].unit = el.value;
-      else if (field === 'rate') state.invoice.items[index].rate = el.value.trim() === "" ? "" : parseFloat(el.value);
-      refreshOpenPreview();
-    }
-    window.onProductInput = onProductInput;
-
-    function deleteItemRow(i) {
-      if (state.invoice?.items) {
-        state.invoice.items.splice(i, 1);
-        renderItemInputs();
-        refreshOpenPreview();
-      }
-    }
-    window.deleteItemRow = deleteItemRow;
-
-    function renderItemInputs() {
-      const container = document.getElementById("items-list-container");
-      if (!container) return;
-      container.innerHTML = "";
-
-      const items = Array.isArray(state.invoice?.items) ? state.invoice.items : [];
-      items.forEach((item, index) => {
-        const div = document.createElement("div");
-        div.className = "item-entry-row";
-        div.innerHTML = `
-          <div class="item-row-header">
-            <span class="item-row-num">ITEM #${index + 1}</span>
-            <button type="button" class="btn btn-danger" style="padding: 2px 7px; font-size: 0.72rem;" onclick="deleteItemRow(${index})">Delete</button>
-          </div>
-          <div class="form-group">
-            <label>Product Description</label>
-            <input type="text" class="item-desc" value="${escapeHTML(item.description)}" placeholder="Product Item Description" oninput="onProductInput(this, 'description', ${index})" />
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label>QNTY</label>
-              <input type="number" class="item-qty" value="${item.qty !== '' ? item.qty : ''}" placeholder="0" min="0" step="any" oninput="onProductInput(this, 'qty', ${index})" />
-            </div>
-            <div class="form-group">
-              <label>Unit</label>
-              <input type="text" class="item-unit" value="${escapeHTML(item.unit \vert{}\vert{} 'BAG')}" placeholder="BAG" oninput="onProductInput(this, 'unit', ${index})" />
-            </div>
-            <div class="form-group">
-              <label>Rate (₹)</label>
-              <input type="number" class="item-rate" value="${item.rate !== '' ? item.rate : ''}" placeholder="0.00" min="0" step="any" oninput="onProductInput(this, 'rate', ${index})" />
-            </div>
-          </div>
-        `;
-        container.appendChild(div);
-      });
-    }
-
+    // ==================================================
     // 1. renderSettings()
+    // ==================================================
     function renderSettings() {
       ensureDesignerSettings();
       const s = state.settings || {};
@@ -1462,7 +1349,9 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       renderItemInputs();
     }
 
+    // ==================================================
     // 2. syncDesignerInputsToState()
+    // ==================================================
     function syncDesignerInputsToState() {
       ensureDesignerSettings();
       const d = state.settings.designer;
@@ -1530,7 +1419,9 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       saveState();
     }
 
+    // ==================================================
     // 3. refreshOpenPreview()
+    // ==================================================
     function refreshOpenPreview() {
       const container = document.getElementById("previewA4Container");
       if (!container) return;
@@ -1562,33 +1453,57 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
     function fitZoomToScreen() {
       const stage = document.getElementById("tab-preview");
       if (!stage) return;
-      const availableWidth = stage.clientWidth - 40;
+      const availableWidth = stage.clientWidth - 16;
       const scale = Math.min(1.15, Math.max(0.32, availableWidth / 794));
       applyZoom(scale);
     }
 
-    function saveCompanyPermanent() {
-      try {
-        localStorage.setItem(STORAGE_KEY_COMPANY_LOCKED, JSON.stringify(state.settings));
-      } catch (e) {}
+    function renderItemInputs() {
+      const container = document.getElementById("items-list-container");
+      if (!container) return;
+      container.innerHTML = "";
+
+      const items = state.invoice?.items || [];
+      items.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "item-entry-row";
+        div.innerHTML = `
+          <div class="item-row-header">
+            <span class="item-row-num">ITEM #${index + 1}</span>
+            <button class="btn btn-danger" style="padding: 2px 7px; font-size: 0.72rem;" data-index="${index}">Delete</button>
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <input type="text" class="item-desc" data-index="${index}" value="${escapeHTML(item.description)}" placeholder="Product Item" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>QNTY</label>
+              <input type="number" class="item-qty" data-index="${index}" value="${item.qty !== '' ? item.qty : ''}" placeholder="0" min="0" step="any" />
+            </div>
+            <div class="form-group">
+              <label>Unit</label>
+              <input type="text" class="item-unit" data-index="${index}" value="${escapeHTML(item.unit || 'BAG')}" placeholder="BAG" />
+            </div>
+            <div class="form-group">
+              <label>Rate (₹)</label>
+              <input type="number" class="item-rate" data-index="${index}" value="${item.rate !== '' ? item.rate : ''}" placeholder="0.00" min="0" step="any" />
+            </div>
+          </div>
+        `;
+        container.appendChild(div);
+      });
     }
 
     function saveState() {
       try {
         localStorage.setItem(STORAGE_KEY_STATE, JSON.stringify(state.settings));
-        saveCompanyPermanent();
-      } catch (e) {}
+      } catch (e) {
+        console.warn("Save state error", e);
+      }
     }
 
     function loadSavedState() {
-      const savedCompany = localStorage.getItem(STORAGE_KEY_COMPANY_LOCKED);
-      if (savedCompany) {
-        try {
-          const parsedComp = JSON.parse(savedCompany);
-          state.settings = Object.assign(state.settings, parsedComp);
-        } catch (e) {}
-      }
-
       const saved = localStorage.getItem(STORAGE_KEY_STATE);
       if (saved) {
         try {
@@ -1613,7 +1528,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       const snapshot = {
         invoiceNumber: state.invoice.invoiceNumber,
         date: state.invoice.date,
-        customerName: (state.invoice.customer?.name || "Customer").toUpperCase(),
+        customerName: state.invoice.customer?.name || "Customer",
         grandTotal: calc.grandTotal,
         savedAt: new Date().toISOString(),
         invoiceData: JSON.parse(JSON.stringify(state.invoice)),
@@ -1651,9 +1566,9 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
           <td>${escapeHTML(item.customerName || "-")}</td>
           <td>${formatINR(item.grandTotal)}</td>
           <td style="display:flex; gap:3px;">
-            <button type="button" class="btn btn-secondary" style="padding: 2px 5px; font-size:0.7rem;" onclick="loadInvoice('${item.invoiceNumber}', false)">Edit</button>
-            <button type="button" class="btn btn-gold" style="padding: 2px 5px; font-size:0.7rem;" onclick="loadInvoice('${item.invoiceNumber}', true)">Duplicate</button>
-            <button type="button" class="btn btn-danger" style="padding: 2px 5px; font-size:0.7rem;" onclick="deleteInvoice('${item.invoiceNumber}')">Del</button>
+            <button class="btn btn-secondary" style="padding: 2px 5px; font-size:0.7rem;" onclick="loadInvoice('${item.invoiceNumber}', false)">Edit</button>
+            <button class="btn btn-gold" style="padding: 2px 5px; font-size:0.7rem;" onclick="loadInvoice('${item.invoiceNumber}', true)">Duplicate</button>
+            <button class="btn btn-danger" style="padding: 2px 5px; font-size:0.7rem;" onclick="deleteInvoice('${item.invoiceNumber}')">Del</button>
           </td>
         `;
         tbody.appendChild(tr);
@@ -1674,6 +1589,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
 
       renderSettings();
       refreshOpenPreview();
+      // Switch to Editor on load
       document.querySelector('[data-tab="tab-editor"]').click();
       alert(`Loaded invoice ${invNum}.`);
     };
@@ -1695,8 +1611,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       }
 
       const calc = computeTotals(state.invoice);
-      const custName = (state.invoice.customer?.name || "Customer").toUpperCase();
-      const message = `Hello *${custName}*,\n\nHere is your invoice *${state.invoice.invoiceNumber}* from *${state.settings.brandName}*.\n\n*Invoice Date:* ${state.invoice.date}\n*Total Amount:* ₹${calc.grandTotal.toLocaleString("en-IN")}\n\nThank you for choosing H4 Construction Solutions!`;
+      const message = `Hello *${state.invoice.customer?.name || "Customer"}*,\n\nHere is your invoice *${state.invoice.invoiceNumber}* from *${state.settings.brandName}*.\n\n*Invoice Date:* ${state.invoice.date}\n*Total Amount:* ₹${calc.grandTotal.toLocaleString("en-IN")}\n\nThank you for choosing H4 Construction Solutions!`;
 
       window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`, "_blank");
     }
@@ -1785,7 +1700,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
         row.style.cssText = "display:flex; justify-content:space-between; align-items:center; padding: 5px; border-bottom: 1px solid #E2E8F0;";
         row.innerHTML = `
           <span style="font-family: '${f.name}', sans-serif; font-size: 0.85rem;">${f.name}</span>
-          <button type="button" class="btn btn-danger" style="padding: 2px 5px; font-size: 0.7rem;" onclick="removeCustomFont('${f.name}')">Remove</button>
+          <button class="btn btn-danger" style="padding: 2px 5px; font-size: 0.7rem;" onclick="removeCustomFont('${f.name}')">Remove</button>
         `;
         container.appendChild(row);
       });
@@ -1821,32 +1736,25 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
         });
       });
 
+      // BUTTON AT BOTTOM OF EDITOR TO GO TO PREVIEW
       document.getElementById("btn-goto-preview")?.addEventListener("click", () => {
-        document.querySelector('[data-tab="tab-preview"]')?.click();
+        document.querySelector('[data-tab="tab-preview"]').click();
       });
 
-      // CLEAN INVOICE
+      // CLEAN NEW INVOICE
       document.getElementById("btn-new-invoice")?.addEventListener("click", () => {
-        if (confirm("Create clean invoice? (കമ്പനി വിവരങ്ങൾ നിലനിൽക്കും)")) {
+        if (confirm("Create new clean invoice?")) {
           state.invoice = createCleanInvoice();
           renderSettings();
           refreshOpenPreview();
-          document.querySelector('[data-tab="tab-editor"]')?.click();
+          document.querySelector('[data-tab="tab-editor"]').click();
         }
       });
 
-      // META INPUTS
+      // EDITOR EVENT LISTENERS
       document.getElementById("inp-inv-num")?.addEventListener("input", e => { state.invoice.invoiceNumber = e.target.value; refreshOpenPreview(); });
       document.getElementById("inp-inv-date")?.addEventListener("change", e => { state.invoice.date = e.target.value; refreshOpenPreview(); });
-      
-      // CUSTOMER NAME: UPPERCASE
-      document.getElementById("inp-cust-name")?.addEventListener("input", e => {
-        if (!state.invoice.customer) state.invoice.customer = {};
-        e.target.value = e.target.value.toUpperCase();
-        state.invoice.customer.name = e.target.value;
-        refreshOpenPreview();
-      });
-
+      document.getElementById("inp-cust-name")?.addEventListener("input", e => { if (!state.invoice.customer) state.invoice.customer = {}; state.invoice.customer.name = e.target.value; refreshOpenPreview(); });
       document.getElementById("inp-cust-phone")?.addEventListener("input", e => { if (!state.invoice.customer) state.invoice.customer = {}; state.invoice.customer.phone = e.target.value; refreshOpenPreview(); });
       document.getElementById("inp-cust-whatsapp")?.addEventListener("input", e => { if (!state.invoice.customer) state.invoice.customer = {}; state.invoice.customer.whatsapp = e.target.value; });
       document.getElementById("inp-cust-address")?.addEventListener("input", e => { if (!state.invoice.customer) state.invoice.customer = {}; state.invoice.customer.address = e.target.value; refreshOpenPreview(); });
@@ -1869,6 +1777,36 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       });
       document.getElementById("sel-gst-rate")?.addEventListener("change", e => { state.invoice.gst.rate = parseFloat(e.target.value) || 0; refreshOpenPreview(); });
       document.getElementById("inp-invoice-notes")?.addEventListener("input", e => { state.invoice.notes = e.target.value; refreshOpenPreview(); });
+
+      // ADD ITEM
+      document.getElementById("btn-add-item")?.addEventListener("click", () => {
+        if (!state.invoice.items) state.invoice.items = [];
+        state.invoice.items.push({ description: "", qty: "", unit: "BAG", rate: "" });
+        renderItemInputs();
+        refreshOpenPreview();
+      });
+
+      // ITEM ROWS DELEGATION
+      const itemContainer = document.getElementById("items-list-container");
+      itemContainer?.addEventListener("input", e => {
+        const idx = e.target.getAttribute("data-index");
+        if (idx === null) return;
+        const i = parseInt(idx, 10);
+        if (e.target.classList.contains("item-desc")) state.invoice.items[i].description = e.target.value;
+        else if (e.target.classList.contains("item-qty")) state.invoice.items[i].qty = e.target.value.trim() === "" ? "" : parseFloat(e.target.value);
+        else if (e.target.classList.contains("item-unit")) state.invoice.items[i].unit = e.target.value;
+        else if (e.target.classList.contains("item-rate")) state.invoice.items[i].rate = e.target.value.trim() === "" ? "" : parseFloat(e.target.value);
+        refreshOpenPreview();
+      });
+
+      itemContainer?.addEventListener("click", e => {
+        if (e.target.tagName === "BUTTON") {
+          const i = parseInt(e.target.getAttribute("data-index"), 10);
+          state.invoice.items.splice(i, 1);
+          renderItemInputs();
+          refreshOpenPreview();
+        }
+      });
 
       // DESIGNER INPUTS
       const designerInputs = [
@@ -1925,7 +1863,7 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
         refreshOpenPreview();
       });
 
-      // ACTIONS
+      // ZOOM & ACTIONS
       document.getElementById("btn-zoom-in")?.addEventListener("click", () => applyZoom(currentZoom + 0.15));
       document.getElementById("btn-zoom-out")?.addEventListener("click", () => applyZoom(Math.max(0.3, currentZoom - 0.15)));
       document.getElementById("btn-zoom-fit")?.addEventListener("click", fitZoomToScreen);
@@ -1982,42 +1920,48 @@ Email: ${escapeHTML(company.email)}${company.showWebsite && company.website ? `W
       });
     }
 
-    // PWA REGISTRATION (FIXED e.waitUntil & STANDARD sw.js ARCHITECTURE)
     function initPWA() {
+      const manifest = {
+        name: "H4 Direct Invoice",
+        short_name: "H4 Invoice",
+        start_url: window.location.href,
+        display: "standalone",
+        background_color: "#FFFFFF",
+        theme_color: "#A8238B",
+        icons: [{
+          src: "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23A8238B'/><text x='50%' y='65%' font-size='48' font-weight='bold' fill='%23FFFFFF' text-anchor='middle'>H4</text></svg>",
+          sizes: "192x192 512x512",
+          type: "image/svg+xml"
+        }]
+      };
+      const blob = new Blob([JSON.stringify(manifest)], { type: "application/json" });
+      document.getElementById("pwa-manifest")?.setAttribute("href", URL.createObjectURL(blob));
+
       if ("serviceWorker" in navigator) {
-        // Registers standard sw.js file with inline fallback containing the fix: e.waitUntil(clients.claim())
-        navigator.serviceWorker.register("sw.js").catch(() => {
-          const swScript = `
-            self.addEventListener('install', e => self.skipWaiting());
-            self.addEventListener('activate', e => e.waitUntil(clients.claim()));
-            self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => caches.match(e.request))));
-          `;
-          const blob = new Blob([swScript], { type: "application/javascript" });
-          navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
-        });
+        const swScript = `
+          self.addEventListener('install', e => self.skipWaiting());
+          self.addEventListener('activate', e => event.waitUntil(clients.claim()));
+          self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => caches.match(e.request))));
+        `;
+        navigator.serviceWorker.register(URL.createObjectURL(new Blob([swScript], { type: "application/javascript" }))).catch(() => {});
       }
     }
 
     // INITIALIZATION
-    window.addEventListener("DOMContentLoaded", () => {
+    window.addEventListener("DOMContentLoaded", async () => {
       loadSavedState();
-      refreshAllFontDropdowns();
+      try {
+        customFonts = await getAllFontsFromDB();
+        applyCustomFontsToDOM();
+      } catch (e) {}
+
       setupEventListeners();
+      refreshAllFontDropdowns();
+      renderCustomFontsList();
       renderSettings();
       applyAppearance();
       refreshOpenPreview();
       initPWA();
-
-      (async () => {
-        try {
-          customFonts = await getAllFontsFromDB();
-          if (customFonts.length > 0) {
-            applyCustomFontsToDOM();
-            refreshAllFontDropdowns();
-            renderCustomFontsList();
-          }
-        } catch (e) {}
-      })();
     });
 
     window.addEventListener("resize", () => {
